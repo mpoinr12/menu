@@ -636,6 +636,14 @@
       const item = menuItems.find(i => i.id === id);
       if (!item) return;
 
+      // إرسال التتبع الذكي لجوجل لمعرفة أكثر السندويشات نقراً
+      if (typeof gtag === 'function') {
+        gtag('event', 'view_item', {
+          'item_name': item.name,
+          'item_category': item.category
+        });
+      }
+
       document.getElementById('modalImg').src = item.image;
       document.getElementById('modalTitle').textContent = item.name;
       document.getElementById('modalCategory').textContent = item.subtitle;

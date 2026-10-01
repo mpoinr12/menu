@@ -76,15 +76,24 @@
         <label class="block text-[10px] text-gray-400 mb-1">الوسوم (مفصولة بفاصلة ,)</label>
         <input type="text" id="newTags" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="شاورما, دجاج">
       </div>
-      <div class="md:col-span-2">
+      <div class="md:col-span-3">
         <label class="block text-[10px] text-gray-400 mb-1">المكونات (Ingredients)</label>
         <input type="text" id="newIngredients" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="صدور دجاج، كريم الثوم...">
       </div>
-      <div>
-        <label class="block text-[10px] text-gray-400 mb-1">مسببات الحساسية (اختياري)</label>
-        <input type="text" id="newAllergens" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="البيض 🥚, الغلوتين 🌾">
+      
+      <!-- مسببات الحساسية على شكل خيارات -->
+      <div class="md:col-span-3 bg-[#161a24] p-3 rounded-lg border border-gray-800">
+        <label class="block text-xs text-orange-400 font-bold mb-2">اختر مسببات الحساسية إن وجدت:</label>
+        <div class="flex flex-wrap gap-4 text-xs text-gray-300">
+          <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="newAllergen" value="البيض 🥚" class="accent-orange-600"> البيض 🥚</label>
+          <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="newAllergen" value="الألبان 🥛" class="accent-orange-600"> الألبان 🥛</label>
+          <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="newAllergen" value="الغلوتين 🌾" class="accent-orange-600"> الغلوتين (خبز) 🌾</label>
+          <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="newAllergen" value="السمسم 🫘" class="accent-orange-600"> السمسم 🫘</label>
+          <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="newAllergen" value="المكسرات 🥜" class="accent-orange-600"> المكسرات 🥜</label>
+        </div>
       </div>
-      <div class="md:col-span-2">
+
+      <div class="md:col-span-3">
         <label class="block text-[10px] text-gray-400 mb-1">صورة الوجبة</label>
         <input type="file" id="newImageFile" accept="image/*" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-orange-600 file:text-white cursor-pointer">
       </div>
@@ -130,7 +139,19 @@
         <div><label class="block text-xs text-gray-400 mb-1">الوصف</label><input type="text" id="editDescription" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
         <div><label class="block text-xs text-gray-400 mb-1">الوسوم (مفصولة بفاصلة)</label><input type="text" id="editTags" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
         <div><label class="block text-xs text-gray-400 mb-1">المكونات</label><input type="text" id="editIngredients" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-        <div><label class="block text-xs text-gray-400 mb-1">مسببات الحساسية</label><input type="text" id="editAllergens" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        
+        <!-- خيارات الحساسية للتعديل -->
+        <div class="bg-[#0f1218] p-3 rounded-lg border border-gray-800">
+          <label class="block text-xs text-orange-400 font-bold mb-2">مسببات الحساسية:</label>
+          <div class="flex flex-wrap gap-4 text-xs text-gray-300">
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="editAllergen" value="البيض 🥚" class="accent-orange-600"> البيض 🥚</label>
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="editAllergen" value="الألبان 🥛" class="accent-orange-600"> الألبان 🥛</label>
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="editAllergen" value="الغلوتين 🌾" class="accent-orange-600"> الغلوتين (خبز) 🌾</label>
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="editAllergen" value="السمسم 🫘" class="accent-orange-600"> السمسم 🫘</label>
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="editAllergen" value="المكسرات 🥜" class="accent-orange-600"> المكسرات 🥜</label>
+          </div>
+        </div>
+
         <div><label class="block text-xs text-gray-400 mb-1">تغيير الصورة</label><input type="file" id="editImageFile" accept="image/*" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white"></div>
       </div>
       <div class="mt-6 flex justify-end gap-3">
@@ -247,9 +268,10 @@
 
       const tagsInput = document.getElementById('newTags').value;
       const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
-      
-      const allergensInput = document.getElementById('newAllergens').value;
-      const allergens = allergensInput ? allergensInput.split(',').map(a => a.trim()) : [];
+
+      // جمع الخيارات المحددة للحساسية
+      const allergens = [];
+      document.querySelectorAll('input[name="newAllergen"]:checked').forEach(cb => allergens.push(cb.value));
 
       await addDoc(collection(db, "menu"), {
         name,
@@ -266,6 +288,7 @@
         isVisible: true
       });
 
+      // تفريغ الحقول
       document.getElementById('newName').value = '';
       document.getElementById('newSubtitle').value = '';
       document.getElementById('newPrice').value = '';
@@ -273,9 +296,9 @@
       document.getElementById('newCalories').value = '';
       document.getElementById('newDescription').value = '';
       document.getElementById('newIngredients').value = '';
-      document.getElementById('newAllergens').value = '';
       document.getElementById('newTags').value = '';
       document.getElementById('newImageFile').value = '';
+      document.querySelectorAll('input[name="newAllergen"]').forEach(cb => cb.checked = false);
       loadItems();
     };
 
@@ -289,7 +312,13 @@
       document.getElementById('editCalories').value = item.calories || '';
       document.getElementById('editDescription').value = item.description || '';
       document.getElementById('editIngredients').value = item.ingredients || '';
-      document.getElementById('editAllergens').value = item.allergens ? item.allergens.join(', ') : '';
+      
+      // تحديد مربعات الحساسية المحفوظة مسبقاً
+      const itemAllergens = item.allergens || [];
+      document.querySelectorAll('input[name="editAllergen"]').forEach(cb => {
+        cb.checked = itemAllergens.includes(cb.value);
+      });
+
       document.getElementById('editTags').value = item.tags ? item.tags.join(', ') : '';
       document.getElementById('editModal').classList.remove('hidden');
     };
@@ -305,8 +334,8 @@
       const tagsInput = document.getElementById('editTags').value;
       const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
 
-      const allergensInput = document.getElementById('editAllergens').value;
-      const allergens = allergensInput ? allergensInput.split(',').map(a => a.trim()) : [];
+      const allergens = [];
+      document.querySelectorAll('input[name="editAllergen"]:checked').forEach(cb => allergens.push(cb.value));
 
       await updateDoc(doc(db, "menu", window.currentEditId), {
         name: document.getElementById('editName').value,

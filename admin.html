@@ -66,8 +66,12 @@
         </select>
       </div>
       <div>
-        <label class="block text-[10px] text-gray-400 mb-1">الشعار (Badge)</label>
-        <input type="text" id="newBadge" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="الأكثر مبيعاً 🔥">
+        <label class="block text-[10px] text-gray-400 mb-1">الشعار (Badge عربي)</label>
+        <input type="text" id="newBadge" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مشهور 🔥">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">الشعار (Badge EN)</label>
+        <input type="text" id="newBadgeEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Famous 🔥">
       </div>
       <div>
         <label class="block text-[10px] text-gray-400 mb-1">السعرات الحرارية</label>
@@ -94,7 +98,7 @@
         <input type="text" id="newTags" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="شاورما, دجاج">
       </div>
       <div>
-        <label class="block text-[10px] text-gray-400 mb-1">الوسوم بالإنجليزية (Tags EN, separated by comma)</label>
+        <label class="block text-[10px] text-gray-400 mb-1">الوسوم بالإنجليزية (Tags EN)</label>
         <input type="text" id="newTagsEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="shawarma, chicken">
       </div>
       
@@ -155,7 +159,10 @@
         </div>
         <div class="grid grid-cols-3 gap-3">
           <div><label class="block text-xs text-gray-400 mb-1">السعر</label><input type="text" id="editPrice" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-          <div><label class="block text-xs text-gray-400 mb-1">الشعار (Badge)</label><input type="text" id="editBadge" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">الشعار (Badge عربي)</label><input type="text" id="editBadge" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">الشعار (Badge EN)</label><input type="text" id="editBadgeEn" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
           <div><label class="block text-xs text-gray-400 mb-1">السعرات</label><input type="text" id="editCalories" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
         </div>
         <div class="grid grid-cols-2 gap-3">
@@ -229,14 +236,16 @@
 
     window.autoTranslateNew = async function() {
       const name = document.getElementById('newName').value;
+      const badge = document.getElementById('newBadge').value;
       const desc = document.getElementById('newDescription').value;
       const ing = document.getElementById('newIngredients').value;
       const tags = document.getElementById('newTags').value;
 
-      if(!name && !desc && !ing) return alert('الرجاء كتابة بعض الحقول بالعربي أولاً لترجمتها!');
+      if(!name && !badge && !desc && !ing) return alert('الرجاء كتابة بعض الحقول بالعربي أولاً لترجمتها!');
 
       event.target.textContent = 'جاري الترجمة... ⏳';
       if(name) document.getElementById('newSubtitle').value = await translateText(name);
+      if(badge) document.getElementById('newBadgeEn').value = await translateText(badge);
       if(desc) document.getElementById('newDescriptionEn').value = await translateText(desc);
       if(ing) document.getElementById('newIngredientsEn').value = await translateText(ing);
       if(tags) document.getElementById('newTagsEn').value = await translateText(tags);
@@ -245,12 +254,14 @@
 
     window.autoTranslateEdit = async function() {
       const name = document.getElementById('editName').value;
+      const badge = document.getElementById('editBadge').value;
       const desc = document.getElementById('editDescription').value;
       const ing = document.getElementById('editIngredients').value;
       const tags = document.getElementById('editTags').value;
 
       event.target.textContent = 'جاري الترجمة...';
       if(name) document.getElementById('editSubtitle').value = await translateText(name);
+      if(badge) document.getElementById('editBadgeEn').value = await translateText(badge);
       if(desc) document.getElementById('editDescriptionEn').value = await translateText(desc);
       if(ing) document.getElementById('editIngredientsEn').value = await translateText(ing);
       if(tags) document.getElementById('editTagsEn').value = await translateText(tags);
@@ -355,6 +366,7 @@
         price,
         category: document.getElementById('newCategory').value,
         badge: document.getElementById('newBadge').value,
+        badgeEn: document.getElementById('newBadgeEn').value,
         calories: document.getElementById('newCalories').value,
         description: document.getElementById('newDescription').value,
         descriptionEn: document.getElementById('newDescriptionEn').value,
@@ -371,6 +383,7 @@
       document.getElementById('newSubtitle').value = '';
       document.getElementById('newPrice').value = '';
       document.getElementById('newBadge').value = '';
+      document.getElementById('newBadgeEn').value = '';
       document.getElementById('newCalories').value = '';
       document.getElementById('newDescription').value = '';
       document.getElementById('newDescriptionEn').value = '';
@@ -390,6 +403,7 @@
       document.getElementById('editSubtitle').value = item.subtitle || '';
       document.getElementById('editPrice').value = item.price || '';
       document.getElementById('editBadge').value = item.badge || '';
+      document.getElementById('editBadgeEn').value = item.badgeEn || '';
       document.getElementById('editCalories').value = item.calories || '';
       document.getElementById('editDescription').value = item.description || '';
       document.getElementById('editDescriptionEn').value = item.descriptionEn || '';
@@ -428,6 +442,7 @@
         subtitle: document.getElementById('editSubtitle').value,
         price: document.getElementById('editPrice').value,
         badge: document.getElementById('editBadge').value,
+        badgeEn: document.getElementById('editBadgeEn').value,
         calories: document.getElementById('editCalories').value,
         description: document.getElementById('editDescription').value,
         descriptionEn: document.getElementById('editDescriptionEn').value,

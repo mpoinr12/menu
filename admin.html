@@ -33,43 +33,55 @@
   </div>
 
   <!-- لوحة التحكم -->
-  <div id="dashboardScreen" class="w-full max-w-4xl bg-[#161a24] p-6 rounded-2xl border border-gray-800 shadow-2xl hidden h-[90vh] flex flex-col">
+  <div id="dashboardScreen" class="w-full max-w-5xl bg-[#161a24] p-6 rounded-2xl border border-gray-800 shadow-2xl hidden h-[95vh] flex flex-col">
     <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-700">
-      <h2 class="text-xl font-black text-white">إدارة قائمة الطعام (المنيو)</h2>
+      <h2 class="text-xl font-black text-white">إدارة قائمة الطعام (المنيو) الاحترافية</h2>
       <button onclick="logout()" class="bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition-all">تسجيل الخروج</button>
     </div>
 
     <!-- فورم إضافة وجبة -->
-    <div class="bg-[#0f1218] p-4 rounded-xl border border-gray-800 mb-6 flex gap-3 items-end flex-wrap">
-      <div class="flex-1 min-w-[150px]">
-        <label class="block text-[10px] text-gray-400 mb-1">اسم الوجبة</label>
-        <input type="text" id="newName" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white" placeholder="مثال: برجر دجاج">
+    <div class="bg-[#0f1218] p-5 rounded-xl border border-gray-800 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">اسم الوجبة *</label>
+        <input type="text" id="newName" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مثال: برجر لحم دبل">
       </div>
-      <div class="w-32">
-        <label class="block text-[10px] text-gray-400 mb-1">السعر</label>
-        <input type="text" id="newPrice" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white" placeholder="250 ل.س">
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">السعر *</label>
+        <input type="text" id="newPrice" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مثال: 45000 ل.س">
       </div>
-      <div class="w-32">
-        <label class="block text-[10px] text-gray-400 mb-1">القسم</label>
-        <select id="newCategory" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white">
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">القسم *</label>
+        <select id="newCategory" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white">
           <option value="sandwich">سندويش</option>
           <option value="burger">برجر</option>
+          <option value="drinks">مشروبات</option>
         </select>
       </div>
-      <button onclick="addItem()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-1.5 px-6 rounded-lg text-sm transition-all h-fit">
-        إضافة الوجبة
-      </button>
+      <div class="md:col-span-2">
+        <label class="block text-[10px] text-gray-400 mb-1">المكونات (الوصف)</label>
+        <input type="text" id="newIngredients" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مثال: شريحتين لحم، جبنة شيدر، صوص خاص، خس">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">رابط الصورة (اختياري)</label>
+        <input type="text" id="newImage" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="https://...">
+      </div>
+      <div class="md:col-span-3 flex justify-end mt-2">
+        <button onclick="addItem()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-8 rounded-lg text-sm transition-all shadow-lg shadow-emerald-900/50">
+          إضافة الوجبة للقائمة
+        </button>
+      </div>
     </div>
 
     <!-- جدول الوجبات -->
     <div class="flex-1 overflow-auto rounded-xl border border-gray-800">
       <table class="w-full text-right text-sm">
-        <thead class="bg-[#0f1218] text-gray-400 text-xs uppercase sticky top-0">
+        <thead class="bg-[#0f1218] text-gray-400 text-xs uppercase sticky top-0 z-10 shadow-md">
           <tr>
-            <th class="px-4 py-3">اسم الوجبة</th>
-            <th class="px-4 py-3">القسم</th>
-            <th class="px-4 py-3">السعر</th>
-            <th class="px-4 py-3 text-left">إجراءات</th>
+            <th class="px-4 py-4">الوجبة</th>
+            <th class="px-4 py-4">القسم</th>
+            <th class="px-4 py-4">السعر</th>
+            <th class="px-4 py-4 text-center">الحالة (إظهار/إخفاء)</th>
+            <th class="px-4 py-4 text-left">إجراءات</th>
           </tr>
         </thead>
         <tbody id="menuTable" class="divide-y divide-gray-800">
@@ -82,9 +94,9 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    // لاحظ أننا أضفنا updateDoc لتعديل حالة الإظهار والإخفاء
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-    // مفاتيح الربط الصحيحة والمحدثة
     const firebaseConfig = {
       apiKey: "AIzaSyBcR06wtdVs0nI3Gmi0Keb8Q9EdXTOEgf0",
       authDomain: "lahma-menu.firebaseapp.com",
@@ -118,36 +130,55 @@
       const p = document.getElementById('password').value;
       const msg = document.getElementById('errorMsg');
       
-      signInWithEmailAndPassword(auth, e, p)
-        .catch(err => {
-          msg.textContent = "تأكد من الإيميل وكلمة المرور!";
-          msg.classList.remove('hidden');
-        });
+      signInWithEmailAndPassword(auth, e, p).catch(err => {
+        msg.textContent = "تأكد من الإيميل وكلمة المرور!";
+        msg.classList.remove('hidden');
+      });
     };
 
     window.logout = () => signOut(auth);
 
     async function loadItems() {
       const table = document.getElementById('menuTable');
-      table.innerHTML = '<tr class="text-center"><td colspan="4" class="py-4 text-gray-500">جاري التحميل...</td></tr>';
+      table.innerHTML = '<tr class="text-center"><td colspan="5" class="py-8 text-gray-500">جاري التحميل...</td></tr>';
       
       const querySnapshot = await getDocs(collection(db, "menu"));
       table.innerHTML = '';
       
       if(querySnapshot.empty) {
-        table.innerHTML = '<tr class="text-center"><td colspan="4" class="py-4 text-gray-500">القائمة فارغة حالياً</td></tr>';
+        table.innerHTML = '<tr class="text-center"><td colspan="5" class="py-8 text-gray-500">القائمة فارغة حالياً. ابدأ بإضافة وجبات!</td></tr>';
         return;
       }
 
       querySnapshot.forEach((docSnap) => {
         const item = docSnap.data();
+        const id = docSnap.id;
+        // افتراضياً الوجبة ظاهرة إذا لم يتم تحديدها
+        const isVisible = item.isVisible !== false; 
+        
+        // صورة افتراضية لو ما حط رابط
+        const imgUrl = item.image || 'https://via.placeholder.com/150?text=No+Image';
+
         table.innerHTML += `
-          <tr class="hover:bg-[#1a1f2b] transition-colors">
-            <td class="px-4 py-3 font-bold text-white">${item.name}</td>
-            <td class="px-4 py-3 text-gray-400 text-xs">${item.category === 'sandwich' ? 'سندويش' : 'برجر'}</td>
-            <td class="px-4 py-3 text-orange-500 font-bold">${item.price}</td>
+          <tr class="hover:bg-[#1a1f2b] transition-colors ${!isVisible ? 'opacity-50' : ''}">
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-3">
+                <img src="${imgUrl}" class="w-12 h-12 rounded-lg object-cover border border-gray-700">
+                <div>
+                  <div class="font-bold text-white text-base">${item.name}</div>
+                  <div class="text-xs text-gray-400 mt-1 max-w-[200px] truncate" title="${item.ingredients || 'لا يوجد وصف'}">${item.ingredients || 'لا يوجد وصف'}</div>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3 text-gray-400 text-xs">${item.category === 'sandwich' ? 'سندويش' : item.category === 'drinks' ? 'مشروبات' : 'برجر'}</td>
+            <td class="px-4 py-3 text-orange-500 font-black">${item.price}</td>
+            <td class="px-4 py-3 text-center">
+              <button onclick="toggleVisibility('${id}', ${isVisible})" class="px-3 py-1 rounded-md text-xs font-bold transition-all ${isVisible ? 'bg-green-500/20 text-green-500 hover:bg-green-500 hover:text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}">
+                ${isVisible ? '👁️ ظاهر للزبائن' : '❌ مخفي'}
+              </button>
+            </td>
             <td class="px-4 py-3 text-left">
-              <button onclick="deleteItem('${docSnap.id}')" class="text-red-500 hover:text-red-400 text-xs font-bold border border-red-500/30 px-3 py-1 rounded-md">حذف</button>
+              <button onclick="deleteItem('${id}')" class="text-red-500 hover:text-red-400 text-xs font-bold border border-red-500/30 px-3 py-1.5 rounded-md hover:bg-red-500/10">🗑️ حذف</button>
             </td>
           </tr>
         `;
@@ -158,29 +189,48 @@
       const name = document.getElementById('newName').value;
       const price = document.getElementById('newPrice').value;
       const category = document.getElementById('newCategory').value;
+      const ingredients = document.getElementById('newIngredients').value;
+      const image = document.getElementById('newImage').value;
 
-      if(!name || !price) return alert('يرجى كتابة الاسم والسعر');
+      if(!name || !price) return alert('يرجى كتابة اسم الوجبة والسعر على الأقل!');
 
       try {
         await addDoc(collection(db, "menu"), {
           name: name,
           price: price,
           category: category,
-          badge: "جديد ✨",
-          description: "تمت إضافته حديثاً",
-          image: "logo.webp",
-          tags: []
+          ingredients: ingredients,
+          image: image,
+          isVisible: true // الوجبة الجديدة تظهر للزبائن مباشرة
         });
+        
+        // تفريغ الحقول بعد الإضافة
         document.getElementById('newName').value = '';
         document.getElementById('newPrice').value = '';
+        document.getElementById('newIngredients').value = '';
+        document.getElementById('newImage').value = '';
         loadItems();
       } catch (e) {
         alert("حدث خطأ أثناء الإضافة");
       }
     };
 
+    // دالة الإخفاء والإظهار
+    window.toggleVisibility = async (id, currentStatus) => {
+      try {
+        const itemRef = doc(db, "menu", id);
+        // عكس الحالة (إذا كان ظاهر نخليه مخفي والعكس)
+        await updateDoc(itemRef, {
+          isVisible: !currentStatus
+        });
+        loadItems(); // تحديث الجدول فوراً
+      } catch (error) {
+        alert("حدث خطأ أثناء تغيير الحالة");
+      }
+    };
+
     window.deleteItem = async (id) => {
-      if(confirm('هل أنت متأكد من حذف هذه الوجبة؟')) {
+      if(confirm('هل أنت متأكد من حذف هذه الوجبة نهائياً؟')) {
         await deleteDoc(doc(db, "menu", id));
         loadItems();
       }

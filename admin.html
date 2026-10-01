@@ -43,11 +43,11 @@
     <div class="bg-[#0f1218] p-5 rounded-xl border border-gray-800 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
       <div>
         <label class="block text-[10px] text-gray-400 mb-1">اسم الوجبة *</label>
-        <input type="text" id="newName" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مثال: برجر لحم دبل">
+        <input type="text" id="newName" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مثال: برجر دجاج">
       </div>
       <div>
         <label class="block text-[10px] text-gray-400 mb-1">السعر *</label>
-        <input type="text" id="newPrice" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مثال: 45000 ل.س">
+        <input type="text" id="newPrice" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مثال: 25000">
       </div>
       <div>
         <label class="block text-[10px] text-gray-400 mb-1">القسم *</label>
@@ -59,14 +59,14 @@
       </div>
       <div class="md:col-span-2">
         <label class="block text-[10px] text-gray-400 mb-1">المكونات (الوصف)</label>
-        <input type="text" id="newIngredients" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مثال: شريحتين لحم، جبنة شيدر، صوص خاص، خس">
+        <input type="text" id="newIngredients" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مثال: دجاج مقرمش، صوص ثوم، مخلل">
       </div>
       <div>
-        <label class="block text-[10px] text-gray-400 mb-1">رابط الصورة (اختياري)</label>
-        <input type="text" id="newImage" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="https://...">
+        <label class="block text-[10px] text-gray-400 mb-1">صورة الوجبة (اختياري)</label>
+        <input type="file" id="newImageFile" accept="image/*" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-orange-600 file:text-white hover:file:bg-orange-500 cursor-pointer">
       </div>
       <div class="md:col-span-3 flex justify-end mt-2">
-        <button onclick="addItem()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-8 rounded-lg text-sm transition-all shadow-lg shadow-emerald-900/50">
+        <button id="submitBtn" onclick="addItem()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-8 rounded-lg text-sm transition-all shadow-lg shadow-emerald-900/50">
           إضافة الوجبة للقائمة
         </button>
       </div>
@@ -94,7 +94,6 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-    // لاحظ أننا أضفنا updateDoc لتعديل حالة الإظهار والإخفاء
     import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -153,10 +152,8 @@
       querySnapshot.forEach((docSnap) => {
         const item = docSnap.data();
         const id = docSnap.id;
-        // افتراضياً الوجبة ظاهرة إذا لم يتم تحديدها
         const isVisible = item.isVisible !== false; 
         
-        // صورة افتراضية لو ما حط رابط
         const imgUrl = item.image || 'https://via.placeholder.com/150?text=No+Image';
 
         table.innerHTML += `
@@ -174,7 +171,7 @@
             <td class="px-4 py-3 text-orange-500 font-black">${item.price}</td>
             <td class="px-4 py-3 text-center">
               <button onclick="toggleVisibility('${id}', ${isVisible})" class="px-3 py-1 rounded-md text-xs font-bold transition-all ${isVisible ? 'bg-green-500/20 text-green-500 hover:bg-green-500 hover:text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}">
-                ${isVisible ? '👁️ ظاهر للزبائن' : '❌ مخفي'}
+                ${isVisible ? '👁️ ظاهر' : '❌ مخفي'}
               </button>
             </td>
             <td class="px-4 py-3 text-left">
@@ -185,45 +182,98 @@
       });
     }
 
+    // خدعة ضغط الصورة وتحويلها لنص (Base64) لكي نحفظها في قاعدة البيانات مجاناً
+    function processImage(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          const img = new Image();
+          img.src = event.target.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            const MAX_SIZE = 400; // تصغير الصورة لتناسب قاعدة البيانات
+
+            if (width > height && width > MAX_SIZE) {
+              height *= MAX_SIZE / width;
+              width = MAX_SIZE;
+            } else if (height > MAX_SIZE) {
+              width *= MAX_SIZE / height;
+              height = MAX_SIZE;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            // تحويل الصورة لنص مع ضغطها جودتها لـ 70%
+            resolve(canvas.toDataURL('image/jpeg', 0.7)); 
+          };
+        };
+        reader.onerror = error => reject(error);
+      });
+    }
+
     window.addItem = async () => {
       const name = document.getElementById('newName').value;
       const price = document.getElementById('newPrice').value;
       const category = document.getElementById('newCategory').value;
       const ingredients = document.getElementById('newIngredients').value;
-      const image = document.getElementById('newImage').value;
+      const imageFile = document.getElementById('newImageFile').files[0];
+      const submitBtn = document.getElementById('submitBtn');
 
       if(!name || !price) return alert('يرجى كتابة اسم الوجبة والسعر على الأقل!');
 
       try {
+        submitBtn.textContent = 'جاري الإضافة ⏳...';
+        submitBtn.disabled = true;
+        submitBtn.classList.replace('bg-emerald-600', 'bg-gray-500');
+
+        let base64Image = '';
+        
+        // إذا اختار صورة، نضغطها ونحولها لنص
+        if (imageFile) {
+          base64Image = await processImage(imageFile);
+        }
+
         await addDoc(collection(db, "menu"), {
           name: name,
-          price: price,
+          price: price, // السعر يمكنك كتابته بالمئات الآن مثلا 250
           category: category,
           ingredients: ingredients,
-          image: image,
-          isVisible: true // الوجبة الجديدة تظهر للزبائن مباشرة
+          image: base64Image, // نحفظ الصورة كنص داخل قاعدة البيانات مباشرة!
+          isVisible: true 
         });
         
-        // تفريغ الحقول بعد الإضافة
         document.getElementById('newName').value = '';
         document.getElementById('newPrice').value = '';
         document.getElementById('newIngredients').value = '';
-        document.getElementById('newImage').value = '';
+        document.getElementById('newImageFile').value = '';
+        
+        submitBtn.textContent = 'إضافة الوجبة للقائمة';
+        submitBtn.disabled = false;
+        submitBtn.classList.replace('bg-gray-500', 'bg-emerald-600');
+
         loadItems();
       } catch (e) {
-        alert("حدث خطأ أثناء الإضافة");
+        console.error(e);
+        alert("حدث خطأ أثناء الإضافة.");
+        submitBtn.textContent = 'إضافة الوجبة للقائمة';
+        submitBtn.disabled = false;
+        submitBtn.classList.replace('bg-gray-500', 'bg-emerald-600');
       }
     };
 
-    // دالة الإخفاء والإظهار
     window.toggleVisibility = async (id, currentStatus) => {
       try {
         const itemRef = doc(db, "menu", id);
-        // عكس الحالة (إذا كان ظاهر نخليه مخفي والعكس)
         await updateDoc(itemRef, {
           isVisible: !currentStatus
         });
-        loadItems(); // تحديث الجدول فوراً
+        loadItems();
       } catch (error) {
         alert("حدث خطأ أثناء تغيير الحالة");
       }

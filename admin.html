@@ -6,7 +6,6 @@
   <title>إدارة مطعم لحمة وفحمة</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-  <!-- تم إضافة مكتبة الأيقونات لتعمل أيقونة الترجمة -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>body { font-family: 'Cairo', sans-serif; background-color: #0f1218; color: white; }</style>
 </head>
@@ -139,6 +138,13 @@
           إضافة الوجبة للقائمة
         </button>
       </div>
+    </div>
+
+    <!-- الزر السحري الشامل -->
+    <div class="mb-6">
+      <button onclick="injectAllOldData()" id="magicBtn" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black py-4 rounded-xl transition-all shadow-[0_0_15px_rgba(147,51,234,0.3)] border border-purple-400/50 flex items-center justify-center gap-2 text-lg">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> استعادة الـ 15 وجبة الأصلية إلى قاعدة البيانات
+      </button>
     </div>
 
     <!-- جدول الوجبات -->
@@ -290,7 +296,7 @@
       if (user) {
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('dashboardScreen').classList.remove('hidden');
-        loadCategories(); // ستقوم بجلب الأقسام ثم الوجبات تلقائياً
+        loadCategories();
       } else {
         document.getElementById('loginScreen').classList.remove('hidden');
         document.getElementById('dashboardScreen').classList.add('hidden');
@@ -309,7 +315,6 @@
 
     window.logout = () => signOut(auth);
 
-    // دوال إدارة الأقسام
     async function loadCategories() {
       const snapshot = await getDocs(collection(db, "categories"));
       const newSelect = document.getElementById('newCategory');
@@ -344,7 +349,6 @@
         list.innerHTML = '<span class="text-xs text-gray-500">لا يوجد أقسام مضافة بعد.</span>';
       }
       
-      // بعد جلب الأقسام، قم بجلب الوجبات
       loadItems();
     }
 
@@ -407,7 +411,6 @@
         window.menuData[id] = item;
         const isVisible = item.isVisible !== false;
         
-        // جلب اسم القسم من الخريطة الديناميكية
         const categoryName = window.categoriesMap[item.category] || item.category || 'غير محدد';
 
         table.innerHTML += `
@@ -557,6 +560,147 @@
       if(confirm('متأكد من الحذف؟')) {
         await deleteDoc(doc(db, "menu", id));
         loadItems();
+      }
+    };
+
+    // دالة الزر السحري
+    window.injectAllOldData = async () => {
+      if(!confirm('هذا الزر سيرفع جميع الـ 15 وجبة الخاصة بك إلى Firebase. اضغط موافق للاستمرار (ولا تضغط الزر مرة ثانية عشان ما تتكرر).')) return;
+
+      const btn = document.getElementById('magicBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري رفع الأقسام والوجبات... ⏳';
+      btn.disabled = true;
+
+      try {
+        const cats = [
+          { id: 'sandwich', nameAr: 'سندويش', nameEn: 'Sandwiches', emoji: '🌮' },
+          { id: 'burger', nameAr: 'برجر', nameEn: 'Burgers', emoji: '🍔' }
+        ];
+        for (let c of cats) {
+          await addDoc(collection(db, "categories"), c);
+        }
+
+        const items = [
+          {
+            name: "سندويش شيش باربيكيو", subtitle: "Shish BBQ Sandwich", price: "250", category: "sandwich",
+            badge: "مشوي عالفحم 🔥", badgeEn: "Charcoal Grilled 🔥", calories: "450 سعرة",
+            description: "قطع الشيش المشوية على الفحم مع صوص الباربيكيو الغني.", descriptionEn: "Charcoal grilled shish taouk with rich BBQ sauce.",
+            ingredients: "شيش طاووق، مايونيز، سلطة كولسلو، صوص الباربيكيو، خس، ومخلل.", ingredientsEn: "Shish taouk, mayonnaise, coleslaw, BBQ sauce, lettuce, pickles.",
+            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["شيش طاووق", "صوص باربيكيو"], tagsEn: ["Shish Taouk", "BBQ"], image: "shish-bbq.webp", isVisible: true
+          },
+          {
+            name: "سندويش الخارقة", subtitle: "Al-Khariqa Sandwich", price: "250", category: "sandwich",
+            badge: "مميزة 🌟", badgeEn: "Special 🌟", calories: "500 سعرة",
+            description: "سندويشة الخارقة، من تشكيلة المطعم المميزة.", descriptionEn: "Al-Khariqa sandwich, from our special collection.",
+            ingredients: "(المكونات سرية / غير معروفة بعد).", ingredientsEn: "(Secret ingredients).",
+            allergens: [], tags: ["وصفة خاصة"], tagsEn: ["Special Recipe"], image: "al-khariqa.webp", isVisible: true
+          },
+          {
+            name: "سندويش الشرحات", subtitle: "Chicken Slices Sandwich", price: "250", category: "sandwich",
+            badge: "طازج 🍗", badgeEn: "Fresh 🍗", calories: "400 سعرة",
+            description: "شرحات صدور الدجاج الطازجة والمشوية.", descriptionEn: "Fresh and grilled chicken breast slices.",
+            ingredients: "مايونيز، سلطة كولسلو، صوص الكوكتيل، خس، ومخلل.", ingredientsEn: "Mayonnaise, coleslaw, cocktail sauce, lettuce, pickles.",
+            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["دجاج طازج"], tagsEn: ["Fresh Chicken"], image: "shrahat-chicken.webp", isVisible: true
+          },
+          {
+            name: "سندويش الماسترد", subtitle: "Mustard Sandwich", price: "250", category: "sandwich",
+            badge: "نكهة لاذعة 💛", badgeEn: "Tangy 💛", calories: "420 سعرة",
+            description: "دجاج متبل مع صوص البافالو وتشكيلة مميزة.", descriptionEn: "Marinated chicken with buffalo sauce and special mix.",
+            ingredients: "مايونيز، صوص البافالو، سلطة كولسلو، خس، ومخلل.", ingredientsEn: "Mayonnaise, buffalo sauce, coleslaw, lettuce, pickles.",
+            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["بافالو"], tagsEn: ["Buffalo"], image: "mustard-sandwich.webp", isVisible: true
+          },
+          {
+            name: "سندويش كباب", subtitle: "Kebab Sandwich", price: "250", category: "sandwich",
+            badge: "الأصل 🍢", badgeEn: "Original 🍢", calories: "550 سعرة",
+            description: "كباب مشوي على الفحم بخلطة المطعم الخاصة.", descriptionEn: "Charcoal grilled kebab with our special mix.",
+            ingredients: "مايونيز، سلطة بيواز، خس، ومخلل.", ingredientsEn: "Mayonnaise, biwaz salad, lettuce, pickles.",
+            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["كباب مشوي"], tagsEn: ["Grilled Kebab"], image: "kebab-sandwich.webp", isVisible: true
+          },
+          {
+            name: "سندويش سجق", subtitle: "Sujuk Sandwich", price: "250", category: "sandwich",
+            badge: "مبهر 🌶️", badgeEn: "Spiced 🌶️", calories: "520 سعرة",
+            description: "سجق بلدي مبهر ومشوي مع الجبنة الذائبة.", descriptionEn: "Spiced and grilled local sujuk with melted cheese.",
+            ingredients: "سجق، جبنة، ومخلل.", ingredientsEn: "Sujuk, cheese, pickles.",
+            allergens: ["الألبان 🥛", "الغلوتين 🌾"], tags: ["سجق بلدي"], tagsEn: ["Local Sujuk"], image: "sujuk-sandwich.webp", isVisible: true
+          },
+          {
+            name: "سندويش الوهم", subtitle: "Al-Wahem Sandwich", price: "250", category: "sandwich",
+            badge: "وهمية 🤯", badgeEn: "Unreal 🤯", calories: "600 سعرة",
+            description: "سندويشة تأخذك لعالم آخر من النكهات الممزوجة.", descriptionEn: "A sandwich that takes you to another world of mixed flavors.",
+            ingredients: "مايونيز، سلطة كولسلو، صوص البافالو، خس، مخلل، وبهارات الوهم الخاصة.", ingredientsEn: "Mayonnaise, coleslaw, buffalo sauce, lettuce, pickles, special Wahem spices.",
+            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["مليئة بالنكهات"], tagsEn: ["Flavorful"], image: "al-wahem.webp", isVisible: true
+          },
+          {
+            name: "سندويش زنجر", subtitle: "Zinger Sandwich", price: "250", category: "sandwich",
+            badge: "قرمشة ⚡", badgeEn: "Crispy ⚡", calories: "580 سعرة",
+            description: "قطع الدجاج المقرمشة مع صوص الهالبينو والجبنة.", descriptionEn: "Crispy chicken pieces with jalapeno sauce and cheese.",
+            ingredients: "مايونيز، سلطة كولسلو، صوص الهالبينو، خس، مخلل، جبنة قشقوان، وصوص الكوكتيل.", ingredientsEn: "Mayonnaise, coleslaw, jalapeno sauce, lettuce, pickles, kashkaval cheese, cocktail sauce.",
+            allergens: ["البيض 🥚", "الألبان 🥛", "الغلوتين 🌾"], tags: ["زنجر", "مقرمش"], tagsEn: ["Zinger", "Crispy"], image: "zinger-sandwich.webp", isVisible: true
+          },
+          {
+            name: "سندويش السبايسي", subtitle: "Spicy Sandwich", price: "250", category: "sandwich",
+            badge: "نااار 🔥", badgeEn: "Fire 🔥", calories: "500 سعرة",
+            description: "لعشاق النكهة الحارة اللاذعة.", descriptionEn: "For spicy flavor lovers.",
+            ingredients: "مايونيز، صوص الهالبينو، سلطة بيواز، وخس.", ingredientsEn: "Mayonnaise, jalapeno sauce, biwaz salad, lettuce.",
+            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["حار جداً"], tagsEn: ["Very Spicy"], image: "spicy-sandwich.webp", isVisible: true
+          },
+          {
+            name: "سندويش نقانق", subtitle: "Sausage Sandwich", price: "250", category: "sandwich",
+            badge: "كلاسيك 🌭", badgeEn: "Classic 🌭", calories: "480 سعرة",
+            description: "نقانق لذيذة بلمسة الثوم والليمون.", descriptionEn: "Delicious sausages with a touch of garlic and lemon.",
+            ingredients: "نقانق، كريم الثوم، مخلل، وعصرة ليمون.", ingredientsEn: "Sausages, garlic cream, pickles, lemon juice.",
+            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["وجبة سريعة"], tagsEn: ["Fast Food"], image: "sausage-sandwich.webp", isVisible: true
+          },
+          {
+            name: "سندويش الخيال", subtitle: "Al-Khayal Sandwich", price: "250", category: "sandwich",
+            badge: "خيالية ✨", badgeEn: "Magical ✨", calories: "620 سعرة",
+            description: "طعم خيالي ومختلف.", descriptionEn: "Magical and different taste.",
+            ingredients: "طرطور، سلطة بيواز، ومخلل.", ingredientsEn: "Tarator, biwaz salad, pickles.",
+            allergens: ["السمسم 🫘", "الغلوتين 🌾"], tags: ["خفيفة"], tagsEn: ["Light"], image: "al-khayal.webp", isVisible: true
+          },
+          {
+            name: "سندويش الميكس", subtitle: "Mix Sandwich", price: "250", category: "sandwich",
+            badge: "كوكتيل 🌯", badgeEn: "Cocktail 🌯", calories: "650 سعرة",
+            description: "تشكيلة منوعة وغنية بأربعة أنواع مختلفة من الشيش.", descriptionEn: "Rich variety of four different types of shish.",
+            ingredients: "4 أنواع منوعة من الشيش (خردل، سبايسي، باربيكيو، ووهم)، بالإضافة إلى المايونيز، المخلل، صوص الوهم، وصوص السبايسي.", ingredientsEn: "4 types of shish, mayonnaise, pickles, wahem sauce, spicy sauce.",
+            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["ميكس شامل"], tagsEn: ["Full Mix"], image: "mix-sandwich.webp", isVisible: true
+          },
+          {
+            name: "شاورما", subtitle: "Shawarma Sandwich", price: "250", category: "sandwich",
+            badge: "الأكثر مبيعاً 🌯", badgeEn: "Best Seller 🌯", calories: "450 سعرة",
+            description: "شاورما لذيذة متوفرة بخبز الصاج أو الصمون.", descriptionEn: "Delicious shawarma available in saj or samoon bread.",
+            ingredients: "كريم الثوم، مخلل، وسلطة بيواز.", ingredientsEn: "Garlic cream, pickles, biwaz salad.",
+            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["شاورما أصيلة"], tagsEn: ["Authentic Shawarma"], image: "shawarma.webp", isVisible: true
+          },
+          {
+            name: "سندويش المدللة", subtitle: "Al-Mdallala Sandwich", price: "250", category: "sandwich",
+            badge: "دلال 👑", badgeEn: "Spoiled 👑", calories: "700 سعرة",
+            description: "سندويشة مدللة مليئة بالمكونات المتنوعة.", descriptionEn: "A spoiled sandwich full of diverse ingredients.",
+            ingredients: "شرائح الحبش، ذرة، جبنة، مايونيز، خس، وصوص الكوكتيل.", ingredientsEn: "Turkey slices, corn, cheese, mayonnaise, lettuce, cocktail sauce.",
+            allergens: ["البيض 🥚", "الألبان 🥛", "الغلوتين 🌾"], tags: ["إكسترا إضافات"], tagsEn: ["Extra Additions"], image: "al-mdallala.webp", isVisible: true
+          },
+          {
+            name: "برجر دبل تشيز", subtitle: "Double Cheese Chicken Burger", price: "250", category: "burger",
+            badge: "غرقانة جبنة 🧀", badgeEn: "Cheesy 🧀", calories: "750 سعرة",
+            description: "لعشاق الجبنة! برجر دجاج مع طبقتين من الجبنة والمكونات الغنية.", descriptionEn: "For cheese lovers! Chicken burger with double cheese and rich ingredients.",
+            ingredients: "قطعة برجر دجاج، مايونيز، صوص الكوكتيل، صوص الباربيكيو، سلطة كولسلو، خس، جبنة موزاريلا، وجبنة شيدر.", ingredientsEn: "Chicken burger patty, mayonnaise, cocktail sauce, BBQ sauce, coleslaw, lettuce, mozzarella cheese, cheddar.",
+            allergens: ["البيض 🥚", "الألبان 🥛", "الغلوتين 🌾"], tags: ["دبل تشيز", "دسمة ولذيذة"], tagsEn: ["Double Cheese", "Rich"], image: "double-cheese-burger.webp", isVisible: true
+          }
+        ];
+        
+        for (let item of items) {
+          await addDoc(collection(db, "menu"), item);
+        }
+
+        alert('✅ تمت إضافة الـ 15 وجبة بنجاح مع ترجمتها ومسببات الحساسية الخاصة بها!');
+        loadCategories(); 
+      } catch (error) {
+        console.error(error);
+        alert('❌ حدث خطأ أثناء الإضافة.');
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
       }
     };
   </script>

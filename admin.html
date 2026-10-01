@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة مطعم لحمة وفحمة</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Cairo', sans-serif; background-color: #0f1218; color: white; }</style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+  <!-- شاشة تسجيل الدخول -->
+  <div id="loginScreen" class="w-full max-w-md bg-[#161a24] p-8 rounded-2xl border border-gray-800 shadow-2xl">
+    <div class="text-center mb-6">
+      <h1 class="text-2xl font-black text-white">لوحة الإدارة</h1>
+      <p class="text-sm text-gray-400 mt-1">مطعم لحمة وفحمة</p>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">البريد الإلكتروني</label>
+        <input type="email" id="email" class="w-full bg-[#0f1218] border border-gray-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500" placeholder="admin@lahma.com">
+      </div>
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">كلمة المرور</label>
+        <input type="password" id="password" class="w-full bg-[#0f1218] border border-gray-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500" placeholder="••••••••">
+      </div>
+      <button onclick="login()" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-2.5 rounded-xl transition-all">
+        تسجيل الدخول
+      </button>
+      <p id="errorMsg" class="text-red-500 text-xs text-center hidden"></p>
+    </div>
+  </div>
+
+  <!-- لوحة التحكم (تظهر بعد الدخول) -->
+  <div id="dashboardScreen" class="w-full max-w-4xl bg-[#161a24] p-6 rounded-2xl border border-gray-800 shadow-2xl hidden h-[90vh] flex flex-col">
+    <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-700">
+      <h2 class="text-xl font-black text-white">إدارة قائمة الطعام (المنيو)</h2>
+      <button onclick="logout()" class="bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition-all">تسجيل الخروج</button>
+    </div>
+
+    <!-- فورم إضافة وجبة جديدة -->
+    <div class="bg-[#0f1218] p-4 rounded-xl border border-gray-800 mb-6 flex gap-3 items-end flex-wrap">
+      <div class="flex-1 min-w-[150px]">
+        <label class="block text-[10px] text-gray-400 mb-1">اسم الوجبة</label>
+        <input type="text" id="newName" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white" placeholder="مثال: برجر دجاج">
+      </div>
+      <div class="w-32">
+        <label class="block text-[10px] text-gray-400 mb-1">السعر</label>
+        <input type="text" id="newPrice" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white" placeholder="250 ل.س">
+      </div>
+      <div class="w-32">
+        <label class="block text-[10px] text-gray-400 mb-1">القسم</label>
+        <select id="newCategory" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white">
+          <option value="sandwich">سندويش</option>
+          <option value="burger">برجر</option>
+        </select>
+      </div>
+      <button onclick="addItem()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-1.5 px-6 rounded-lg text-sm transition-all h-fit">
+        إضافة الوجبة
+      </button>
+    </div>
+
+    <!-- جدول الوجبات -->
+    <div class="flex-1 overflow-auto rounded-xl border border-gray-800">
+      <table class="w-full text-right text-sm">
+        <thead class="bg-[#0f1218] text-gray-400 text-xs uppercase sticky top-0">
+          <tr>
+            <th class="px-4 py-3">اسم الوجبة</th>
+            <th class="px-4 py-3">القسم</th>
+            <th class="px-4 py-3">السعر</th>
+            <th class="px-4 py-3 text-left">إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="menuTable" class="divide-y divide-gray-800">
+          <!-- سيتم جلب البيانات هنا من فايربيس -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- أكواد فايربيس -->
+  <script type="module">
+    // استيراد مكتبات فايربيس
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    // مفاتيح الربط الخاصة بك
+    const firebaseConfig = {
+      apiKey: "AIzaSyBcR0wtdVs0nI3Gmi0Keb8Q9EdXTOEgf0",
+      authDomain: "lahma-menu.firebaseapp.com",
+      projectId: "lahma-menu",
+      storageBucket: "lahma-menu.firebasestorage.app",
+      messagingSenderId: "642565994237",
+      appId: "1:642565994237:web:2fff0a3fe0741460f67094"
+    };
+
+    // تهيئة فايربيس
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const loginScreen = document.getElementById('loginScreen');
+    const dashboardScreen = document.getElementById('dashboardScreen');
+
+    // التحقق من حالة تسجيل الدخول
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loginScreen.classList.add('hidden');
+        dashboardScreen.classList.remove('hidden');
+        loadItems(); // جلب البيانات عند الدخول
+      } else {
+        loginScreen.classList.remove('hidden');
+        dashboardScreen.classList.add('hidden');
+      }
+    });
+
+    // دالة تسجيل الدخول
+    window.login = () => {
+      const e = document.getElementById('email').value;
+      const p = document.getElementById('password').value;
+      const msg = document.getElementById('errorMsg');
+      
+      signInWithEmailAndPassword(auth, e, p)
+        .catch(err => {
+          msg.textContent = "تأكد من الإيميل وكلمة المرور!";
+          msg.classList.remove('hidden');
+        });
+    };
+
+    // دالة تسجيل الخروج
+    window.logout = () => signOut(auth);
+
+    // دالة جلب الوجبات من قاعدة البيانات
+    async function loadItems() {
+      const table = document.getElementById('menuTable');
+      table.innerHTML = '<tr class="text-center"><td colspan="4" class="py-4 text-gray-500">جاري التحميل...</td></tr>';
+      
+      const querySnapshot = await getDocs(collection(db, "menu"));
+      table.innerHTML = '';
+      
+      if(querySnapshot.empty) {
+        table.innerHTML = '<tr class="text-center"><td colspan="4" class="py-4 text-gray-500">القائمة فارغة حالياً</td></tr>';
+        return;
+      }
+
+      querySnapshot.forEach((docSnap) => {
+        const item = docSnap.data();
+        table.innerHTML += `
+          <tr class="hover:bg-[#1a1f2b] transition-colors">
+            <td class="px-4 py-3 font-bold text-white">${item.name}</td>
+            <td class="px-4 py-3 text-gray-400 text-xs">${item.category === 'sandwich' ? 'سندويش' : 'برجر'}</td>
+            <td class="px-4 py-3 text-orange-500 font-bold">${item.price}</td>
+            <td class="px-4 py-3 text-left">
+              <button onclick="deleteItem('${docSnap.id}')" class="text-red-500 hover:text-red-400 text-xs font-bold border border-red-500/30 px-3 py-1 rounded-md">حذف</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    // دالة إضافة وجبة جديدة
+    window.addItem = async () => {
+      const name = document.getElementById('newName').value;
+      const price = document.getElementById('newPrice').value;
+      const category = document.getElementById('newCategory').value;
+
+      if(!name || !price) return alert('يرجى كتابة الاسم والسعر');
+
+      try {
+        await addDoc(collection(db, "menu"), {
+          name: name,
+          price: price,
+          category: category,
+          badge: "جديد ✨",
+          description: "تمت إضافته حديثاً",
+          image: "logo.webp", // صورة افتراضية
+          tags: []
+        });
+        document.getElementById('newName').value = '';
+        document.getElementById('newPrice').value = '';
+        loadItems(); // تحديث الجدول
+      } catch (e) {
+        alert("حدث خطأ أثناء الإضافة");
+      }
+    };
+
+    // دالة حذف وجبة
+    window.deleteItem = async (id) => {
+      if(confirm('هل أنت متأكد من حذف هذه الوجبة؟')) {
+        await deleteDoc(doc(db, "menu", id));
+        loadItems();
+      }
+    };
+  </script>
+</body>
+</html>

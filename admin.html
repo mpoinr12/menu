@@ -33,49 +33,68 @@
   </div>
 
   <!-- لوحة التحكم الرئيسية -->
-  <div id="dashboardScreen" class="w-full max-w-6xl bg-[#161a24] p-6 rounded-2xl border border-gray-800 shadow-2xl hidden h-[95vh] flex flex-col relative">
+  <div id="dashboardScreen" class="w-full max-w-5xl bg-[#161a24] p-6 rounded-2xl border border-gray-800 shadow-2xl hidden h-[95vh] flex flex-col">
     <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-700">
-      <h2 class="text-xl font-black text-white">إدارة قائمة الطعام (المنيو) الاحترافية</h2>
+      <h2 class="text-xl font-black text-white">إدارة قائمة الطعام الشاملة</h2>
       <button onclick="logout()" class="bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition-all">تسجيل الخروج</button>
     </div>
 
-    <!-- فورم إضافة وجبة -->
+    <!-- فورم إضافة وجبة بكل التفاصيل -->
     <div class="bg-[#0f1218] p-5 rounded-xl border border-gray-800 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
       <div>
         <label class="block text-[10px] text-gray-400 mb-1">اسم الوجبة *</label>
-        <input type="text" id="newName" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:border-emerald-500 focus:outline-none" placeholder="مثال: برجر دجاج">
+        <input type="text" id="newName" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مثال: سندويش شيش باربيكيو">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">الاسم الإنجليزي (Subtitle)</label>
+        <input type="text" id="newSubtitle" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Shish BBQ Sandwich">
       </div>
       <div>
         <label class="block text-[10px] text-gray-400 mb-1">السعر *</label>
-        <input type="text" id="newPrice" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:border-emerald-500 focus:outline-none" placeholder="مثال: 250">
+        <input type="text" id="newPrice" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="250">
       </div>
       <div>
-        <label class="block text-[10px] text-gray-400 mb-1">القسم *</label>
-        <select id="newCategory" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:border-emerald-500 focus:outline-none">
+        <label class="block text-[10px] text-gray-400 mb-1">القسم</label>
+        <select id="newCategory" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white">
           <option value="sandwich">سندويش</option>
           <option value="burger">برجر</option>
-          <option value="drinks">مشروبات</option>
         </select>
       </div>
-      <div class="md:col-span-2">
-        <label class="block text-[10px] text-gray-400 mb-1">المكونات (الوصف)</label>
-        <input type="text" id="newIngredients" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:border-emerald-500 focus:outline-none" placeholder="مثال: دجاج مقرمش، صوص ثوم، مخلل">
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">الشعار (Badge)</label>
+        <input type="text" id="newBadge" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مشوي عالفحم 🔥">
       </div>
       <div>
-        <label class="block text-[10px] text-gray-400 mb-1">صورة الوجبة (اختياري)</label>
-        <input type="file" id="newImageFile" accept="image/*" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-emerald-600 file:text-white hover:file:bg-emerald-500 cursor-pointer">
+        <label class="block text-[10px] text-gray-400 mb-1">السعرات الحرارية</label>
+        <input type="text" id="newCalories" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="450 سعرة">
+      </div>
+      <div class="md:col-span-2">
+        <label class="block text-[10px] text-gray-400 mb-1">الوصف المختصر</label>
+        <input type="text" id="newDescription" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="قطع الشيش المشوية على الفحم مع صوص الباربيكيو الغني.">
+      </div>
+      <div class="md:col-span-1">
+        <label class="block text-[10px] text-gray-400 mb-1">الوسوم (مفصولة بفاصلة ,)</label>
+        <input type="text" id="newTags" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="شيش طاووق, صوص باربيكيو">
+      </div>
+      <div class="md:col-span-2">
+        <label class="block text-[10px] text-gray-400 mb-1">المكونات (Ingredients)</label>
+        <input type="text" id="newIngredients" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="شيش طاووق، مايونيز، خس...">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">صورة الوجبة</label>
+        <input type="file" id="newImageFile" accept="image/*" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-orange-600 file:text-white cursor-pointer">
       </div>
       <div class="md:col-span-3 flex justify-end mt-2">
-        <button id="submitBtn" onclick="addItem()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-8 rounded-lg text-sm transition-all shadow-lg shadow-emerald-900/50">
+        <button id="submitBtn" onclick="addItem()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-8 rounded-lg text-sm transition-all shadow-lg">
           إضافة الوجبة للقائمة
         </button>
       </div>
     </div>
 
     <!-- جدول الوجبات -->
-    <div class="flex-1 overflow-auto rounded-xl border border-gray-800 relative">
+    <div class="flex-1 overflow-auto rounded-xl border border-gray-800">
       <table class="w-full text-right text-sm">
-        <thead class="bg-[#0f1218] text-gray-400 text-xs uppercase sticky top-0 z-10 shadow-md">
+        <thead class="bg-[#0f1218] text-gray-400 text-xs uppercase sticky top-0 z-10">
           <tr>
             <th class="px-4 py-4">الوجبة</th>
             <th class="px-4 py-4">القسم</th>
@@ -90,51 +109,32 @@
     </div>
   </div>
 
-  <!-- نافذة التعديل المنبثقة (Modal) -->
+  <!-- نافذة التعديل -->
   <div id="editModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-    <div class="bg-[#161a24] border border-gray-700 rounded-2xl w-full max-w-xl p-6 shadow-2xl transform transition-all">
-      <h3 class="text-xl font-bold text-white mb-6 border-b border-gray-700 pb-3">تعديل الوجبة</h3>
-      
-      <div class="space-y-4">
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">اسم الوجبة</label>
-            <input type="text" id="editName" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:border-blue-500 focus:outline-none">
-          </div>
-          <div>
-            <label class="block text-xs text-gray-400 mb-1">السعر</label>
-            <input type="text" id="editPrice" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:border-blue-500 focus:outline-none">
-          </div>
+    <div class="bg-[#161a24] border border-gray-700 rounded-2xl w-full max-w-xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <h3 class="text-xl font-bold text-white mb-4 border-b border-gray-700 pb-3">تعديل الوجبة</h3>
+      <div class="space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block text-xs text-gray-400 mb-1">اسم الوجبة</label><input type="text" id="editName" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">الاسم الإنجليزي</label><input type="text" id="editSubtitle" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
         </div>
-        
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">القسم</label>
-          <select id="editCategory" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:border-blue-500 focus:outline-none">
-            <option value="sandwich">سندويش</option>
-            <option value="burger">برجر</option>
-            <option value="drinks">مشروبات</option>
-          </select>
+        <div class="grid grid-cols-3 gap-3">
+          <div><label class="block text-xs text-gray-400 mb-1">السعر</label><input type="text" id="editPrice" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">الشعار (Badge)</label><input type="text" id="editBadge" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">السعرات</label><input type="text" id="editCalories" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
         </div>
-
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">المكونات (الوصف)</label>
-          <input type="text" id="editIngredients" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:border-blue-500 focus:outline-none">
-        </div>
-
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">تغيير الصورة (اتركه فارغاً للاحتفاظ بالقديمة)</label>
-          <input type="file" id="editImageFile" accept="image/*" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-blue-600 file:text-white hover:file:bg-blue-500 cursor-pointer">
-        </div>
+        <div><label class="block text-xs text-gray-400 mb-1">الوصف</label><input type="text" id="editDescription" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        <div><label class="block text-xs text-gray-400 mb-1">الوسوم (مفصولة بفاصلة)</label><input type="text" id="editTags" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        <div><label class="block text-xs text-gray-400 mb-1">المكونات</label><input type="text" id="editIngredients" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        <div><label class="block text-xs text-gray-400 mb-1">تغيير الصورة</label><input type="file" id="editImageFile" accept="image/*" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white"></div>
       </div>
-
-      <div class="mt-8 flex justify-end gap-3">
-        <button onclick="closeEditModal()" class="px-5 py-2 rounded-lg text-sm font-bold text-gray-400 hover:bg-gray-800 transition-all">إلغاء</button>
-        <button id="saveEditBtn" onclick="saveEdit()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg text-sm font-bold transition-all shadow-lg shadow-blue-900/50">حفظ التعديلات</button>
+      <div class="mt-6 flex justify-end gap-3">
+        <button onclick="closeEditModal()" class="px-4 py-2 rounded-lg text-sm text-gray-400 hover:bg-gray-800">إلغاء</button>
+        <button id="saveEditBtn" onclick="saveEdit()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg text-sm font-bold">حفظ</button>
       </div>
     </div>
   </div>
 
-  <!-- أكواد فايربيس -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
@@ -154,113 +154,77 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // متغير عالمي لحفظ الوجبات المحملة عشان نستخدمها بالتعديل
     window.menuData = {};
     window.currentEditId = null;
 
-    const loginScreen = document.getElementById('loginScreen');
-    const dashboardScreen = document.getElementById('dashboardScreen');
-
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        loginScreen.classList.add('hidden');
-        dashboardScreen.classList.remove('hidden');
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('dashboardScreen').classList.remove('hidden');
         loadItems();
       } else {
-        loginScreen.classList.remove('hidden');
-        dashboardScreen.classList.add('hidden');
+        document.getElementById('loginScreen').classList.remove('hidden');
+        document.getElementById('dashboardScreen').classList.add('hidden');
       }
     });
 
     window.login = () => {
       const e = document.getElementById('email').value;
       const p = document.getElementById('password').value;
-      const msg = document.getElementById('errorMsg');
-      signInWithEmailAndPassword(auth, e, p).catch(err => {
-        msg.textContent = "تأكد من الإيميل وكلمة المرور!";
-        msg.classList.remove('hidden');
-      });
+      signInWithEmailAndPassword(auth, e, p).catch(() => alert('تأكد من البيانات'));
     };
 
     window.logout = () => signOut(auth);
 
-    // دالة ضغط الصور (تستخدم في الإضافة والتعديل)
     function processImage(file) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = (event) => {
+        reader.onload = (e) => {
           const img = new Image();
-          img.src = event.target.result;
+          img.src = e.target.result;
           img.onload = () => {
             const canvas = document.createElement('canvas');
-            let width = img.width;
-            let height = img.height;
-            const MAX_SIZE = 400; 
-
-            if (width > height && width > MAX_SIZE) {
-              height *= MAX_SIZE / width;
-              width = MAX_SIZE;
-            } else if (height > MAX_SIZE) {
-              width *= MAX_SIZE / height;
-              height = MAX_SIZE;
-            }
-
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL('image/jpeg', 0.7)); 
+            let w = img.width, h = img.height;
+            if (w > h && w > 400) { h *= 400 / w; w = 400; } else if (h > 400) { w *= 400 / h; h = 400; }
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/jpeg', 0.7));
           };
         };
-        reader.onerror = error => reject(error);
       });
     }
 
     async function loadItems() {
       const table = document.getElementById('menuTable');
-      table.innerHTML = '<tr class="text-center"><td colspan="5" class="py-8 text-gray-500">جاري التحميل...</td></tr>';
-      
-      const querySnapshot = await getDocs(collection(db, "menu"));
+      const snapshot = await getDocs(collection(db, "menu"));
       table.innerHTML = '';
-      window.menuData = {}; // تصفير البيانات القديمة
+      window.menuData = {};
       
-      if(querySnapshot.empty) {
-        table.innerHTML = '<tr class="text-center"><td colspan="5" class="py-8 text-gray-500">القائمة فارغة حالياً. ابدأ بإضافة وجبات!</td></tr>';
+      if(snapshot.empty) {
+        table.innerHTML = '<tr><td colspan="5" class="text-center py-6 text-gray-500">القائمة فارغة</td></tr>';
         return;
       }
 
-      querySnapshot.forEach((docSnap) => {
+      snapshot.forEach(docSnap => {
         const item = docSnap.data();
         const id = docSnap.id;
-        window.menuData[id] = item; // حفظ بيانات الوجبة في الذاكرة لسهولة التعديل
-        
-        const isVisible = item.isVisible !== false; 
-        const imgUrl = item.image || 'https://via.placeholder.com/150?text=No+Image';
+        window.menuData[id] = item;
+        const isVisible = item.isVisible !== false;
 
         table.innerHTML += `
-          <tr class="hover:bg-[#1a1f2b] transition-colors ${!isVisible ? 'opacity-50' : ''}">
-            <td class="px-4 py-3">
-              <div class="flex items-center gap-3">
-                <img src="${imgUrl}" class="w-12 h-12 rounded-lg object-cover border border-gray-700">
-                <div>
-                  <div class="font-bold text-white text-base">${item.name}</div>
-                  <div class="text-xs text-gray-400 mt-1 max-w-[200px] truncate" title="${item.ingredients || 'لا يوجد وصف'}">${item.ingredients || 'لا يوجد وصف'}</div>
-                </div>
-              </div>
-            </td>
-            <td class="px-4 py-3 text-gray-400 text-xs">${item.category === 'sandwich' ? 'سندويش' : item.category === 'drinks' ? 'مشروبات' : 'برجر'}</td>
-            <td class="px-4 py-3 text-emerald-500 font-black">${item.price}</td>
+          <tr class="hover:bg-[#1a1f2b] ${!isVisible ? 'opacity-50' : ''}">
+            <td class="px-4 py-3 font-bold">${item.name}</td>
+            <td class="px-4 py-3 text-xs text-gray-400">${item.category === 'sandwich' ? 'سندويش' : 'برجر'}</td>
+            <td class="px-4 py-3 text-orange-500 font-bold">${item.price} ل.س</td>
             <td class="px-4 py-3 text-center">
-              <button onclick="toggleVisibility('${id}', ${isVisible})" class="px-3 py-1 rounded-md text-xs font-bold transition-all ${isVisible ? 'bg-green-500/20 text-green-500 hover:bg-green-500 hover:text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}">
+              <button onclick="toggleVisibility('${id}', ${isVisible})" class="px-2 py-1 rounded text-xs ${isVisible ? 'bg-green-500/20 text-green-400' : 'bg-gray-700 text-gray-300'}">
                 ${isVisible ? '👁️ ظاهر' : '❌ مخفي'}
               </button>
             </td>
-            <td class="px-4 py-3 text-left">
-              <div class="flex items-center justify-end gap-2">
-                <button onclick="openEditModal('${id}')" class="text-blue-500 hover:text-blue-400 text-xs font-bold border border-blue-500/30 px-3 py-1.5 rounded-md hover:bg-blue-500/10">✏️ تعديل</button>
-                <button onclick="deleteItem('${id}')" class="text-red-500 hover:text-red-400 text-xs font-bold border border-red-500/30 px-3 py-1.5 rounded-md hover:bg-red-500/10">🗑️ حذف</button>
-              </div>
+            <td class="px-4 py-3 text-left space-x-2">
+              <button onclick="openEditModal('${id}')" class="text-blue-400 text-xs border border-blue-500/30 px-2.5 py-1 rounded">تعديل</button>
+              <button onclick="deleteItem('${id}')" class="text-red-400 text-xs border border-red-500/30 px-2.5 py-1 rounded">حذف</button>
             </td>
           </tr>
         `;
@@ -270,120 +234,89 @@
     window.addItem = async () => {
       const name = document.getElementById('newName').value;
       const price = document.getElementById('newPrice').value;
-      const category = document.getElementById('newCategory').value;
-      const ingredients = document.getElementById('newIngredients').value;
-      const imageFile = document.getElementById('newImageFile').files[0];
-      const submitBtn = document.getElementById('submitBtn');
+      if(!name || !price) return alert('الاسم والسعر مطلوبان!');
 
-      if(!name || !price) return alert('يرجى كتابة اسم الوجبة والسعر على الأقل!');
+      const file = document.getElementById('newImageFile').files[0];
+      let img = '';
+      if(file) img = await processImage(file);
 
-      try {
-        submitBtn.textContent = 'جاري الإضافة ⏳...';
-        submitBtn.disabled = true;
-        submitBtn.classList.replace('bg-emerald-600', 'bg-gray-500');
+      const tagsInput = document.getElementById('newTags').value;
+      const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
 
-        let base64Image = '';
-        if (imageFile) base64Image = await processImage(imageFile);
+      await addDoc(collection(db, "menu"), {
+        name,
+        subtitle: document.getElementById('newSubtitle').value,
+        price,
+        category: document.getElementById('newCategory').value,
+        badge: document.getElementById('newBadge').value,
+        calories: document.getElementById('newCalories').value,
+        description: document.getElementById('newDescription').value,
+        ingredients: document.getElementById('newIngredients').value,
+        tags,
+        image: img,
+        isVisible: true
+      });
 
-        await addDoc(collection(db, "menu"), {
-          name, price, category, ingredients, image: base64Image, isVisible: true 
-        });
-        
-        document.getElementById('newName').value = '';
-        document.getElementById('newPrice').value = '';
-        document.getElementById('newIngredients').value = '';
-        document.getElementById('newImageFile').value = '';
-        
-        submitBtn.textContent = 'إضافة الوجبة للقائمة';
-        submitBtn.disabled = false;
-        submitBtn.classList.replace('bg-gray-500', 'bg-emerald-600');
-
-        loadItems();
-      } catch (e) {
-        alert("حدث خطأ أثناء الإضافة.");
-        submitBtn.textContent = 'إضافة الوجبة للقائمة';
-        submitBtn.disabled = false;
-        submitBtn.classList.replace('bg-gray-500', 'bg-emerald-600');
-      }
+      document.getElementById('newName').value = '';
+      document.getElementById('newSubtitle').value = '';
+      document.getElementById('newPrice').value = '';
+      document.getElementById('newBadge').value = '';
+      document.getElementById('newCalories').value = '';
+      document.getElementById('newDescription').value = '';
+      document.getElementById('newIngredients').value = '';
+      document.getElementById('newTags').value = '';
+      document.getElementById('newImageFile').value = '';
+      loadItems();
     };
 
-    /* ------ دوال التعديل الجديدة ------ */
-    
-    // فتح نافذة التعديل وتعبئة البيانات
     window.openEditModal = (id) => {
       window.currentEditId = id;
       const item = window.menuData[id];
-      
       document.getElementById('editName').value = item.name || '';
+      document.getElementById('editSubtitle').value = item.subtitle || '';
       document.getElementById('editPrice').value = item.price || '';
-      document.getElementById('editCategory').value = item.category || 'sandwich';
+      document.getElementById('editBadge').value = item.badge || '';
+      document.getElementById('editCalories').value = item.calories || '';
+      document.getElementById('editDescription').value = item.description || '';
       document.getElementById('editIngredients').value = item.ingredients || '';
-      document.getElementById('editImageFile').value = ''; // تصفير حقل الصورة
-      
+      document.getElementById('editTags').value = item.tags ? item.tags.join(', ') : '';
       document.getElementById('editModal').classList.remove('hidden');
     };
 
-    // إغلاق النافذة
-    window.closeEditModal = () => {
-      document.getElementById('editModal').classList.add('hidden');
-      window.currentEditId = null;
-    };
+    window.closeEditModal = () => document.getElementById('editModal').classList.add('hidden');
 
-    // حفظ التعديلات
     window.saveEdit = async () => {
       if(!window.currentEditId) return;
+      const file = document.getElementById('editImageFile').files[0];
+      let img = window.menuData[window.currentEditId].image;
+      if(file) img = await processImage(file);
 
-      const name = document.getElementById('editName').value;
-      const price = document.getElementById('editPrice').value;
-      const category = document.getElementById('editCategory').value;
-      const ingredients = document.getElementById('editIngredients').value;
-      const imageFile = document.getElementById('editImageFile').files[0];
-      const saveBtn = document.getElementById('saveEditBtn');
+      const tagsInput = document.getElementById('editTags').value;
+      const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
 
-      if(!name || !price) return alert('الاسم والسعر مطلوبان!');
+      await updateDoc(doc(db, "menu", window.currentEditId), {
+        name: document.getElementById('editName').value,
+        subtitle: document.getElementById('editSubtitle').value,
+        price: document.getElementById('editPrice').value,
+        badge: document.getElementById('editBadge').value,
+        calories: document.getElementById('editCalories').value,
+        description: document.getElementById('editDescription').value,
+        ingredients: document.getElementById('editIngredients').value,
+        tags,
+        image: img
+      });
 
-      try {
-        saveBtn.textContent = 'جاري الحفظ...';
-        saveBtn.disabled = true;
-
-        // نحتفظ بالصورة القديمة كقيمة افتراضية
-        let finalImage = window.menuData[window.currentEditId].image;
-        
-        // إذا رفع صورة جديدة، نقوم بضغطها وتغيير القيمة
-        if (imageFile) {
-          finalImage = await processImage(imageFile);
-        }
-
-        // تحديث قاعدة البيانات
-        await updateDoc(doc(db, "menu", window.currentEditId), {
-          name, price, category, ingredients, image: finalImage
-        });
-
-        saveBtn.textContent = 'حفظ التعديلات';
-        saveBtn.disabled = false;
-        closeEditModal();
-        loadItems(); // إعادة تحميل الجدول لإظهار التعديلات
-
-      } catch (error) {
-        alert('حدث خطأ أثناء حفظ التعديلات');
-        saveBtn.textContent = 'حفظ التعديلات';
-        saveBtn.disabled = false;
-      }
+      closeEditModal();
+      loadItems();
     };
 
-    /* ----------------------------------- */
-
-    window.toggleVisibility = async (id, currentStatus) => {
-      try {
-        await updateDoc(doc(db, "menu", id), { isVisible: !currentStatus });
-        loadItems();
-      } catch (error) {
-        alert("حدث خطأ أثناء تغيير الحالة");
-      }
+    window.toggleVisibility = async (id, status) => {
+      await updateDoc(doc(db, "menu", id), { isVisible: !status });
+      loadItems();
     };
 
     window.deleteItem = async (id) => {
-      if(confirm('هل أنت متأكد من حذف هذه الوجبة نهائياً؟ لا يمكن التراجع عن هذا الإجراء.')) {
+      if(confirm('متأكد من الحذف؟')) {
         await deleteDoc(doc(db, "menu", id));
         loadItems();
       }

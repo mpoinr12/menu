@@ -32,14 +32,14 @@
     </div>
   </div>
 
-  <!-- لوحة التحكم (تظهر بعد الدخول) -->
+  <!-- لوحة التحكم -->
   <div id="dashboardScreen" class="w-full max-w-4xl bg-[#161a24] p-6 rounded-2xl border border-gray-800 shadow-2xl hidden h-[90vh] flex flex-col">
     <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-700">
       <h2 class="text-xl font-black text-white">إدارة قائمة الطعام (المنيو)</h2>
       <button onclick="logout()" class="bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition-all">تسجيل الخروج</button>
     </div>
 
-    <!-- فورم إضافة وجبة جديدة -->
+    <!-- فورم إضافة وجبة -->
     <div class="bg-[#0f1218] p-4 rounded-xl border border-gray-800 mb-6 flex gap-3 items-end flex-wrap">
       <div class="flex-1 min-w-[150px]">
         <label class="block text-[10px] text-gray-400 mb-1">اسم الوجبة</label>
@@ -73,7 +73,6 @@
           </tr>
         </thead>
         <tbody id="menuTable" class="divide-y divide-gray-800">
-          <!-- سيتم جلب البيانات هنا من فايربيس -->
         </tbody>
       </table>
     </div>
@@ -81,22 +80,21 @@
 
   <!-- أكواد فايربيس -->
   <script type="module">
-    // استيراد مكتبات فايربيس
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
     import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-    // مفاتيح الربط الخاصة بك
+    // مفاتيح الربط الصحيحة والمحدثة
     const firebaseConfig = {
-      apiKey: "AIzaSyBcR0wtdVs0nI3Gmi0Keb8Q9EdXTOEgf0",
+      apiKey: "AIzaSyBcR06wtdVs0nI3Gmi0Keb8Q9EdXTOEgf0",
       authDomain: "lahma-menu.firebaseapp.com",
       projectId: "lahma-menu",
       storageBucket: "lahma-menu.firebasestorage.app",
       messagingSenderId: "642565994237",
-      appId: "1:642565994237:web:2fff0a3fe0741460f67094"
+      appId: "1:642565994237:web:2fff0a3fe0741460f67094",
+      measurementId: "G-MZ4G6DD20L"
     };
 
-    // تهيئة فايربيس
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -104,19 +102,17 @@
     const loginScreen = document.getElementById('loginScreen');
     const dashboardScreen = document.getElementById('dashboardScreen');
 
-    // التحقق من حالة تسجيل الدخول
     onAuthStateChanged(auth, (user) => {
       if (user) {
         loginScreen.classList.add('hidden');
         dashboardScreen.classList.remove('hidden');
-        loadItems(); // جلب البيانات عند الدخول
+        loadItems();
       } else {
         loginScreen.classList.remove('hidden');
         dashboardScreen.classList.add('hidden');
       }
     });
 
-    // دالة تسجيل الدخول
     window.login = () => {
       const e = document.getElementById('email').value;
       const p = document.getElementById('password').value;
@@ -129,10 +125,8 @@
         });
     };
 
-    // دالة تسجيل الخروج
     window.logout = () => signOut(auth);
 
-    // دالة جلب الوجبات من قاعدة البيانات
     async function loadItems() {
       const table = document.getElementById('menuTable');
       table.innerHTML = '<tr class="text-center"><td colspan="4" class="py-4 text-gray-500">جاري التحميل...</td></tr>';
@@ -160,7 +154,6 @@
       });
     }
 
-    // دالة إضافة وجبة جديدة
     window.addItem = async () => {
       const name = document.getElementById('newName').value;
       const price = document.getElementById('newPrice').value;
@@ -175,18 +168,17 @@
           category: category,
           badge: "جديد ✨",
           description: "تمت إضافته حديثاً",
-          image: "logo.webp", // صورة افتراضية
+          image: "logo.webp",
           tags: []
         });
         document.getElementById('newName').value = '';
         document.getElementById('newPrice').value = '';
-        loadItems(); // تحديث الجدول
+        loadItems();
       } catch (e) {
         alert("حدث خطأ أثناء الإضافة");
       }
     };
 
-    // دالة حذف وجبة
     window.deleteItem = async (id) => {
       if(confirm('هل أنت متأكد من حذف هذه الوجبة؟')) {
         await deleteDoc(doc(db, "menu", id));

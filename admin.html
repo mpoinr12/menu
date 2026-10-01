@@ -45,7 +45,7 @@
       <button onclick="logout()" class="bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition-all">تسجيل الخروج</button>
     </div>
 
-    <!-- ميزة إدارة الأقسام الجديدة -->
+    <!-- ميزة إدارة الأقسام -->
     <div class="bg-[#0f1218] p-4 rounded-xl border border-gray-800 mb-4">
       <h3 class="text-sm font-bold text-white mb-3 text-orange-400"><i class="fa-solid fa-layer-group"></i> إدارة الأقسام (التصنيفات)</h3>
       <div class="flex flex-wrap md:flex-nowrap gap-2 mb-2">
@@ -55,69 +55,25 @@
         <input type="text" id="catEmoji" placeholder="إيموجي 🥤" class="w-24 bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white text-center">
         <button onclick="addCategory()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg text-sm transition-all">إضافة قسم</button>
       </div>
-      <div id="categoriesList" class="flex flex-wrap gap-2 mt-3">
-        <!-- الأقسام ستظهر هنا -->
-      </div>
+      <div id="categoriesList" class="flex flex-wrap gap-2 mt-3"></div>
     </div>
 
     <!-- فورم إضافة وجبة -->
     <div class="bg-[#0f1218] p-5 rounded-xl border border-gray-800 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-end overflow-y-auto max-h-[45vh]">
-      <div>
-        <label class="block text-[10px] text-gray-400 mb-1">اسم الوجبة (عربي) *</label>
-        <input type="text" id="newName" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مثال: شاورما عربي دبل">
-      </div>
-      <div>
-        <label class="block text-[10px] text-gray-400 mb-1">الاسم الإنجليزي (Subtitle)</label>
-        <input type="text" id="newSubtitle" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Double Arabic Shawarma">
-      </div>
-      <div>
-        <label class="block text-[10px] text-gray-400 mb-1">السعر *</label>
-        <input type="text" id="newPrice" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="350">
-      </div>
-      <div>
-        <label class="block text-[10px] text-gray-400 mb-1">القسم</label>
-        <select id="newCategory" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white">
-          <option value="">جاري تحميل الأقسام...</option>
-        </select>
-      </div>
-      <div>
-        <label class="block text-[10px] text-gray-400 mb-1">الشعار (Badge عربي)</label>
-        <input type="text" id="newBadge" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مشهور 🔥">
-      </div>
-      <div>
-        <label class="block text-[10px] text-gray-400 mb-1">الشعار (Badge EN)</label>
-        <input type="text" id="newBadgeEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Famous 🔥">
-      </div>
-      <div>
-        <label class="block text-[10px] text-gray-400 mb-1">السعرات الحرارية</label>
-        <input type="text" id="newCalories" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="650 سعرة">
-      </div>
-      <div class="md:col-span-2">
-        <label class="block text-[10px] text-gray-400 mb-1">الوصف (عربي)</label>
-        <input type="text" id="newDescription" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="وصف الوجبة المختصر...">
-      </div>
-      <div>
-        <label class="block text-[10px] text-gray-400 mb-1">الوصف بالإنجليزية (Description EN)</label>
-        <input type="text" id="newDescriptionEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="English description">
-      </div>
-      <div class="md:col-span-2">
-        <label class="block text-[10px] text-gray-400 mb-1">المكونات (عربي)</label>
-        <input type="text" id="newIngredients" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="صدور دجاج، كريم الثوم...">
-      </div>
-      <div>
-        <label class="block text-[10px] text-gray-400 mb-1">المكونات بالإنجليزية (Ingredients EN)</label>
-        <input type="text" id="newIngredientsEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Chicken breasts, garlic sauce...">
-      </div>
-      <div class="md:col-span-2">
-        <label class="block text-[10px] text-gray-400 mb-1">الوسوم (مفصولة بفاصلة ,)</label>
-        <input type="text" id="newTags" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="شاورما, دجاج">
-      </div>
-      <div>
-        <label class="block text-[10px] text-gray-400 mb-1">الوسوم بالإنجليزية (Tags EN)</label>
-        <input type="text" id="newTagsEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="shawarma, chicken">
-      </div>
+      <div><label class="block text-[10px] text-gray-400 mb-1">اسم الوجبة (عربي) *</label><input type="text" id="newName" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+      <div><label class="block text-[10px] text-gray-400 mb-1">الاسم الإنجليزي (Subtitle)</label><input type="text" id="newSubtitle" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+      <div><label class="block text-[10px] text-gray-400 mb-1">السعر *</label><input type="text" id="newPrice" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+      <div><label class="block text-[10px] text-gray-400 mb-1">القسم</label><select id="newCategory" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"><option value="">جاري التحميل...</option></select></div>
+      <div><label class="block text-[10px] text-gray-400 mb-1">الشعار (Badge عربي)</label><input type="text" id="newBadge" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+      <div><label class="block text-[10px] text-gray-400 mb-1">الشعار (Badge EN)</label><input type="text" id="newBadgeEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+      <div><label class="block text-[10px] text-gray-400 mb-1">السعرات</label><input type="text" id="newCalories" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+      <div class="md:col-span-2"><label class="block text-[10px] text-gray-400 mb-1">الوصف (عربي)</label><input type="text" id="newDescription" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+      <div><label class="block text-[10px] text-gray-400 mb-1">الوصف بالإنجليزية</label><input type="text" id="newDescriptionEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+      <div class="md:col-span-2"><label class="block text-[10px] text-gray-400 mb-1">المكونات (عربي)</label><input type="text" id="newIngredients" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+      <div><label class="block text-[10px] text-gray-400 mb-1">المكونات بالإنجليزية</label><input type="text" id="newIngredientsEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+      <div class="md:col-span-2"><label class="block text-[10px] text-gray-400 mb-1">الوسوم (مفصولة بفاصلة ,)</label><input type="text" id="newTags" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+      <div><label class="block text-[10px] text-gray-400 mb-1">الوسوم بالإنجليزية</label><input type="text" id="newTagsEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
       
-      <!-- مسببات الحساسية -->
       <div class="md:col-span-3 bg-[#161a24] p-3 rounded-lg border border-gray-800">
         <label class="block text-xs text-orange-400 font-bold mb-2">اختر مسببات الحساسية إن وجدت:</label>
         <div class="flex flex-wrap gap-4 text-xs text-gray-300">
@@ -129,25 +85,11 @@
         </div>
       </div>
 
-      <div class="md:col-span-3">
-        <label class="block text-[10px] text-gray-400 mb-1">صورة الوجبة</label>
-        <input type="file" id="newImageFile" accept="image/*" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-orange-600 file:text-white cursor-pointer">
-      </div>
-      <div class="md:col-span-3 flex justify-end mt-2">
-        <button id="submitBtn" onclick="addItem()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-8 rounded-lg text-sm transition-all shadow-lg">
-          إضافة الوجبة للقائمة
-        </button>
-      </div>
+      <div class="md:col-span-3"><label class="block text-[10px] text-gray-400 mb-1">صورة الوجبة</label><input type="file" id="newImageFile" accept="image/*" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white"></div>
+      <div class="md:col-span-3 flex justify-end mt-2"><button id="submitBtn" onclick="addItem()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-8 rounded-lg text-sm transition-all shadow-lg">إضافة الوجبة</button></div>
     </div>
 
-    <!-- الزر السحري الشامل -->
-    <div class="mb-6">
-      <button onclick="injectAllOldData()" id="magicBtn" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black py-4 rounded-xl transition-all shadow-[0_0_15px_rgba(147,51,234,0.3)] border border-purple-400/50 flex items-center justify-center gap-2 text-lg">
-        <i class="fa-solid fa-wand-magic-sparkles"></i> استعادة الـ 15 وجبة الأصلية إلى قاعدة البيانات
-      </button>
-    </div>
-
-    <!-- جدول الوجبات -->
+    <!-- جدول الوجبات مع أزرار الترتيب -->
     <div class="flex-1 overflow-auto rounded-xl border border-gray-800">
       <table class="w-full text-right text-sm">
         <thead class="bg-[#0f1218] text-gray-400 text-xs uppercase sticky top-0 z-10">
@@ -156,7 +98,7 @@
             <th class="px-4 py-4">القسم</th>
             <th class="px-4 py-4">السعر</th>
             <th class="px-4 py-4 text-center">الحالة</th>
-            <th class="px-4 py-4 text-left">إجراءات</th>
+            <th class="px-4 py-4 text-left">إجراءات وترتيب</th>
           </tr>
         </thead>
         <tbody id="menuTable" class="divide-y divide-gray-800">
@@ -170,9 +112,7 @@
     <div class="bg-[#161a24] border border-gray-700 rounded-2xl w-full max-w-xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-3">
         <h3 class="text-xl font-bold text-white">تعديل الوجبة</h3>
-        <button type="button" onclick="autoTranslateEdit()" class="bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/40 px-3 py-1 rounded-lg text-xs font-bold transition-all">
-          ترجمة تلقائية 🌐
-        </button>
+        <button type="button" onclick="autoTranslateEdit()" class="bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/40 px-3 py-1 rounded-lg text-xs font-bold transition-all">ترجمة تلقائية 🌐</button>
       </div>
       <div class="space-y-3">
         <div class="grid grid-cols-2 gap-3">
@@ -184,9 +124,6 @@
           <div><label class="block text-xs text-gray-400 mb-1">القسم</label><select id="editCategory" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></select></div>
           <div><label class="block text-xs text-gray-400 mb-1">الشعار عربي</label><input type="text" id="editBadge" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
           <div><label class="block text-xs text-gray-400 mb-1">الشعار EN</label><input type="text" id="editBadgeEn" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div><label class="block text-xs text-gray-400 mb-1">السعرات</label><input type="text" id="editCalories" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div><label class="block text-xs text-gray-400 mb-1">الوصف (عربي)</label><input type="text" id="editDescription" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
@@ -211,7 +148,6 @@
             <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="editAllergen" value="المكسرات 🥜" class="accent-orange-600"> المكسرات 🥜</label>
           </div>
         </div>
-
         <div><label class="block text-xs text-gray-400 mb-1">تغيير الصورة</label><input type="file" id="editImageFile" accept="image/*" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white"></div>
       </div>
       <div class="mt-6 flex justify-end gap-3">
@@ -232,8 +168,7 @@
       projectId: "lahma-menu",
       storageBucket: "lahma-menu.firebasestorage.app",
       messagingSenderId: "642565994237",
-      appId: "1:642565994237:web:2fff0a3fe0741460f67094",
-      measurementId: "G-MZ4G6DD20L"
+      appId: "1:642565994237:web:2fff0a3fe0741460f67094"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -241,56 +176,9 @@
     const db = getFirestore(app);
 
     window.menuData = {};
+    window.menuList = [];
     window.categoriesMap = {};
     window.currentEditId = null;
-
-    async function translateText(text) {
-      if (!text) return '';
-      try {
-        const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=ar|en`);
-        const data = await res.json();
-        if (data && data.responseData && data.responseData.translatedText) {
-          return data.responseData.translatedText;
-        }
-      } catch (e) {
-        console.error("Translation error", e);
-      }
-      return text;
-    }
-
-    window.autoTranslateNew = async function() {
-      const name = document.getElementById('newName').value;
-      const badge = document.getElementById('newBadge').value;
-      const desc = document.getElementById('newDescription').value;
-      const ing = document.getElementById('newIngredients').value;
-      const tags = document.getElementById('newTags').value;
-
-      if(!name && !badge && !desc && !ing) return alert('الرجاء كتابة بعض الحقول بالعربي أولاً لترجمتها!');
-
-      event.target.textContent = 'جاري الترجمة... ⏳';
-      if(name) document.getElementById('newSubtitle').value = await translateText(name);
-      if(badge) document.getElementById('newBadgeEn').value = await translateText(badge);
-      if(desc) document.getElementById('newDescriptionEn').value = await translateText(desc);
-      if(ing) document.getElementById('newIngredientsEn').value = await translateText(ing);
-      if(tags) document.getElementById('newTagsEn').value = await translateText(tags);
-      event.target.innerHTML = '<i class="fa-solid fa-language"></i> ترجمة البيانات العربية تلقائياً 🌐';
-    };
-
-    window.autoTranslateEdit = async function() {
-      const name = document.getElementById('editName').value;
-      const badge = document.getElementById('editBadge').value;
-      const desc = document.getElementById('editDescription').value;
-      const ing = document.getElementById('editIngredients').value;
-      const tags = document.getElementById('editTags').value;
-
-      event.target.textContent = 'جاري الترجمة...';
-      if(name) document.getElementById('editSubtitle').value = await translateText(name);
-      if(badge) document.getElementById('editBadgeEn').value = await translateText(badge);
-      if(desc) document.getElementById('editDescriptionEn').value = await translateText(desc);
-      if(ing) document.getElementById('editIngredientsEn').value = await translateText(ing);
-      if(tags) document.getElementById('editTagsEn').value = await translateText(tags);
-      event.target.textContent = 'ترجمة تلقائية 🌐';
-    };
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -307,9 +195,8 @@
       const e = document.getElementById('email').value;
       const p = document.getElementById('password').value;
       signInWithEmailAndPassword(auth, e, p).catch(() => {
-        const err = document.getElementById('errorMsg');
-        err.textContent = 'تأكد من البيانات';
-        err.classList.remove('hidden');
+        document.getElementById('errorMsg').textContent = 'تأكد من البيانات';
+        document.getElementById('errorMsg').classList.remove('hidden');
       });
     };
 
@@ -328,52 +215,201 @@
 
       snapshot.forEach(docSnap => {
         const cat = docSnap.data();
-        const id = docSnap.id;
         const displayName = `${cat.emoji || ''} ${cat.nameAr}`;
-        
         window.categoriesMap[cat.id] = displayName;
         
-        const optionHtml = `<option value="${cat.id}">${displayName} - ${cat.nameEn}</option>`;
+        const optionHtml = `<option value="${cat.id}">${displayName}</option>`;
         newSelect.innerHTML += optionHtml;
         editSelect.innerHTML += optionHtml;
 
-        list.innerHTML += `
-          <div class="bg-[#1a1f2b] border border-gray-700 text-xs px-3 py-1.5 rounded-lg flex items-center gap-3">
-            <span class="font-bold text-gray-300">${displayName}</span>
-            <button onclick="deleteCategory('${id}')" class="text-red-500 hover:text-red-400 bg-red-500/10 rounded-full w-5 h-5 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
-          </div>
-        `;
+        list.innerHTML += `<div class="bg-[#1a1f2b] border border-gray-700 text-xs px-3 py-1.5 rounded-lg flex items-center gap-3"><span class="font-bold text-gray-300">${displayName}</span><button onclick="deleteCategory('${docSnap.id}')" class="text-red-500 hover:text-red-400"><i class="fa-solid fa-xmark"></i></button></div>`;
       });
-
-      if(snapshot.empty) {
-        list.innerHTML = '<span class="text-xs text-gray-500">لا يوجد أقسام مضافة بعد.</span>';
-      }
-      
       loadItems();
     }
 
-    window.addCategory = async () => {
-      const id = document.getElementById('catId').value;
-      const nameAr = document.getElementById('catNameAr').value;
-      const nameEn = document.getElementById('catNameEn').value;
-      const emoji = document.getElementById('catEmoji').value;
+    window.loadItems = async () => {
+      const table = document.getElementById('menuTable');
+      table.innerHTML = '<tr><td colspan="5" class="text-center py-6 text-gray-500">جاري التحميل...</td></tr>';
       
-      if(!id || !nameAr) return alert('المعرف والاسم العربي مطلوبان!');
+      const snapshot = await getDocs(collection(db, "menu"));
+      window.menuData = {};
+      window.menuList = [];
       
-      await addDoc(collection(db, "categories"), { id, nameAr, nameEn, emoji });
-      document.getElementById('catId').value = '';
-      document.getElementById('catNameAr').value = '';
-      document.getElementById('catNameEn').value = '';
-      document.getElementById('catEmoji').value = '';
-      loadCategories();
+      snapshot.forEach(docSnap => {
+        let data = docSnap.data();
+        data.id = docSnap.id;
+        if(typeof data.order !== 'number') data.order = 999999;
+        window.menuList.push(data);
+      });
+
+      // ترتيب الوجبات بناءً على رقم الـ order
+      window.menuList.sort((a, b) => a.order - b.order);
+
+      // تصحيح أرقام الترتيب تلقائياً في الخلفية لضمان التسلسل الصحيح (0, 10, 20...)
+      window.menuList.forEach((item, index) => {
+         const correctOrder = index * 10;
+         if(item.order !== correctOrder) {
+            item.order = correctOrder;
+            updateDoc(doc(db, "menu", item.id), { order: correctOrder }).catch(console.error);
+         }
+         window.menuData[item.id] = item;
+      });
+
+      renderTableLocally();
     };
 
-    window.deleteCategory = async (docId) => {
-      if(confirm('هل أنت متأكد من حذف هذا القسم؟')) {
-        await deleteDoc(doc(db, "categories", docId));
-        loadCategories();
+    // دالة رسم الجدول محلياً (لسرعة الاستجابة عند الترتيب)
+    window.renderTableLocally = () => {
+      const table = document.getElementById('menuTable');
+      table.innerHTML = '';
+      
+      if(window.menuList.length === 0) {
+        table.innerHTML = '<tr><td colspan="5" class="text-center py-6 text-gray-500">القائمة فارغة</td></tr>';
+        return;
       }
+
+      window.menuList.forEach((item, index) => {
+        const isVisible = item.isVisible !== false;
+        const categoryName = window.categoriesMap[item.category] || item.category || 'غير محدد';
+        
+        table.innerHTML += `
+          <tr class="hover:bg-[#1a1f2b] ${!isVisible ? 'opacity-50' : ''}">
+            <td class="px-4 py-3 font-bold">${item.name}</td>
+            <td class="px-4 py-3 text-xs text-gray-400">${categoryName}</td>
+            <td class="px-4 py-3 text-orange-500 font-bold">${item.price} ل.س</td>
+            <td class="px-4 py-3 text-center">
+              <button onclick="toggleVisibility('${item.id}', ${isVisible})" class="px-2 py-1 rounded text-xs ${isVisible ? 'bg-green-500/20 text-green-400' : 'bg-gray-700 text-gray-300'}">
+                ${isVisible ? '👁️️ ظاهر' : '❌ مخفي'}
+              </button>
+            </td>
+            <td class="px-4 py-3 text-left">
+              <div class="flex items-center justify-end gap-1.5">
+                <button onclick="moveItem(${index}, 'up')" class="text-gray-400 bg-[#1f2430] hover:bg-gray-700 px-2 py-1 rounded disabled:opacity-30 disabled:cursor-not-allowed" ${index === 0 ? 'disabled' : ''}><i class="fa-solid fa-arrow-up"></i></button>
+                <button onclick="moveItem(${index}, 'down')" class="text-gray-400 bg-[#1f2430] hover:bg-gray-700 px-2 py-1 rounded disabled:opacity-30 disabled:cursor-not-allowed" ${index === window.menuList.length - 1 ? 'disabled' : ''}><i class="fa-solid fa-arrow-down"></i></button>
+                <div class="w-px h-5 bg-gray-700 mx-1"></div>
+                <button onclick="openEditModal('${item.id}')" class="text-blue-400 text-xs border border-blue-500/30 px-2.5 py-1 rounded">تعديل</button>
+                <button onclick="deleteItem('${item.id}')" class="text-red-400 text-xs border border-red-500/30 px-2.5 py-1 rounded">حذف</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
     };
+
+    // دالة تحريك الوجبة (فوق / تحت)
+    window.moveItem = async (index, direction) => {
+      const items = window.menuList;
+      if (direction === 'up' && index > 0) {
+        let temp = items[index];
+        items[index] = items[index - 1];
+        items[index - 1] = temp;
+      } else if (direction === 'down' && index < items.length - 1) {
+        let temp = items[index];
+        items[index] = items[index + 1];
+        items[index + 1] = temp;
+      } else {
+        return;
+      }
+
+      // إعادة تعيين قيم الترتيب وتحديث قاعدة البيانات
+      for(let i = 0; i < items.length; i++) {
+        items[i].order = i * 10;
+        updateDoc(doc(db, "menu", items[i].id), { order: items[i].order }).catch(console.error);
+      }
+      
+      renderTableLocally(); // تحديث فوري وسريع للجدول
+    };
+
+    window.addItem = async () => {
+      const name = document.getElementById('newName').value;
+      const price = document.getElementById('newPrice').value;
+      if(!name || !price) return alert('الاسم والسعر مطلوبان!');
+      
+      const newOrder = window.menuList.length * 10; // لإضافتها في الأخير
+      const tags = document.getElementById('newTags').value.split(',').map(t => t.trim());
+      const tagsEn = document.getElementById('newTagsEn').value.split(',').map(t => t.trim());
+      const allergens = [];
+      document.querySelectorAll('input[name="newAllergen"]:checked').forEach(cb => allergens.push(cb.value));
+
+      let img = '';
+      const file = document.getElementById('newImageFile').files[0];
+      if(file) img = await processImage(file);
+
+      await addDoc(collection(db, "menu"), {
+        name, subtitle: document.getElementById('newSubtitle').value, price,
+        category: document.getElementById('newCategory').value, badge: document.getElementById('newBadge').value,
+        badgeEn: document.getElementById('newBadgeEn').value, description: document.getElementById('newDescription').value,
+        descriptionEn: document.getElementById('newDescriptionEn').value, ingredients: document.getElementById('newIngredients').value,
+        ingredientsEn: document.getElementById('newIngredientsEn').value, allergens, tags, tagsEn, image: img, isVisible: true,
+        order: newOrder
+      });
+      loadItems();
+    };
+
+    // إصلاح دالة التعديل بشكل جذري
+    window.openEditModal = (id) => {
+      try {
+        window.currentEditId = id;
+        const item = window.menuData[id];
+        
+        document.getElementById('editName').value = item.name || '';
+        document.getElementById('editSubtitle').value = item.subtitle || '';
+        document.getElementById('editPrice').value = item.price || '';
+        document.getElementById('editCategory').value = item.category || '';
+        document.getElementById('editBadge').value = item.badge || '';
+        document.getElementById('editBadgeEn').value = item.badgeEn || '';
+        document.getElementById('editDescription').value = item.description || '';
+        document.getElementById('editDescriptionEn').value = item.descriptionEn || '';
+        document.getElementById('editIngredients').value = item.ingredients || '';
+        document.getElementById('editIngredientsEn').value = item.ingredientsEn || '';
+        
+        const tags = Array.isArray(item.tags) ? item.tags.join(', ') : (item.tags || '');
+        document.getElementById('editTags').value = tags;
+        const tagsEn = Array.isArray(item.tagsEn) ? item.tagsEn.join(', ') : (item.tagsEn || '');
+        document.getElementById('editTagsEn').value = tagsEn;
+        
+        const itemAllergens = item.allergens || [];
+        document.querySelectorAll('input[name="editAllergen"]').forEach(cb => { cb.checked = itemAllergens.includes(cb.value); });
+        
+        document.getElementById('editModal').classList.remove('hidden');
+      } catch (e) { alert('خطأ في التعديل: ' + e.message); }
+    };
+
+    window.closeEditModal = () => document.getElementById('editModal').classList.add('hidden');
+
+    window.saveEdit = async () => {
+      if(!window.currentEditId) return;
+      const btn = document.getElementById('saveEditBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الحفظ...';
+      btn.disabled = true;
+
+      try {
+        const file = document.getElementById('editImageFile').files[0];
+        let img = window.menuData[window.currentEditId].image;
+        if(file) img = await processImage(file);
+
+        const tags = document.getElementById('editTags').value ? document.getElementById('editTags').value.split(',').map(t => t.trim()) : [];
+        const tagsEn = document.getElementById('editTagsEn').value ? document.getElementById('editTagsEn').value.split(',').map(t => t.trim()) : [];
+        const allergens = [];
+        document.querySelectorAll('input[name="editAllergen"]:checked').forEach(cb => allergens.push(cb.value));
+
+        await updateDoc(doc(db, "menu", window.currentEditId), {
+          name: document.getElementById('editName').value, subtitle: document.getElementById('editSubtitle').value,
+          price: document.getElementById('editPrice').value, category: document.getElementById('editCategory').value,
+          badge: document.getElementById('editBadge').value, badgeEn: document.getElementById('editBadgeEn').value,
+          description: document.getElementById('editDescription').value, descriptionEn: document.getElementById('editDescriptionEn').value,
+          ingredients: document.getElementById('editIngredients').value, ingredientsEn: document.getElementById('editIngredientsEn').value,
+          allergens, tags, tagsEn, image: img
+        });
+        closeEditModal();
+        loadItems();
+      } catch (error) { alert('❌ حدث خطأ، تأكد من اتصالك.'); } 
+      finally { btn.innerHTML = originalText; btn.disabled = false; }
+    };
+
+    window.toggleVisibility = async (id, status) => { await updateDoc(doc(db, "menu", id), { isVisible: !status }); loadItems(); };
+    window.deleteItem = async (id) => { if(confirm('متأكد من الحذف؟')) { await deleteDoc(doc(db, "menu", id)); loadItems(); } };
 
     function processImage(file) {
       return new Promise((resolve) => {
@@ -393,316 +429,6 @@
         };
       });
     }
-
-    async function loadItems() {
-      const table = document.getElementById('menuTable');
-      const snapshot = await getDocs(collection(db, "menu"));
-      table.innerHTML = '';
-      window.menuData = {};
-      
-      if(snapshot.empty) {
-        table.innerHTML = '<tr><td colspan="5" class="text-center py-6 text-gray-500">القائمة فارغة</td></tr>';
-        return;
-      }
-
-      snapshot.forEach(docSnap => {
-        const item = docSnap.data();
-        const id = docSnap.id;
-        window.menuData[id] = item;
-        const isVisible = item.isVisible !== false;
-        
-        const categoryName = window.categoriesMap[item.category] || item.category || 'غير محدد';
-
-        table.innerHTML += `
-          <tr class="hover:bg-[#1a1f2b] ${!isVisible ? 'opacity-50' : ''}">
-            <td class="px-4 py-3 font-bold">${item.name}</td>
-            <td class="px-4 py-3 text-xs text-gray-400">${categoryName}</td>
-            <td class="px-4 py-3 text-orange-500 font-bold">${item.price} ل.س</td>
-            <td class="px-4 py-3 text-center">
-              <button onclick="toggleVisibility('${id}', ${isVisible})" class="px-2 py-1 rounded text-xs ${isVisible ? 'bg-green-500/20 text-green-400' : 'bg-gray-700 text-gray-300'}">
-                ${isVisible ? '👁️ ظاهر' : '❌ مخفي'}
-              </button>
-            </td>
-            <td class="px-4 py-3 text-left space-x-2">
-              <button onclick="openEditModal('${id}')" class="text-blue-400 text-xs border border-blue-500/30 px-2.5 py-1 rounded">تعديل</button>
-              <button onclick="deleteItem('${id}')" class="text-red-400 text-xs border border-red-500/30 px-2.5 py-1 rounded">حذف</button>
-            </td>
-          </tr>
-        `;
-      });
-    }
-
-    window.addItem = async () => {
-      const name = document.getElementById('newName').value;
-      const price = document.getElementById('newPrice').value;
-      const category = document.getElementById('newCategory').value;
-      if(!name || !price || !category) return alert('الاسم والسعر والقسم مطلوبان!');
-
-      const file = document.getElementById('newImageFile').files[0];
-      let img = '';
-      if(file) img = await processImage(file);
-
-      const tagsInput = document.getElementById('newTags').value;
-      const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
-
-      const tagsInputEn = document.getElementById('newTagsEn').value;
-      const tagsEn = tagsInputEn ? tagsInputEn.split(',').map(t => t.trim()) : [];
-
-      const allergens = [];
-      document.querySelectorAll('input[name="newAllergen"]:checked').forEach(cb => allergens.push(cb.value));
-
-      await addDoc(collection(db, "menu"), {
-        name,
-        subtitle: document.getElementById('newSubtitle').value,
-        price,
-        category: category,
-        badge: document.getElementById('newBadge').value,
-        badgeEn: document.getElementById('newBadgeEn').value,
-        calories: document.getElementById('newCalories').value,
-        description: document.getElementById('newDescription').value,
-        descriptionEn: document.getElementById('newDescriptionEn').value,
-        ingredients: document.getElementById('newIngredients').value,
-        ingredientsEn: document.getElementById('newIngredientsEn').value,
-        allergens,
-        tags,
-        tagsEn,
-        image: img,
-        isVisible: true
-      });
-
-      document.getElementById('newName').value = '';
-      document.getElementById('newSubtitle').value = '';
-      document.getElementById('newPrice').value = '';
-      document.getElementById('newBadge').value = '';
-      document.getElementById('newBadgeEn').value = '';
-      document.getElementById('newCalories').value = '';
-      document.getElementById('newDescription').value = '';
-      document.getElementById('newDescriptionEn').value = '';
-      document.getElementById('newIngredients').value = '';
-      document.getElementById('newIngredientsEn').value = '';
-      document.getElementById('newTags').value = '';
-      document.getElementById('newTagsEn').value = '';
-      document.getElementById('newImageFile').value = '';
-      document.querySelectorAll('input[name="newAllergen"]').forEach(cb => cb.checked = false);
-      loadItems();
-    };
-
-    window.openEditModal = (id) => {
-      window.currentEditId = id;
-      const item = window.menuData[id];
-      document.getElementById('editName').value = item.name || '';
-      document.getElementById('editSubtitle').value = item.subtitle || '';
-      document.getElementById('editPrice').value = item.price || '';
-      document.getElementById('editCategory').value = item.category || '';
-      document.getElementById('editBadge').value = item.badge || '';
-      document.getElementById('editBadgeEn').value = item.badgeEn || '';
-      document.getElementById('editCalories').value = item.calories || '';
-      document.getElementById('editDescription').value = item.description || '';
-      document.getElementById('editDescriptionEn').value = item.descriptionEn || '';
-      document.getElementById('editIngredients').value = item.ingredients || '';
-      document.getElementById('editIngredientsEn').value = item.ingredientsEn || '';
-      document.getElementById('editTags').value = item.tags ? item.tags.join(', ') : '';
-      document.getElementById('editTagsEn').value = item.tagsEn ? item.tagsEn.join(', ') : '';
-      
-      const itemAllergens = item.allergens || [];
-      document.querySelectorAll('input[name="editAllergen"]').forEach(cb => {
-        cb.checked = itemAllergens.includes(cb.value);
-      });
-
-      document.getElementById('editModal').classList.remove('hidden');
-    };
-
-    window.closeEditModal = () => document.getElementById('editModal').classList.add('hidden');
-
-    window.saveEdit = async () => {
-      if(!window.currentEditId) return;
-      const file = document.getElementById('editImageFile').files[0];
-      let img = window.menuData[window.currentEditId].image;
-      if(file) img = await processImage(file);
-
-      const tagsInput = document.getElementById('editTags').value;
-      const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
-
-      const tagsInputEn = document.getElementById('editTagsEn').value;
-      const tagsEn = tagsInputEn ? tagsInputEn.split(',').map(t => t.trim()) : [];
-
-      const allergens = [];
-      document.querySelectorAll('input[name="editAllergen"]:checked').forEach(cb => allergens.push(cb.value));
-
-      await updateDoc(doc(db, "menu", window.currentEditId), {
-        name: document.getElementById('editName').value,
-        subtitle: document.getElementById('editSubtitle').value,
-        price: document.getElementById('editPrice').value,
-        category: document.getElementById('editCategory').value,
-        badge: document.getElementById('editBadge').value,
-        badgeEn: document.getElementById('editBadgeEn').value,
-        calories: document.getElementById('editCalories').value,
-        description: document.getElementById('editDescription').value,
-        descriptionEn: document.getElementById('editDescriptionEn').value,
-        ingredients: document.getElementById('editIngredients').value,
-        ingredientsEn: document.getElementById('editIngredientsEn').value,
-        allergens,
-        tags,
-        tagsEn,
-        image: img
-      });
-
-      closeEditModal();
-      loadItems();
-    };
-
-    window.toggleVisibility = async (id, status) => {
-      await updateDoc(doc(db, "menu", id), { isVisible: !status });
-      loadItems();
-    };
-
-    window.deleteItem = async (id) => {
-      if(confirm('متأكد من الحذف؟')) {
-        await deleteDoc(doc(db, "menu", id));
-        loadItems();
-      }
-    };
-
-    // دالة الزر السحري
-    window.injectAllOldData = async () => {
-      if(!confirm('هذا الزر سيرفع جميع الـ 15 وجبة الخاصة بك إلى Firebase. اضغط موافق للاستمرار (ولا تضغط الزر مرة ثانية عشان ما تتكرر).')) return;
-
-      const btn = document.getElementById('magicBtn');
-      const originalText = btn.innerHTML;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري رفع الأقسام والوجبات... ⏳';
-      btn.disabled = true;
-
-      try {
-        const cats = [
-          { id: 'sandwich', nameAr: 'سندويش', nameEn: 'Sandwiches', emoji: '🌮' },
-          { id: 'burger', nameAr: 'برجر', nameEn: 'Burgers', emoji: '🍔' }
-        ];
-        for (let c of cats) {
-          await addDoc(collection(db, "categories"), c);
-        }
-
-        const items = [
-          {
-            name: "سندويش شيش باربيكيو", subtitle: "Shish BBQ Sandwich", price: "250", category: "sandwich",
-            badge: "مشوي عالفحم 🔥", badgeEn: "Charcoal Grilled 🔥", calories: "450 سعرة",
-            description: "قطع الشيش المشوية على الفحم مع صوص الباربيكيو الغني.", descriptionEn: "Charcoal grilled shish taouk with rich BBQ sauce.",
-            ingredients: "شيش طاووق، مايونيز، سلطة كولسلو، صوص الباربيكيو، خس، ومخلل.", ingredientsEn: "Shish taouk, mayonnaise, coleslaw, BBQ sauce, lettuce, pickles.",
-            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["شيش طاووق", "صوص باربيكيو"], tagsEn: ["Shish Taouk", "BBQ"], image: "shish-bbq.webp", isVisible: true
-          },
-          {
-            name: "سندويش الخارقة", subtitle: "Al-Khariqa Sandwich", price: "250", category: "sandwich",
-            badge: "مميزة 🌟", badgeEn: "Special 🌟", calories: "500 سعرة",
-            description: "سندويشة الخارقة، من تشكيلة المطعم المميزة.", descriptionEn: "Al-Khariqa sandwich, from our special collection.",
-            ingredients: "(المكونات سرية / غير معروفة بعد).", ingredientsEn: "(Secret ingredients).",
-            allergens: [], tags: ["وصفة خاصة"], tagsEn: ["Special Recipe"], image: "al-khariqa.webp", isVisible: true
-          },
-          {
-            name: "سندويش الشرحات", subtitle: "Chicken Slices Sandwich", price: "250", category: "sandwich",
-            badge: "طازج 🍗", badgeEn: "Fresh 🍗", calories: "400 سعرة",
-            description: "شرحات صدور الدجاج الطازجة والمشوية.", descriptionEn: "Fresh and grilled chicken breast slices.",
-            ingredients: "مايونيز، سلطة كولسلو، صوص الكوكتيل، خس، ومخلل.", ingredientsEn: "Mayonnaise, coleslaw, cocktail sauce, lettuce, pickles.",
-            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["دجاج طازج"], tagsEn: ["Fresh Chicken"], image: "shrahat-chicken.webp", isVisible: true
-          },
-          {
-            name: "سندويش الماسترد", subtitle: "Mustard Sandwich", price: "250", category: "sandwich",
-            badge: "نكهة لاذعة 💛", badgeEn: "Tangy 💛", calories: "420 سعرة",
-            description: "دجاج متبل مع صوص البافالو وتشكيلة مميزة.", descriptionEn: "Marinated chicken with buffalo sauce and special mix.",
-            ingredients: "مايونيز، صوص البافالو، سلطة كولسلو، خس، ومخلل.", ingredientsEn: "Mayonnaise, buffalo sauce, coleslaw, lettuce, pickles.",
-            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["بافالو"], tagsEn: ["Buffalo"], image: "mustard-sandwich.webp", isVisible: true
-          },
-          {
-            name: "سندويش كباب", subtitle: "Kebab Sandwich", price: "250", category: "sandwich",
-            badge: "الأصل 🍢", badgeEn: "Original 🍢", calories: "550 سعرة",
-            description: "كباب مشوي على الفحم بخلطة المطعم الخاصة.", descriptionEn: "Charcoal grilled kebab with our special mix.",
-            ingredients: "مايونيز، سلطة بيواز، خس، ومخلل.", ingredientsEn: "Mayonnaise, biwaz salad, lettuce, pickles.",
-            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["كباب مشوي"], tagsEn: ["Grilled Kebab"], image: "kebab-sandwich.webp", isVisible: true
-          },
-          {
-            name: "سندويش سجق", subtitle: "Sujuk Sandwich", price: "250", category: "sandwich",
-            badge: "مبهر 🌶️", badgeEn: "Spiced 🌶️", calories: "520 سعرة",
-            description: "سجق بلدي مبهر ومشوي مع الجبنة الذائبة.", descriptionEn: "Spiced and grilled local sujuk with melted cheese.",
-            ingredients: "سجق، جبنة، ومخلل.", ingredientsEn: "Sujuk, cheese, pickles.",
-            allergens: ["الألبان 🥛", "الغلوتين 🌾"], tags: ["سجق بلدي"], tagsEn: ["Local Sujuk"], image: "sujuk-sandwich.webp", isVisible: true
-          },
-          {
-            name: "سندويش الوهم", subtitle: "Al-Wahem Sandwich", price: "250", category: "sandwich",
-            badge: "وهمية 🤯", badgeEn: "Unreal 🤯", calories: "600 سعرة",
-            description: "سندويشة تأخذك لعالم آخر من النكهات الممزوجة.", descriptionEn: "A sandwich that takes you to another world of mixed flavors.",
-            ingredients: "مايونيز، سلطة كولسلو، صوص البافالو، خس، مخلل، وبهارات الوهم الخاصة.", ingredientsEn: "Mayonnaise, coleslaw, buffalo sauce, lettuce, pickles, special Wahem spices.",
-            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["مليئة بالنكهات"], tagsEn: ["Flavorful"], image: "al-wahem.webp", isVisible: true
-          },
-          {
-            name: "سندويش زنجر", subtitle: "Zinger Sandwich", price: "250", category: "sandwich",
-            badge: "قرمشة ⚡", badgeEn: "Crispy ⚡", calories: "580 سعرة",
-            description: "قطع الدجاج المقرمشة مع صوص الهالبينو والجبنة.", descriptionEn: "Crispy chicken pieces with jalapeno sauce and cheese.",
-            ingredients: "مايونيز، سلطة كولسلو، صوص الهالبينو، خس، مخلل، جبنة قشقوان، وصوص الكوكتيل.", ingredientsEn: "Mayonnaise, coleslaw, jalapeno sauce, lettuce, pickles, kashkaval cheese, cocktail sauce.",
-            allergens: ["البيض 🥚", "الألبان 🥛", "الغلوتين 🌾"], tags: ["زنجر", "مقرمش"], tagsEn: ["Zinger", "Crispy"], image: "zinger-sandwich.webp", isVisible: true
-          },
-          {
-            name: "سندويش السبايسي", subtitle: "Spicy Sandwich", price: "250", category: "sandwich",
-            badge: "نااار 🔥", badgeEn: "Fire 🔥", calories: "500 سعرة",
-            description: "لعشاق النكهة الحارة اللاذعة.", descriptionEn: "For spicy flavor lovers.",
-            ingredients: "مايونيز، صوص الهالبينو، سلطة بيواز، وخس.", ingredientsEn: "Mayonnaise, jalapeno sauce, biwaz salad, lettuce.",
-            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["حار جداً"], tagsEn: ["Very Spicy"], image: "spicy-sandwich.webp", isVisible: true
-          },
-          {
-            name: "سندويش نقانق", subtitle: "Sausage Sandwich", price: "250", category: "sandwich",
-            badge: "كلاسيك 🌭", badgeEn: "Classic 🌭", calories: "480 سعرة",
-            description: "نقانق لذيذة بلمسة الثوم والليمون.", descriptionEn: "Delicious sausages with a touch of garlic and lemon.",
-            ingredients: "نقانق، كريم الثوم، مخلل، وعصرة ليمون.", ingredientsEn: "Sausages, garlic cream, pickles, lemon juice.",
-            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["وجبة سريعة"], tagsEn: ["Fast Food"], image: "sausage-sandwich.webp", isVisible: true
-          },
-          {
-            name: "سندويش الخيال", subtitle: "Al-Khayal Sandwich", price: "250", category: "sandwich",
-            badge: "خيالية ✨", badgeEn: "Magical ✨", calories: "620 سعرة",
-            description: "طعم خيالي ومختلف.", descriptionEn: "Magical and different taste.",
-            ingredients: "طرطور، سلطة بيواز، ومخلل.", ingredientsEn: "Tarator, biwaz salad, pickles.",
-            allergens: ["السمسم 🫘", "الغلوتين 🌾"], tags: ["خفيفة"], tagsEn: ["Light"], image: "al-khayal.webp", isVisible: true
-          },
-          {
-            name: "سندويش الميكس", subtitle: "Mix Sandwich", price: "250", category: "sandwich",
-            badge: "كوكتيل 🌯", badgeEn: "Cocktail 🌯", calories: "650 سعرة",
-            description: "تشكيلة منوعة وغنية بأربعة أنواع مختلفة من الشيش.", descriptionEn: "Rich variety of four different types of shish.",
-            ingredients: "4 أنواع منوعة من الشيش (خردل، سبايسي، باربيكيو، ووهم)، بالإضافة إلى المايونيز، المخلل، صوص الوهم، وصوص السبايسي.", ingredientsEn: "4 types of shish, mayonnaise, pickles, wahem sauce, spicy sauce.",
-            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["ميكس شامل"], tagsEn: ["Full Mix"], image: "mix-sandwich.webp", isVisible: true
-          },
-          {
-            name: "شاورما", subtitle: "Shawarma Sandwich", price: "250", category: "sandwich",
-            badge: "الأكثر مبيعاً 🌯", badgeEn: "Best Seller 🌯", calories: "450 سعرة",
-            description: "شاورما لذيذة متوفرة بخبز الصاج أو الصمون.", descriptionEn: "Delicious shawarma available in saj or samoon bread.",
-            ingredients: "كريم الثوم، مخلل، وسلطة بيواز.", ingredientsEn: "Garlic cream, pickles, biwaz salad.",
-            allergens: ["البيض 🥚", "الغلوتين 🌾"], tags: ["شاورما أصيلة"], tagsEn: ["Authentic Shawarma"], image: "shawarma.webp", isVisible: true
-          },
-          {
-            name: "سندويش المدللة", subtitle: "Al-Mdallala Sandwich", price: "250", category: "sandwich",
-            badge: "دلال 👑", badgeEn: "Spoiled 👑", calories: "700 سعرة",
-            description: "سندويشة مدللة مليئة بالمكونات المتنوعة.", descriptionEn: "A spoiled sandwich full of diverse ingredients.",
-            ingredients: "شرائح الحبش، ذرة، جبنة، مايونيز، خس، وصوص الكوكتيل.", ingredientsEn: "Turkey slices, corn, cheese, mayonnaise, lettuce, cocktail sauce.",
-            allergens: ["البيض 🥚", "الألبان 🥛", "الغلوتين 🌾"], tags: ["إكسترا إضافات"], tagsEn: ["Extra Additions"], image: "al-mdallala.webp", isVisible: true
-          },
-          {
-            name: "برجر دبل تشيز", subtitle: "Double Cheese Chicken Burger", price: "250", category: "burger",
-            badge: "غرقانة جبنة 🧀", badgeEn: "Cheesy 🧀", calories: "750 سعرة",
-            description: "لعشاق الجبنة! برجر دجاج مع طبقتين من الجبنة والمكونات الغنية.", descriptionEn: "For cheese lovers! Chicken burger with double cheese and rich ingredients.",
-            ingredients: "قطعة برجر دجاج، مايونيز، صوص الكوكتيل، صوص الباربيكيو، سلطة كولسلو، خس، جبنة موزاريلا، وجبنة شيدر.", ingredientsEn: "Chicken burger patty, mayonnaise, cocktail sauce, BBQ sauce, coleslaw, lettuce, mozzarella cheese, cheddar.",
-            allergens: ["البيض 🥚", "الألبان 🥛", "الغلوتين 🌾"], tags: ["دبل تشيز", "دسمة ولذيذة"], tagsEn: ["Double Cheese", "Rich"], image: "double-cheese-burger.webp", isVisible: true
-          }
-        ];
-        
-        for (let item of items) {
-          await addDoc(collection(db, "menu"), item);
-        }
-
-        alert('✅ تمت إضافة الـ 15 وجبة بنجاح مع ترجمتها ومسببات الحساسية الخاصة بها!');
-        loadCategories(); 
-      } catch (error) {
-        console.error(error);
-        alert('❌ حدث خطأ أثناء الإضافة.');
-      } finally {
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-      }
-    };
   </script>
 </body>
 </html>

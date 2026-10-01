@@ -35,7 +35,12 @@
   <!-- لوحة التحكم الرئيسية -->
   <div id="dashboardScreen" class="w-full max-w-5xl bg-[#161a24] p-6 rounded-2xl border border-gray-800 shadow-2xl hidden h-[95vh] flex flex-col">
     <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-700">
-      <h2 class="text-xl font-black text-white">إدارة قائمة الطعام الشاملة</h2>
+      <div class="flex items-center gap-4">
+        <h2 class="text-xl font-black text-white">إدارة قائمة الطعام الشاملة</h2>
+        <button type="button" onclick="autoTranslateNew()" class="bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/40 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-language"></i> ترجمة البيانات العربية تلقائياً 🌐
+        </button>
+      </div>
       <button onclick="logout()" class="bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition-all">تسجيل الخروج</button>
     </div>
 
@@ -69,19 +74,27 @@
         <input type="text" id="newCalories" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="650 سعرة">
       </div>
       <div class="md:col-span-2">
-        <label class="block text-[10px] text-gray-400 mb-1">الوصف</label>
+        <label class="block text-[10px] text-gray-400 mb-1">الوصف (عربي)</label>
         <input type="text" id="newDescription" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="وصف الوجبة المختصر...">
       </div>
       <div>
+        <label class="block text-[10px] text-gray-400 mb-1">الوصف بالإنجليزية (Description EN)</label>
+        <input type="text" id="newDescriptionEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="English description">
+      </div>
+      <div class="md:col-span-2">
+        <label class="block text-[10px] text-gray-400 mb-1">المكونات (عربي)</label>
+        <input type="text" id="newIngredients" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="صدور دجاج، كريم الثوم...">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">المكونات بالإنجليزية (Ingredients EN)</label>
+        <input type="text" id="newIngredientsEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Chicken breasts, garlic sauce...">
+      </div>
+      <div class="md:col-span-2">
         <label class="block text-[10px] text-gray-400 mb-1">الوسوم (مفصولة بفاصلة ,)</label>
         <input type="text" id="newTags" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="شاورما, دجاج">
       </div>
-      <div class="md:col-span-3">
-        <label class="block text-[10px] text-gray-400 mb-1">المكونات (Ingredients)</label>
-        <input type="text" id="newIngredients" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="صدور دجاج، كريم الثوم...">
-      </div>
       
-      <!-- مسببات الحساسية على شكل خيارات -->
+      <!-- مسببات الحساسية -->
       <div class="md:col-span-3 bg-[#161a24] p-3 rounded-lg border border-gray-800">
         <label class="block text-xs text-orange-400 font-bold mb-2">اختر مسببات الحساسية إن وجدت:</label>
         <div class="flex flex-wrap gap-4 text-xs text-gray-300">
@@ -125,22 +138,32 @@
   <!-- نافذة التعديل -->
   <div id="editModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
     <div class="bg-[#161a24] border border-gray-700 rounded-2xl w-full max-w-xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
-      <h3 class="text-xl font-bold text-white mb-4 border-b border-gray-700 pb-3">تعديل الوجبة</h3>
+      <div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-3">
+        <h3 class="text-xl font-bold text-white">تعديل الوجبة</h3>
+        <button type="button" onclick="autoTranslateEdit()" class="bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/40 px-3 py-1 rounded-lg text-xs font-bold transition-all">
+          ترجمة تلقائية 🌐
+        </button>
+      </div>
       <div class="space-y-3">
         <div class="grid grid-cols-2 gap-3">
-          <div><label class="block text-xs text-gray-400 mb-1">اسم الوجبة</label><input type="text" id="editName" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-          <div><label class="block text-xs text-gray-400 mb-1">الاسم الإنجليزي</label><input type="text" id="editSubtitle" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">اسم الوجبة (عربي)</label><input type="text" id="editName" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">الاسم الإنجليزي (Subtitle)</label><input type="text" id="editSubtitle" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
         </div>
         <div class="grid grid-cols-3 gap-3">
           <div><label class="block text-xs text-gray-400 mb-1">السعر</label><input type="text" id="editPrice" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
           <div><label class="block text-xs text-gray-400 mb-1">الشعار (Badge)</label><input type="text" id="editBadge" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
           <div><label class="block text-xs text-gray-400 mb-1">السعرات</label><input type="text" id="editCalories" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
         </div>
-        <div><label class="block text-xs text-gray-400 mb-1">الوصف</label><input type="text" id="editDescription" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block text-xs text-gray-400 mb-1">الوصف (عربي)</label><input type="text" id="editDescription" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">الوصف (EN)</label><input type="text" id="editDescriptionEn" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block text-xs text-gray-400 mb-1">المكونات (عربي)</label><input type="text" id="editIngredients" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">المكونات (EN)</label><input type="text" id="editIngredientsEn" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        </div>
         <div><label class="block text-xs text-gray-400 mb-1">الوسوم (مفصولة بفاصلة)</label><input type="text" id="editTags" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
-        <div><label class="block text-xs text-gray-400 mb-1">المكونات</label><input type="text" id="editIngredients" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
         
-        <!-- خيارات الحساسية للتعديل -->
         <div class="bg-[#0f1218] p-3 rounded-lg border border-gray-800">
           <label class="block text-xs text-orange-400 font-bold mb-2">مسببات الحساسية:</label>
           <div class="flex flex-wrap gap-4 text-xs text-gray-300">
@@ -182,6 +205,47 @@
 
     window.menuData = {};
     window.currentEditId = null;
+
+    // دالة الترجمة التلقائية المجانية البرمجية
+    async function translateText(text) {
+      if (!text) return '';
+      try {
+        const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=ar|en`);
+        const data = await res.json();
+        if (data && data.responseData && data.responseData.translatedText) {
+          return data.responseData.translatedText;
+        }
+      } catch (e) {
+        console.error("Translation error", e);
+      }
+      return text;
+    }
+
+    window.autoTranslateNew = async function() {
+      const name = document.getElementById('newName').value;
+      const desc = document.getElementById('newDescription').value;
+      const ing = document.getElementById('newIngredients').value;
+
+      if(!name && !desc && !ing) return alert('الرجاء كتابة بعض الحقول بالعربي أولاً لترجمتها!');
+
+      event.target.textContent = 'جاري الترجمة... ⏳';
+      if(name) document.getElementById('newSubtitle').value = await translateText(name);
+      if(desc) document.getElementById('newDescriptionEn').value = await translateText(desc);
+      if(ing) document.getElementById('newIngredientsEn').value = await translateText(ing);
+      event.target.textContent = 'ترجمة البيانات العربية تلقائياً 🌐';
+    };
+
+    window.autoTranslateEdit = async function() {
+      const name = document.getElementById('editName').value;
+      const desc = document.getElementById('editDescription').value;
+      const ing = document.getElementById('editIngredients').value;
+
+      event.target.textContent = 'جاري الترجمة...';
+      if(name) document.getElementById('editSubtitle').value = await translateText(name);
+      if(desc) document.getElementById('editDescriptionEn').value = await translateText(desc);
+      if(ing) document.getElementById('editIngredientsEn').value = await translateText(ing);
+      event.target.textContent = 'ترجمة تلقائية 🌐';
+    };
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -269,7 +333,6 @@
       const tagsInput = document.getElementById('newTags').value;
       const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
 
-      // جمع الخيارات المحددة للحساسية
       const allergens = [];
       document.querySelectorAll('input[name="newAllergen"]:checked').forEach(cb => allergens.push(cb.value));
 
@@ -281,7 +344,9 @@
         badge: document.getElementById('newBadge').value,
         calories: document.getElementById('newCalories').value,
         description: document.getElementById('newDescription').value,
+        descriptionEn: document.getElementById('newDescriptionEn').value,
         ingredients: document.getElementById('newIngredients').value,
+        ingredientsEn: document.getElementById('newIngredientsEn').value,
         allergens,
         tags,
         image: img,
@@ -295,7 +360,9 @@
       document.getElementById('newBadge').value = '';
       document.getElementById('newCalories').value = '';
       document.getElementById('newDescription').value = '';
+      document.getElementById('newDescriptionEn').value = '';
       document.getElementById('newIngredients').value = '';
+      document.getElementById('newIngredientsEn').value = '';
       document.getElementById('newTags').value = '';
       document.getElementById('newImageFile').value = '';
       document.querySelectorAll('input[name="newAllergen"]').forEach(cb => cb.checked = false);
@@ -311,9 +378,10 @@
       document.getElementById('editBadge').value = item.badge || '';
       document.getElementById('editCalories').value = item.calories || '';
       document.getElementById('editDescription').value = item.description || '';
+      document.getElementById('editDescriptionEn').value = item.descriptionEn || '';
       document.getElementById('editIngredients').value = item.ingredients || '';
+      document.getElementById('editIngredientsEn').value = item.ingredientsEn || '';
       
-      // تحديد مربعات الحساسية المحفوظة مسبقاً
       const itemAllergens = item.allergens || [];
       document.querySelectorAll('input[name="editAllergen"]').forEach(cb => {
         cb.checked = itemAllergens.includes(cb.value);
@@ -344,7 +412,9 @@
         badge: document.getElementById('editBadge').value,
         calories: document.getElementById('editCalories').value,
         description: document.getElementById('editDescription').value,
+        descriptionEn: document.getElementById('editDescriptionEn').value,
         ingredients: document.getElementById('editIngredients').value,
+        ingredientsEn: document.getElementById('editIngredientsEn').value,
         allergens,
         tags,
         image: img

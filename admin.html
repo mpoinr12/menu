@@ -3,318 +3,562 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة تحكم الأدمن - لحمة وفحمة</title>
+  <title>إدارة مطعم لحمة وفحمة</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+  <!-- تم إضافة مكتبة الأيقونات لتعمل أيقونة الترجمة -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Cairo', sans-serif; background-color: #0f1218; color: #f3f4f6; }
-  </style>
+  <style>body { font-family: 'Cairo', sans-serif; background-color: #0f1218; color: white; }</style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen flex items-center justify-center p-4">
 
   <!-- شاشة تسجيل الدخول -->
-  <div id="loginScreen" class="flex items-center justify-center min-h-screen px-4">
-    <div class="bg-[#161a24] p-8 rounded-2xl shadow-2xl border border-gray-800 w-full max-w-md">
-      <div class="text-center mb-6">
-        <div class="w-16 h-16 bg-brand-500/20 text-brand-500 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
-          <i class="fa-solid fa-lock"></i>
-        </div>
-        <h2 class="text-2xl font-bold text-white">تسجيل دخول الأدمن</h2>
-        <p class="text-gray-400 text-sm mt-1">مطعم لحمة وفحمة</p>
+  <div id="loginScreen" class="w-full max-w-md bg-[#161a24] p-8 rounded-2xl border border-gray-800 shadow-2xl">
+    <div class="text-center mb-6">
+      <h1 class="text-2xl font-black text-white">لوحة الإدارة</h1>
+      <p class="text-sm text-gray-400 mt-1">مطعم لحمة وفحمة</p>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">البريد الإلكتروني</label>
+        <input type="email" id="email" class="w-full bg-[#0f1218] border border-gray-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500" placeholder="admin@lahma.com">
       </div>
-      
-      <div class="space-y-4">
-        <div>
-          <label class="block text-sm font-bold text-gray-300 mb-1">البريد الإلكتروني</label>
-          <input type="email" id="loginEmail" class="w-full bg-[#0b0d13] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500" placeholder="admin@lahma.com">
-        </div>
-        <div>
-          <label class="block text-sm font-bold text-gray-300 mb-1">كلمة المرور</label>
-          <input type="password" id="loginPassword" class="w-full bg-[#0b0d13] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500" placeholder="••••••••">
-        </div>
-        <button id="btnLogin" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-xl transition-colors mt-2">
-          دخول
-        </button>
-        <p id="loginError" class="text-red-500 text-sm text-center hidden mt-2"></p>
+      <div>
+        <label class="block text-xs text-gray-400 mb-1">كلمة المرور</label>
+        <input type="password" id="password" class="w-full bg-[#0f1218] border border-gray-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-orange-500" placeholder="••••••••">
       </div>
+      <button onclick="login()" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-2.5 rounded-xl transition-all">
+        تسجيل الدخول
+      </button>
+      <p id="errorMsg" class="text-red-500 text-xs text-center hidden"></p>
     </div>
   </div>
 
-  <!-- لوحة التحكم (مخفية حتى يتم تسجيل الدخول) -->
-  <div id="dashboardScreen" class="hidden">
-    <nav class="bg-[#161a24] border-b border-gray-800 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-      <div class="flex items-center gap-3">
-        <i class="fa-solid fa-gear text-orange-500 text-xl"></i>
-        <h1 class="text-xl font-bold text-white">لوحة الإدارة</h1>
+  <!-- لوحة التحكم الرئيسية -->
+  <div id="dashboardScreen" class="w-full max-w-5xl bg-[#161a24] p-6 rounded-2xl border border-gray-800 shadow-2xl hidden h-[95vh] flex flex-col">
+    <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-700">
+      <div class="flex items-center gap-4">
+        <h2 class="text-xl font-black text-white">إدارة قائمة الطعام الشاملة</h2>
+        <button type="button" onclick="autoTranslateNew()" class="bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/40 px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-language"></i> ترجمة البيانات العربية تلقائياً 🌐
+        </button>
       </div>
-      <button id="btnLogout" class="bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/30 px-4 py-2 rounded-lg text-sm font-bold transition-all">
-        <i class="fa-solid fa-arrow-right-from-bracket ml-1"></i> تسجيل الخروج
-      </button>
-    </nav>
+      <button onclick="logout()" class="bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition-all">تسجيل الخروج</button>
+    </div>
 
-    <div class="max-w-5xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-      
-      <!-- العمود الجانبي: إدارة الأقسام -->
-      <div class="md:col-span-1 space-y-6">
-        <div class="bg-[#161a24] p-5 rounded-2xl border border-gray-800">
-          <h2 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2"><i class="fa-solid fa-layer-group text-orange-500 ml-1"></i> إدارة الأقسام</h2>
-          
-          <div class="space-y-3 mb-5">
-            <input type="text" id="catId" placeholder="المعرف (مثال: drinks)" class="w-full bg-[#0b0d13] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white">
-            <input type="text" id="catNameAr" placeholder="الاسم بالعربي (مشروبات)" class="w-full bg-[#0b0d13] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white">
-            <input type="text" id="catNameEn" placeholder="الاسم بالإنجليزي (Drinks)" class="w-full bg-[#0b0d13] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white">
-            <input type="text" id="catEmoji" placeholder="إيموجي القسم (🥤)" class="w-full bg-[#0b0d13] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white">
-            <button id="btnAddCategory" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg text-sm transition-colors">إضافة قسم جديد</button>
-          </div>
-
-          <div id="categoriesList" class="space-y-2 max-h-60 overflow-y-auto">
-            <div class="text-center text-sm text-gray-500">جاري تحميل الأقسام...</div>
-          </div>
-        </div>
+    <!-- ميزة إدارة الأقسام الجديدة -->
+    <div class="bg-[#0f1218] p-4 rounded-xl border border-gray-800 mb-4">
+      <h3 class="text-sm font-bold text-white mb-3 text-orange-400"><i class="fa-solid fa-layer-group"></i> إدارة الأقسام (التصنيفات)</h3>
+      <div class="flex flex-wrap md:flex-nowrap gap-2 mb-2">
+        <input type="text" id="catId" placeholder="المعرف (مثال: drinks)" class="flex-1 bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white">
+        <input type="text" id="catNameAr" placeholder="الاسم بالعربي (مشروبات)" class="flex-1 bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white">
+        <input type="text" id="catNameEn" placeholder="الاسم بالإنجليزي (Drinks)" class="flex-1 bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white">
+        <input type="text" id="catEmoji" placeholder="إيموجي 🥤" class="w-24 bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white text-center">
+        <button onclick="addCategory()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg text-sm transition-all">إضافة قسم</button>
       </div>
+      <div id="categoriesList" class="flex flex-wrap gap-2 mt-3">
+        <!-- الأقسام ستظهر هنا -->
+      </div>
+    </div>
 
-      <!-- العمود الرئيسي: إضافة الوجبات -->
+    <!-- فورم إضافة وجبة -->
+    <div class="bg-[#0f1218] p-5 rounded-xl border border-gray-800 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-end overflow-y-auto max-h-[45vh]">
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">اسم الوجبة (عربي) *</label>
+        <input type="text" id="newName" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مثال: شاورما عربي دبل">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">الاسم الإنجليزي (Subtitle)</label>
+        <input type="text" id="newSubtitle" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Double Arabic Shawarma">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">السعر *</label>
+        <input type="text" id="newPrice" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="350">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">القسم</label>
+        <select id="newCategory" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white">
+          <option value="">جاري تحميل الأقسام...</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">الشعار (Badge عربي)</label>
+        <input type="text" id="newBadge" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="مشهور 🔥">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">الشعار (Badge EN)</label>
+        <input type="text" id="newBadgeEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Famous 🔥">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">السعرات الحرارية</label>
+        <input type="text" id="newCalories" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="650 سعرة">
+      </div>
       <div class="md:col-span-2">
-        <div class="bg-[#161a24] p-6 rounded-2xl border border-gray-800">
-          <div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-3">
-            <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-plus text-orange-500 ml-2"></i> إضافة وجبة جديدة</h2>
-            <button id="btnAutoTranslate" class="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 rounded-lg text-sm font-bold transition-all"><i class="fa-solid fa-language ml-1"></i> ترجمة تلقائية للإنجليزية</button>
-          </div>
-          
-          <form id="addMenuForm" class="space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-bold text-gray-300 mb-1">اسم الوجبة (عربي)</label>
-                <input type="text" id="name" required class="w-full bg-[#0b0d13] border border-gray-700 rounded-xl px-4 py-2.5 text-white">
-              </div>
-              <div>
-                <label class="block text-sm font-bold text-gray-300 mb-1">اسم الوجبة (إنجليزي)</label>
-                <input type="text" id="subtitle" required class="w-full bg-[#0b0d13] border border-gray-700 rounded-xl px-4 py-2.5 text-white">
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-bold text-gray-300 mb-1">القسم</label>
-                <select id="category" required class="w-full bg-[#0b0d13] border border-gray-700 rounded-xl px-4 py-2.5 text-white appearance-none">
-                  <option value="">جاري تحميل الأقسام...</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-sm font-bold text-gray-300 mb-1">السعر (ل.س)</label>
-                <input type="number" id="price" required class="w-full bg-[#0b0d13] border border-gray-700 rounded-xl px-4 py-2.5 text-white">
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-sm font-bold text-gray-300 mb-1">رابط الصورة (WebP)</label>
-              <input type="text" id="image" required class="w-full bg-[#0b0d13] border border-gray-700 rounded-xl px-4 py-2.5 text-white" placeholder="burger.webp">
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-bold text-gray-300 mb-1">الوصف (عربي)</label>
-                <textarea id="description" rows="2" class="w-full bg-[#0b0d13] border border-gray-700 rounded-xl px-4 py-2 text-white"></textarea>
-              </div>
-              <div>
-                <label class="block text-sm font-bold text-gray-300 mb-1">الوصف (إنجليزي)</label>
-                <textarea id="descriptionEn" rows="2" class="w-full bg-[#0b0d13] border border-gray-700 rounded-xl px-4 py-2 text-white"></textarea>
-              </div>
-            </div>
-
-            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg mt-4 text-lg">
-              <i class="fa-solid fa-cloud-arrow-up ml-2"></i> رفع الوجبة للقائمة
-            </button>
-          </form>
-          <div id="statusMsg" class="mt-4 text-center font-bold text-sm"></div>
+        <label class="block text-[10px] text-gray-400 mb-1">الوصف (عربي)</label>
+        <input type="text" id="newDescription" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="وصف الوجبة المختصر...">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">الوصف بالإنجليزية (Description EN)</label>
+        <input type="text" id="newDescriptionEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="English description">
+      </div>
+      <div class="md:col-span-2">
+        <label class="block text-[10px] text-gray-400 mb-1">المكونات (عربي)</label>
+        <input type="text" id="newIngredients" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="صدور دجاج، كريم الثوم...">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">المكونات بالإنجليزية (Ingredients EN)</label>
+        <input type="text" id="newIngredientsEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="Chicken breasts, garlic sauce...">
+      </div>
+      <div class="md:col-span-2">
+        <label class="block text-[10px] text-gray-400 mb-1">الوسوم (مفصولة بفاصلة ,)</label>
+        <input type="text" id="newTags" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="شاورما, دجاج">
+      </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">الوسوم بالإنجليزية (Tags EN)</label>
+        <input type="text" id="newTagsEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="shawarma, chicken">
+      </div>
+      
+      <!-- مسببات الحساسية -->
+      <div class="md:col-span-3 bg-[#161a24] p-3 rounded-lg border border-gray-800">
+        <label class="block text-xs text-orange-400 font-bold mb-2">اختر مسببات الحساسية إن وجدت:</label>
+        <div class="flex flex-wrap gap-4 text-xs text-gray-300">
+          <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="newAllergen" value="البيض 🥚" class="accent-orange-600"> البيض 🥚</label>
+          <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="newAllergen" value="الألبان 🥛" class="accent-orange-600"> الألبان 🥛</label>
+          <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="newAllergen" value="الغلوتين 🌾" class="accent-orange-600"> الغلوتين (خبز) 🌾</label>
+          <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="newAllergen" value="السمسم 🫘" class="accent-orange-600"> السمسم 🫘</label>
+          <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="newAllergen" value="المكسرات 🥜" class="accent-orange-600"> المكسرات 🥜</label>
         </div>
+      </div>
+
+      <div class="md:col-span-3">
+        <label class="block text-[10px] text-gray-400 mb-1">صورة الوجبة</label>
+        <input type="file" id="newImageFile" accept="image/*" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-orange-600 file:text-white cursor-pointer">
+      </div>
+      <div class="md:col-span-3 flex justify-end mt-2">
+        <button id="submitBtn" onclick="addItem()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-8 rounded-lg text-sm transition-all shadow-lg">
+          إضافة الوجبة للقائمة
+        </button>
+      </div>
+    </div>
+
+    <!-- جدول الوجبات -->
+    <div class="flex-1 overflow-auto rounded-xl border border-gray-800">
+      <table class="w-full text-right text-sm">
+        <thead class="bg-[#0f1218] text-gray-400 text-xs uppercase sticky top-0 z-10">
+          <tr>
+            <th class="px-4 py-4">الوجبة</th>
+            <th class="px-4 py-4">القسم</th>
+            <th class="px-4 py-4">السعر</th>
+            <th class="px-4 py-4 text-center">الحالة</th>
+            <th class="px-4 py-4 text-left">إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="menuTable" class="divide-y divide-gray-800">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- نافذة التعديل -->
+  <div id="editModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-[#161a24] border border-gray-700 rounded-2xl w-full max-w-xl p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-3">
+        <h3 class="text-xl font-bold text-white">تعديل الوجبة</h3>
+        <button type="button" onclick="autoTranslateEdit()" class="bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/40 px-3 py-1 rounded-lg text-xs font-bold transition-all">
+          ترجمة تلقائية 🌐
+        </button>
+      </div>
+      <div class="space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block text-xs text-gray-400 mb-1">اسم الوجبة (عربي)</label><input type="text" id="editName" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">الاسم الإنجليزي (Subtitle)</label><input type="text" id="editSubtitle" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        </div>
+        <div class="grid grid-cols-4 gap-3">
+          <div><label class="block text-xs text-gray-400 mb-1">السعر</label><input type="text" id="editPrice" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">القسم</label><select id="editCategory" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></select></div>
+          <div><label class="block text-xs text-gray-400 mb-1">الشعار عربي</label><input type="text" id="editBadge" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">الشعار EN</label><input type="text" id="editBadgeEn" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block text-xs text-gray-400 mb-1">السعرات</label><input type="text" id="editCalories" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block text-xs text-gray-400 mb-1">الوصف (عربي)</label><input type="text" id="editDescription" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">الوصف (EN)</label><input type="text" id="editDescriptionEn" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block text-xs text-gray-400 mb-1">المكونات (عربي)</label><input type="text" id="editIngredients" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">المكونات (EN)</label><input type="text" id="editIngredientsEn" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block text-xs text-gray-400 mb-1">الوسوم</label><input type="text" id="editTags" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">الوسوم (EN)</label><input type="text" id="editTagsEn" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        </div>
+        
+        <div class="bg-[#0f1218] p-3 rounded-lg border border-gray-800">
+          <label class="block text-xs text-orange-400 font-bold mb-2">مسببات الحساسية:</label>
+          <div class="flex flex-wrap gap-4 text-xs text-gray-300">
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="editAllergen" value="البيض 🥚" class="accent-orange-600"> البيض 🥚</label>
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="editAllergen" value="الألبان 🥛" class="accent-orange-600"> الألبان 🥛</label>
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="editAllergen" value="الغلوتين 🌾" class="accent-orange-600"> الغلوتين (خبز) 🌾</label>
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="editAllergen" value="السمسم 🫘" class="accent-orange-600"> السمسم 🫘</label>
+            <label class="flex items-center gap-1.5 cursor-pointer"><input type="checkbox" name="editAllergen" value="المكسرات 🥜" class="accent-orange-600"> المكسرات 🥜</label>
+          </div>
+        </div>
+
+        <div><label class="block text-xs text-gray-400 mb-1">تغيير الصورة</label><input type="file" id="editImageFile" accept="image/*" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white"></div>
+      </div>
+      <div class="mt-6 flex justify-end gap-3">
+        <button onclick="closeEditModal()" class="px-4 py-2 rounded-lg text-sm text-gray-400 hover:bg-gray-800">إلغاء</button>
+        <button id="saveEditBtn" onclick="saveEdit()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg text-sm font-bold">حفظ</button>
       </div>
     </div>
   </div>
 
   <script type="module">
-    // 1. استيراد المكتبات الأساسية
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-    // 2. إعدادات Firebase الخاصة بك
     const firebaseConfig = {
       apiKey: "AIzaSyBcR06wtdVs0nI3Gmi0Keb8Q9EdXTOEgf0",
       authDomain: "lahma-menu.firebaseapp.com",
       projectId: "lahma-menu",
       storageBucket: "lahma-menu.firebasestorage.app",
       messagingSenderId: "642565994237",
-      appId: "1:642565994237:web:2fff0a3fe0741460f67094"
+      appId: "1:642565994237:web:2fff0a3fe0741460f67094",
+      measurementId: "G-MZ4G6DD20L"
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    // واجهة المستخدم
-    const loginScreen = document.getElementById('loginScreen');
-    const dashboardScreen = document.getElementById('dashboardScreen');
+    window.menuData = {};
+    window.categoriesMap = {};
+    window.currentEditId = null;
 
-    // 3. مراقبة حالة تسجيل الدخول
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // إذا كان مسجل دخول، اعرض لوحة التحكم وحمل الأقسام
-        loginScreen.classList.add('hidden');
-        dashboardScreen.classList.remove('hidden');
-        loadCategories();
-      } else {
-        // إذا لم يكن مسجل دخول، اعرض شاشة تسجيل الدخول
-        loginScreen.classList.remove('hidden');
-        dashboardScreen.classList.add('hidden');
-      }
-    });
-
-    // 4. برمجة زر تسجيل الدخول
-    document.getElementById('btnLogin').addEventListener('click', async () => {
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-      const errorMsg = document.getElementById('loginError');
-      
+    async function translateText(text) {
+      if (!text) return '';
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        errorMsg.classList.add('hidden');
-      } catch (error) {
-        errorMsg.textContent = "بيانات الدخول غير صحيحة!";
-        errorMsg.classList.remove('hidden');
-      }
-    });
-
-    // 5. برمجة زر تسجيل الخروج
-    document.getElementById('btnLogout').addEventListener('click', () => {
-      signOut(auth);
-    });
-
-    // 6. إدارة الأقسام (جلب البيانات وعرضها في القائمة الجانبية وقائمة اختيار الوجبات)
-    async function loadCategories() {
-      const catList = document.getElementById('categoriesList');
-      const catSelect = document.getElementById('category');
-      
-      try {
-        const querySnapshot = await getDocs(collection(db, "categories"));
-        catList.innerHTML = '';
-        catSelect.innerHTML = '<option value="">اختر القسم...</option>';
-        
-        querySnapshot.forEach((docSnap) => {
-          const cat = docSnap.data();
-          
-          // إضافتها لقائمة الحذف
-          catList.innerHTML += `
-            <div class="flex justify-between items-center bg-[#1f2430] p-2.5 rounded-lg border border-gray-700">
-              <div class="text-sm font-bold text-gray-200">${cat.emoji} ${cat.nameAr}</div>
-              <button onclick="deleteCategory('${docSnap.id}')" class="text-red-400 hover:text-red-300 text-xs bg-red-500/10 px-2 py-1 rounded">حذف</button>
-            </div>
-          `;
-          
-          // إضافتها للقائمة المنسدلة في نموذج الوجبة
-          catSelect.innerHTML += `<option value="${cat.id}">${cat.emoji} ${cat.nameAr} - ${cat.nameEn}</option>`;
-        });
-
-        if(querySnapshot.empty) {
-            catList.innerHTML = '<div class="text-xs text-gray-500 text-center">لا توجد أقسام، أضف قسماً جديداً.</div>';
+        const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=ar|en`);
+        const data = await res.json();
+        if (data && data.responseData && data.responseData.translatedText) {
+          return data.responseData.translatedText;
         }
-      } catch (error) {
-        console.error("Error loading categories: ", error);
+      } catch (e) {
+        console.error("Translation error", e);
       }
+      return text;
     }
 
-    // 7. إضافة قسم جديد
-    document.getElementById('btnAddCategory').addEventListener('click', async () => {
+    window.autoTranslateNew = async function() {
+      const name = document.getElementById('newName').value;
+      const badge = document.getElementById('newBadge').value;
+      const desc = document.getElementById('newDescription').value;
+      const ing = document.getElementById('newIngredients').value;
+      const tags = document.getElementById('newTags').value;
+
+      if(!name && !badge && !desc && !ing) return alert('الرجاء كتابة بعض الحقول بالعربي أولاً لترجمتها!');
+
+      event.target.textContent = 'جاري الترجمة... ⏳';
+      if(name) document.getElementById('newSubtitle').value = await translateText(name);
+      if(badge) document.getElementById('newBadgeEn').value = await translateText(badge);
+      if(desc) document.getElementById('newDescriptionEn').value = await translateText(desc);
+      if(ing) document.getElementById('newIngredientsEn').value = await translateText(ing);
+      if(tags) document.getElementById('newTagsEn').value = await translateText(tags);
+      event.target.innerHTML = '<i class="fa-solid fa-language"></i> ترجمة البيانات العربية تلقائياً 🌐';
+    };
+
+    window.autoTranslateEdit = async function() {
+      const name = document.getElementById('editName').value;
+      const badge = document.getElementById('editBadge').value;
+      const desc = document.getElementById('editDescription').value;
+      const ing = document.getElementById('editIngredients').value;
+      const tags = document.getElementById('editTags').value;
+
+      event.target.textContent = 'جاري الترجمة...';
+      if(name) document.getElementById('editSubtitle').value = await translateText(name);
+      if(badge) document.getElementById('editBadgeEn').value = await translateText(badge);
+      if(desc) document.getElementById('editDescriptionEn').value = await translateText(desc);
+      if(ing) document.getElementById('editIngredientsEn').value = await translateText(ing);
+      if(tags) document.getElementById('editTagsEn').value = await translateText(tags);
+      event.target.textContent = 'ترجمة تلقائية 🌐';
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('dashboardScreen').classList.remove('hidden');
+        loadCategories(); // ستقوم بجلب الأقسام ثم الوجبات تلقائياً
+      } else {
+        document.getElementById('loginScreen').classList.remove('hidden');
+        document.getElementById('dashboardScreen').classList.add('hidden');
+      }
+    });
+
+    window.login = () => {
+      const e = document.getElementById('email').value;
+      const p = document.getElementById('password').value;
+      signInWithEmailAndPassword(auth, e, p).catch(() => {
+        const err = document.getElementById('errorMsg');
+        err.textContent = 'تأكد من البيانات';
+        err.classList.remove('hidden');
+      });
+    };
+
+    window.logout = () => signOut(auth);
+
+    // دوال إدارة الأقسام
+    async function loadCategories() {
+      const snapshot = await getDocs(collection(db, "categories"));
+      const newSelect = document.getElementById('newCategory');
+      const editSelect = document.getElementById('editCategory');
+      const list = document.getElementById('categoriesList');
+      
+      newSelect.innerHTML = '<option value="">اختر القسم...</option>';
+      editSelect.innerHTML = '<option value="">اختر القسم...</option>';
+      list.innerHTML = '';
+      window.categoriesMap = {};
+
+      snapshot.forEach(docSnap => {
+        const cat = docSnap.data();
+        const id = docSnap.id;
+        const displayName = `${cat.emoji || ''} ${cat.nameAr}`;
+        
+        window.categoriesMap[cat.id] = displayName;
+        
+        const optionHtml = `<option value="${cat.id}">${displayName} - ${cat.nameEn}</option>`;
+        newSelect.innerHTML += optionHtml;
+        editSelect.innerHTML += optionHtml;
+
+        list.innerHTML += `
+          <div class="bg-[#1a1f2b] border border-gray-700 text-xs px-3 py-1.5 rounded-lg flex items-center gap-3">
+            <span class="font-bold text-gray-300">${displayName}</span>
+            <button onclick="deleteCategory('${id}')" class="text-red-500 hover:text-red-400 bg-red-500/10 rounded-full w-5 h-5 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+        `;
+      });
+
+      if(snapshot.empty) {
+        list.innerHTML = '<span class="text-xs text-gray-500">لا يوجد أقسام مضافة بعد.</span>';
+      }
+      
+      // بعد جلب الأقسام، قم بجلب الوجبات
+      loadItems();
+    }
+
+    window.addCategory = async () => {
       const id = document.getElementById('catId').value;
       const nameAr = document.getElementById('catNameAr').value;
       const nameEn = document.getElementById('catNameEn').value;
       const emoji = document.getElementById('catEmoji').value;
+      
+      if(!id || !nameAr) return alert('المعرف والاسم العربي مطلوبان!');
+      
+      await addDoc(collection(db, "categories"), { id, nameAr, nameEn, emoji });
+      document.getElementById('catId').value = '';
+      document.getElementById('catNameAr').value = '';
+      document.getElementById('catNameEn').value = '';
+      document.getElementById('catEmoji').value = '';
+      loadCategories();
+    };
 
-      if(!id || !nameAr || !nameEn) return alert('يرجى تعبئة بيانات القسم الأساسية');
-
-      try {
-        await addDoc(collection(db, "categories"), {
-          id: id,
-          nameAr: nameAr,
-          nameEn: nameEn,
-          emoji: emoji
-        });
-        
-        // تفريغ الحقول وتحديث القائمة
-        document.getElementById('catId').value = '';
-        document.getElementById('catNameAr').value = '';
-        document.getElementById('catNameEn').value = '';
-        document.getElementById('catEmoji').value = '';
-        loadCategories();
-      } catch (error) {
-        alert('حدث خطأ أثناء الإضافة');
-      }
-    });
-
-    // 8. حذف قسم (يجب تعريفها على window لتصلها أزرار HTML)
-    window.deleteCategory = async function(docId) {
+    window.deleteCategory = async (docId) => {
       if(confirm('هل أنت متأكد من حذف هذا القسم؟')) {
         await deleteDoc(doc(db, "categories", docId));
         loadCategories();
       }
     };
 
-    // 9. إضافة الوجبة (باستخدام القسم الديناميكي)
-    document.getElementById('addMenuForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const statusMsg = document.getElementById('statusMsg');
-      statusMsg.textContent = "جاري الرفع... ⏳";
-      statusMsg.className = "mt-4 text-center font-bold text-sm text-yellow-500";
+    function processImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e) => {
+          const img = new Image();
+          img.src = e.target.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let w = img.width, h = img.height;
+            if (w > h && w > 400) { h *= 400 / w; w = 400; } else if (h > 400) { w *= 400 / h; h = 400; }
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            resolve(canvas.toDataURL('image/jpeg', 0.7));
+          };
+        };
+      });
+    }
 
-      const newItem = {
-        name: document.getElementById('name').value,
-        subtitle: document.getElementById('subtitle').value,
-        category: document.getElementById('category').value,
-        price: document.getElementById('price').value,
-        image: document.getElementById('image').value,
-        description: document.getElementById('description').value,
-        descriptionEn: document.getElementById('descriptionEn').value,
-        tags: [], tagsEn: [], allergens: [], isVisible: true
-      };
-
-      try {
-        await addDoc(collection(db, "menu"), newItem);
-        statusMsg.textContent = "✅ تم إضافة الوجبة بنجاح!";
-        statusMsg.className = "mt-4 text-center font-bold text-sm text-green-500";
-        document.getElementById('addMenuForm').reset();
-      } catch (error) {
-        console.error(error);
-        statusMsg.textContent = "❌ حدث خطأ، تأكد من الصلاحيات والاتصال";
-        statusMsg.className = "mt-4 text-center font-bold text-sm text-red-500";
+    async function loadItems() {
+      const table = document.getElementById('menuTable');
+      const snapshot = await getDocs(collection(db, "menu"));
+      table.innerHTML = '';
+      window.menuData = {};
+      
+      if(snapshot.empty) {
+        table.innerHTML = '<tr><td colspan="5" class="text-center py-6 text-gray-500">القائمة فارغة</td></tr>';
+        return;
       }
-    });
 
-    // 10. دالة الترجمة التلقائية
-    document.getElementById('btnAutoTranslate').addEventListener('click', async () => {
-      const nameAr = document.getElementById('name').value;
-      const descAr = document.getElementById('description').value;
+      snapshot.forEach(docSnap => {
+        const item = docSnap.data();
+        const id = docSnap.id;
+        window.menuData[id] = item;
+        const isVisible = item.isVisible !== false;
+        
+        // جلب اسم القسم من الخريطة الديناميكية
+        const categoryName = window.categoriesMap[item.category] || item.category || 'غير محدد';
 
-      if (!nameAr && !descAr) return alert("يرجى كتابة الاسم أو الوصف بالعربي أولاً!");
+        table.innerHTML += `
+          <tr class="hover:bg-[#1a1f2b] ${!isVisible ? 'opacity-50' : ''}">
+            <td class="px-4 py-3 font-bold">${item.name}</td>
+            <td class="px-4 py-3 text-xs text-gray-400">${categoryName}</td>
+            <td class="px-4 py-3 text-orange-500 font-bold">${item.price} ل.س</td>
+            <td class="px-4 py-3 text-center">
+              <button onclick="toggleVisibility('${id}', ${isVisible})" class="px-2 py-1 rounded text-xs ${isVisible ? 'bg-green-500/20 text-green-400' : 'bg-gray-700 text-gray-300'}">
+                ${isVisible ? '👁️ ظاهر' : '❌ مخفي'}
+              </button>
+            </td>
+            <td class="px-4 py-3 text-left space-x-2">
+              <button onclick="openEditModal('${id}')" class="text-blue-400 text-xs border border-blue-500/30 px-2.5 py-1 rounded">تعديل</button>
+              <button onclick="deleteItem('${id}')" class="text-red-400 text-xs border border-red-500/30 px-2.5 py-1 rounded">حذف</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
 
-      document.getElementById('btnAutoTranslate').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الترجمة...';
+    window.addItem = async () => {
+      const name = document.getElementById('newName').value;
+      const price = document.getElementById('newPrice').value;
+      const category = document.getElementById('newCategory').value;
+      if(!name || !price || !category) return alert('الاسم والسعر والقسم مطلوبان!');
 
-      try {
-        if (nameAr) {
-          const resName = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(nameAr)}&langpair=ar|en`);
-          const dataName = await resName.json();
-          document.getElementById('subtitle').value = dataName.responseData.translatedText;
-        }
-        if (descAr) {
-          const resDesc = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(descAr)}&langpair=ar|en`);
-          const dataDesc = await resDesc.json();
-          document.getElementById('descriptionEn').value = dataDesc.responseData.translatedText;
-        }
-      } catch (err) {
-        alert("حدث خطأ في خدمة الترجمة.");
+      const file = document.getElementById('newImageFile').files[0];
+      let img = '';
+      if(file) img = await processImage(file);
+
+      const tagsInput = document.getElementById('newTags').value;
+      const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
+
+      const tagsInputEn = document.getElementById('newTagsEn').value;
+      const tagsEn = tagsInputEn ? tagsInputEn.split(',').map(t => t.trim()) : [];
+
+      const allergens = [];
+      document.querySelectorAll('input[name="newAllergen"]:checked').forEach(cb => allergens.push(cb.value));
+
+      await addDoc(collection(db, "menu"), {
+        name,
+        subtitle: document.getElementById('newSubtitle').value,
+        price,
+        category: category,
+        badge: document.getElementById('newBadge').value,
+        badgeEn: document.getElementById('newBadgeEn').value,
+        calories: document.getElementById('newCalories').value,
+        description: document.getElementById('newDescription').value,
+        descriptionEn: document.getElementById('newDescriptionEn').value,
+        ingredients: document.getElementById('newIngredients').value,
+        ingredientsEn: document.getElementById('newIngredientsEn').value,
+        allergens,
+        tags,
+        tagsEn,
+        image: img,
+        isVisible: true
+      });
+
+      document.getElementById('newName').value = '';
+      document.getElementById('newSubtitle').value = '';
+      document.getElementById('newPrice').value = '';
+      document.getElementById('newBadge').value = '';
+      document.getElementById('newBadgeEn').value = '';
+      document.getElementById('newCalories').value = '';
+      document.getElementById('newDescription').value = '';
+      document.getElementById('newDescriptionEn').value = '';
+      document.getElementById('newIngredients').value = '';
+      document.getElementById('newIngredientsEn').value = '';
+      document.getElementById('newTags').value = '';
+      document.getElementById('newTagsEn').value = '';
+      document.getElementById('newImageFile').value = '';
+      document.querySelectorAll('input[name="newAllergen"]').forEach(cb => cb.checked = false);
+      loadItems();
+    };
+
+    window.openEditModal = (id) => {
+      window.currentEditId = id;
+      const item = window.menuData[id];
+      document.getElementById('editName').value = item.name || '';
+      document.getElementById('editSubtitle').value = item.subtitle || '';
+      document.getElementById('editPrice').value = item.price || '';
+      document.getElementById('editCategory').value = item.category || '';
+      document.getElementById('editBadge').value = item.badge || '';
+      document.getElementById('editBadgeEn').value = item.badgeEn || '';
+      document.getElementById('editCalories').value = item.calories || '';
+      document.getElementById('editDescription').value = item.description || '';
+      document.getElementById('editDescriptionEn').value = item.descriptionEn || '';
+      document.getElementById('editIngredients').value = item.ingredients || '';
+      document.getElementById('editIngredientsEn').value = item.ingredientsEn || '';
+      document.getElementById('editTags').value = item.tags ? item.tags.join(', ') : '';
+      document.getElementById('editTagsEn').value = item.tagsEn ? item.tagsEn.join(', ') : '';
+      
+      const itemAllergens = item.allergens || [];
+      document.querySelectorAll('input[name="editAllergen"]').forEach(cb => {
+        cb.checked = itemAllergens.includes(cb.value);
+      });
+
+      document.getElementById('editModal').classList.remove('hidden');
+    };
+
+    window.closeEditModal = () => document.getElementById('editModal').classList.add('hidden');
+
+    window.saveEdit = async () => {
+      if(!window.currentEditId) return;
+      const file = document.getElementById('editImageFile').files[0];
+      let img = window.menuData[window.currentEditId].image;
+      if(file) img = await processImage(file);
+
+      const tagsInput = document.getElementById('editTags').value;
+      const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
+
+      const tagsInputEn = document.getElementById('editTagsEn').value;
+      const tagsEn = tagsInputEn ? tagsInputEn.split(',').map(t => t.trim()) : [];
+
+      const allergens = [];
+      document.querySelectorAll('input[name="editAllergen"]:checked').forEach(cb => allergens.push(cb.value));
+
+      await updateDoc(doc(db, "menu", window.currentEditId), {
+        name: document.getElementById('editName').value,
+        subtitle: document.getElementById('editSubtitle').value,
+        price: document.getElementById('editPrice').value,
+        category: document.getElementById('editCategory').value,
+        badge: document.getElementById('editBadge').value,
+        badgeEn: document.getElementById('editBadgeEn').value,
+        calories: document.getElementById('editCalories').value,
+        description: document.getElementById('editDescription').value,
+        descriptionEn: document.getElementById('editDescriptionEn').value,
+        ingredients: document.getElementById('editIngredients').value,
+        ingredientsEn: document.getElementById('editIngredientsEn').value,
+        allergens,
+        tags,
+        tagsEn,
+        image: img
+      });
+
+      closeEditModal();
+      loadItems();
+    };
+
+    window.toggleVisibility = async (id, status) => {
+      await updateDoc(doc(db, "menu", id), { isVisible: !status });
+      loadItems();
+    };
+
+    window.deleteItem = async (id) => {
+      if(confirm('متأكد من الحذف؟')) {
+        await deleteDoc(doc(db, "menu", id));
+        loadItems();
       }
-      document.getElementById('btnAutoTranslate').innerHTML = '<i class="fa-solid fa-language ml-1"></i> ترجمة تلقائية للإنجليزية';
-    });
+    };
   </script>
 </body>
 </html>

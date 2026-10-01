@@ -93,6 +93,10 @@
         <label class="block text-[10px] text-gray-400 mb-1">الوسوم (مفصولة بفاصلة ,)</label>
         <input type="text" id="newTags" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="شاورما, دجاج">
       </div>
+      <div>
+        <label class="block text-[10px] text-gray-400 mb-1">الوسوم بالإنجليزية (Tags EN, separated by comma)</label>
+        <input type="text" id="newTagsEn" class="w-full bg-[#161a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white" placeholder="shawarma, chicken">
+      </div>
       
       <!-- مسببات الحساسية -->
       <div class="md:col-span-3 bg-[#161a24] p-3 rounded-lg border border-gray-800">
@@ -162,7 +166,10 @@
           <div><label class="block text-xs text-gray-400 mb-1">المكونات (عربي)</label><input type="text" id="editIngredients" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
           <div><label class="block text-xs text-gray-400 mb-1">المكونات (EN)</label><input type="text" id="editIngredientsEn" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
         </div>
-        <div><label class="block text-xs text-gray-400 mb-1">الوسوم (مفصولة بفاصلة)</label><input type="text" id="editTags" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block text-xs text-gray-400 mb-1">الوسوم</label><input type="text" id="editTags" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">الوسوم (EN)</label><input type="text" id="editTagsEn" class="w-full bg-[#0f1218] border border-gray-700 rounded-lg px-3 py-2 text-sm text-white"></div>
+        </div>
         
         <div class="bg-[#0f1218] p-3 rounded-lg border border-gray-800">
           <label class="block text-xs text-orange-400 font-bold mb-2">مسببات الحساسية:</label>
@@ -206,7 +213,6 @@
     window.menuData = {};
     window.currentEditId = null;
 
-    // دالة الترجمة التلقائية المجانية البرمجية
     async function translateText(text) {
       if (!text) return '';
       try {
@@ -225,6 +231,7 @@
       const name = document.getElementById('newName').value;
       const desc = document.getElementById('newDescription').value;
       const ing = document.getElementById('newIngredients').value;
+      const tags = document.getElementById('newTags').value;
 
       if(!name && !desc && !ing) return alert('الرجاء كتابة بعض الحقول بالعربي أولاً لترجمتها!');
 
@@ -232,6 +239,7 @@
       if(name) document.getElementById('newSubtitle').value = await translateText(name);
       if(desc) document.getElementById('newDescriptionEn').value = await translateText(desc);
       if(ing) document.getElementById('newIngredientsEn').value = await translateText(ing);
+      if(tags) document.getElementById('newTagsEn').value = await translateText(tags);
       event.target.textContent = 'ترجمة البيانات العربية تلقائياً 🌐';
     };
 
@@ -239,11 +247,13 @@
       const name = document.getElementById('editName').value;
       const desc = document.getElementById('editDescription').value;
       const ing = document.getElementById('editIngredients').value;
+      const tags = document.getElementById('editTags').value;
 
       event.target.textContent = 'جاري الترجمة...';
       if(name) document.getElementById('editSubtitle').value = await translateText(name);
       if(desc) document.getElementById('editDescriptionEn').value = await translateText(desc);
       if(ing) document.getElementById('editIngredientsEn').value = await translateText(ing);
+      if(tags) document.getElementById('editTagsEn').value = await translateText(tags);
       event.target.textContent = 'ترجمة تلقائية 🌐';
     };
 
@@ -333,6 +343,9 @@
       const tagsInput = document.getElementById('newTags').value;
       const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
 
+      const tagsInputEn = document.getElementById('newTagsEn').value;
+      const tagsEn = tagsInputEn ? tagsInputEn.split(',').map(t => t.trim()) : [];
+
       const allergens = [];
       document.querySelectorAll('input[name="newAllergen"]:checked').forEach(cb => allergens.push(cb.value));
 
@@ -349,11 +362,11 @@
         ingredientsEn: document.getElementById('newIngredientsEn').value,
         allergens,
         tags,
+        tagsEn,
         image: img,
         isVisible: true
       });
 
-      // تفريغ الحقول
       document.getElementById('newName').value = '';
       document.getElementById('newSubtitle').value = '';
       document.getElementById('newPrice').value = '';
@@ -364,6 +377,7 @@
       document.getElementById('newIngredients').value = '';
       document.getElementById('newIngredientsEn').value = '';
       document.getElementById('newTags').value = '';
+      document.getElementById('newTagsEn').value = '';
       document.getElementById('newImageFile').value = '';
       document.querySelectorAll('input[name="newAllergen"]').forEach(cb => cb.checked = false);
       loadItems();
@@ -381,13 +395,14 @@
       document.getElementById('editDescriptionEn').value = item.descriptionEn || '';
       document.getElementById('editIngredients').value = item.ingredients || '';
       document.getElementById('editIngredientsEn').value = item.ingredientsEn || '';
+      document.getElementById('editTags').value = item.tags ? item.tags.join(', ') : '';
+      document.getElementById('editTagsEn').value = item.tagsEn ? item.tagsEn.join(', ') : '';
       
       const itemAllergens = item.allergens || [];
       document.querySelectorAll('input[name="editAllergen"]').forEach(cb => {
         cb.checked = itemAllergens.includes(cb.value);
       });
 
-      document.getElementById('editTags').value = item.tags ? item.tags.join(', ') : '';
       document.getElementById('editModal').classList.remove('hidden');
     };
 
@@ -401,6 +416,9 @@
 
       const tagsInput = document.getElementById('editTags').value;
       const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
+
+      const tagsInputEn = document.getElementById('editTagsEn').value;
+      const tagsEn = tagsInputEn ? tagsInputEn.split(',').map(t => t.trim()) : [];
 
       const allergens = [];
       document.querySelectorAll('input[name="editAllergen"]:checked').forEach(cb => allergens.push(cb.value));
@@ -417,6 +435,7 @@
         ingredientsEn: document.getElementById('editIngredientsEn').value,
         allergens,
         tags,
+        tagsEn,
         image: img
       });
 

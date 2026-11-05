@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DTYP3STBW5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DTYP3STBW5');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مطعم لحمة وفحمة - المنيو الإلكتروني</title>
+  <meta name="description" content="منيو مطعم لحمة وفحمة - شارع بور، اللاذقية. سندويشات وبرجر مشوي على الفحم.">
+  <meta name="theme-color" content="#0f1218">
+  <meta property="og:title" content="لحمة وفحمة - المنيو الإلكتروني">
+  <meta property="og:description" content="أطيب لقمة مشوية على الفحم - شارع بور، اللاذقية">
+  <meta property="og:image" content="logo.webp">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff7ed',
+              500: '#ff5722',
+              600: '#e64a19',
+              gold: '#fbbf24',
+              dark: '#0c0e12',
+              card: '#161922',
+              border: '#242834'
+            }
+          },
+          fontFamily: { cairo: ['Cairo', 'sans-serif'], tajawal: ['Tajawal', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Cairo', sans-serif; background-color: #08090d; color: #f3f4f6; -webkit-tap-highlight-color: transparent; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+
+<body class="min-h-screen flex justify-center selection:bg-brand-500 selection:text-white pb-14">
+
+  <div class="w-full max-w-md bg-[#0f1218] min-h-screen border-x border-gray-800/80 shadow-2xl relative flex flex-col">
+
+    <!-- Header -->
+    <header class="relative bg-gradient-to-b from-brand-500/10 via-[#12151e] to-[#0f1218] pt-5 px-4 pb-4 border-b border-brand-border">
+
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="txtDirectMenu">منيو الطاولة المباشر</span>
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="toggleLanguage()" class="flex items-center gap-1 bg-brand-500/20 hover:bg-brand-500/30 text-brand-500 border border-brand-500/40 px-2 py-1.5 rounded-xl text-xs font-bold transition-all">
+            <i class="fa-solid fa-globe"></i>
+            <span id="langBtnText">EN</span>
+          </button>
+          <button onclick="openTableInfoModal()" class="flex items-center gap-1 bg-[#1b202c] hover:bg-gray-700 text-gray-200 border border-gray-700/70 px-2 py-1.5 rounded-xl text-xs font-bold transition-all shadow-sm">
+            <i class="fa-solid fa-bell-concierge text-brand-gold"></i>
+            <span id="txtTableService">خدمة الطاولة</span>
+          </button>
+          <button onclick="openQRModal()" title="رمز الباركود" class="flex items-center gap-1 bg-brand-500/15 hover:bg-brand-500/25 text-brand-500 border border-brand-500/30 px-2 py-1.5 rounded-xl text-xs font-bold transition-all">
+            <i class="fa-solid fa-qrcode text-sm"></i>
+            <span id="txtQrCode">الباركود</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3.5 mb-4">
+        <div class="w-16 h-16 rounded-2xl flex-shrink-0 shadow-lg shadow-brand-500/20 overflow-hidden border border-gray-800">
+          <img src="logo.webp" alt="شعار لحمة وفحمة" class="w-full h-full object-cover bg-white">
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl font-black text-white tracking-wide" id="txtRestaurantName">لحمة وفحمة</h1>
+            <span class="text-[10px] bg-brand-500/20 text-brand-500 border border-brand-500/30 font-bold px-1.5 py-0.5 rounded-md">GRILL</span>
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=%D9%84%D8%AD%D9%85%D8%A9+%D9%88%D9%81%D8%AD%D9%85%D8%A9+%D8%B4%D8%A7%D8%B1%D8%B9+%D8%A8%D9%88%D8%B1+%D8%A7%D9%84%D9%84%D8%A7%D8%B0%D9%82%D9%8A%D8%A9" target="_blank" rel="noopener" class="block text-xs font-semibold text-gray-400 mt-0.5 underline decoration-dotted" id="txtLocation">📍 شارع بور - اللاذقية</a>
+          <div class="flex items-center gap-3 mt-1 text-xs text-gray-400">
+            <span class="flex items-center gap-1 text-brand-gold font-bold" id="txtSubtitleTag">
+              <i class="fa-solid fa-fire text-[11px]"></i> أطيب لقمة مشوية على الفحم
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative mt-2">
+        <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+        <input
+          type="text"
+          id="searchInput"
+          oninput="handleSearch()"
+          placeholder="ابحث في قائمة الطعام..."
+          class="w-full bg-[#161a24] border border-gray-700/60 rounded-xl pr-9 pl-4 py-2.5 text-xs sm:text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-brand-500 transition-all"
+        >
+      </div>
+    </header>
+
+    <!-- الأقسام الديناميكية -->
+    <nav class="sticky top-0 z-20 bg-[#0f1218]/95 backdrop-blur-md px-4 py-3 border-b border-brand-border">
+      <div class="flex items-center gap-2 overflow-x-auto hide-scrollbar" id="categoryTabs">
+        <div class="text-xs text-gray-500 px-2 py-1">جاري تحميل الأقسام...</div>
+      </div>
+    </nav>
+
+    <div class="mx-4 mt-3 p-3 bg-gradient-to-r from-amber-500/10 via-brand-500/10 to-transparent border border-amber-500/20 rounded-2xl flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm">
+          <i class="fa-solid fa-utensils"></i>
+        </div>
+        <div>
+          <div class="text-xs font-bold text-gray-200" id="txtEnjoyTitle">تصفح المنيو بمتعة</div>
+          <div class="text-[11px] text-gray-400" id="txtEnjoySubtitle">سيكون النادل بخدمتك لتسجيل طلبك فور اختيارك</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- حاوية الوجبات -->
+    <main class="flex-1 p-4 space-y-4" id="itemsContainer">
+      <div class="text-center text-gray-500 py-16">جاري تحميل الوجبات... ⏳</div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="px-4 py-6 text-center text-xs text-gray-500 space-y-4 border-t border-brand-border/60 mt-4 bg-[#0c0e12]">
+      <div class="flex items-center justify-center gap-4 text-gray-400 text-sm mb-2">
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-wifi text-brand-gold"></i> <span id="txtWifi">واي فاي مجاني</span></span>
+        <span>•</span>
+        <span class="flex items-center gap-1.5"><i class="fa-solid fa-fire text-brand-500"></i> <span id="txtGrill">مشوي على الأصول</span></span>
+      </div>
+      <div class="flex items-center justify-center gap-4">
+        <a href="https://www.instagram.com/lahmafahma" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white flex items-center justify-center text-lg shadow-lg hover:scale-110 transition-transform"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/963933473788" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center text-lg shadow-lg hover:scale-110 transition-transform"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="tel:0933473788" class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center text-lg shadow-lg hover:scale-110 transition-transform"><i class="fa-solid fa-phone"></i></a>
+      </div>
+      <p class="text-[11px] text-gray-600 mt-3" id="txtFooterRights">مطعم لحمة وفحمة • منيو إلكتروني مباشر عبر الباركود</p>
+    </footer>
+
+  </div>
+
+  <!-- Modal تفاصيل الوجبة -->
+  <div id="itemModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-[#141720] w-full max-w-md rounded-t-3xl sm:rounded-3xl border border-gray-700/70 overflow-hidden max-h-[92vh] flex flex-col">
+      <div class="relative h-60 w-full overflow-hidden bg-black">
+        <img id="modalImg" src="" alt="" class="w-full h-full object-cover">
+        <button onclick="closeItemModal()" class="absolute top-4 left-4 w-9 h-9 bg-black/70 hover:bg-black rounded-full flex items-center justify-center text-white text-sm border border-white/10"><i class="fa-solid fa-xmark"></i></button>
+        <span id="modalBadge" class="absolute bottom-3 right-3 bg-brand-600 text-white text-xs font-extrabold px-3 py-1 rounded-xl shadow-lg"></span>
+      </div>
+
+      <div class="p-5 flex-1 overflow-y-auto space-y-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h3 id="modalTitle" class="text-xl font-black text-white"></h3>
+            <p id="modalCategory" class="text-xs text-brand-500 font-bold mt-0.5"></p>
+          </div>
+          <div class="text-left"><span id="modalPrice" class="text-2xl font-black text-brand-gold"></span></div>
+        </div>
+
+        <p id="modalDescription" class="text-sm text-gray-300 leading-relaxed"></p>
+        <div class="flex flex-wrap gap-2" id="modalTags"></div>
+
+        <div id="ingredientsBox" class="bg-[#0e1017] p-4 rounded-2xl border border-gray-800 space-y-1.5">
+          <div class="text-xs font-bold text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-clipboard-list"></i> <span id="txtIngredientsTitle">محتويات ومكونات الوجبة:</span></div>
+          <p id="modalIngredients" class="text-xs text-gray-300 leading-relaxed"></p>
+        </div>
+
+        <div id="allergensBox" class="bg-red-500/10 p-4 rounded-2xl border border-red-500/20 space-y-2 hidden">
+          <div class="text-xs font-bold text-red-400 flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> <span id="txtAllergensTitle">مسببات الحساسية المحتملة:</span></div>
+          <div id="modalAllergens" class="flex flex-wrap gap-1.5"></div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-[#11131a] border-t border-gray-800">
+        <button onclick="closeItemModal()" class="w-full bg-[#1f2430] hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-xl text-xs" id="txtCloseDetails">إغلاق التفاصيل</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal معلومات الطاولة -->
+  <div id="tableInfoModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-[#151922] w-full max-w-sm rounded-3xl border border-brand-border p-5 text-center shadow-2xl space-y-4">
+      <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <h3 class="text-base font-extrabold text-white flex items-center gap-2"><i class="fa-solid fa-bell-concierge text-brand-gold"></i> <span id="txtTableSrvModal">خدمات الطاولة</span></h3>
+        <button onclick="closeTableInfoModal()" class="w-8 h-8 rounded-full bg-gray-800 text-gray-400 hover:text-white flex items-center justify-center"><i class="fa-solid fa-xmark text-sm"></i></button>
+      </div>
+      <div class="bg-[#10131a] p-4 rounded-2xl border border-gray-800 text-right space-y-2">
+        <div class="text-xs font-bold text-gray-200"><i class="fa-solid fa-wifi text-emerald-400"></i> Wi-Fi:</div>
+        <div class="flex justify-between items-center bg-[#171b26] p-2.5 rounded-xl border border-gray-700 text-xs">
+          <span class="text-gray-400">Name:</span><span class="font-bold text-white">Lahma_Fahma_Guest</span>
+        </div>
+        <div class="flex justify-between items-center bg-[#171b26] p-2.5 rounded-xl border border-gray-700 text-xs">
+          <span class="text-gray-400">Password:</span><span class="font-bold text-brand-gold font-mono">bbq2026</span>
+        </div>
+      </div>
+      <button onclick="closeTableInfoModal()" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-2.5 rounded-xl text-xs" id="txtUnderstood">حسناً، فهمت</button>
+    </div>
+  </div>
+
+  <!-- Modal الباركود -->
+  <div id="qrModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="bg-[#161a24] w-full max-w-sm rounded-3xl border border-brand-border p-5 text-center shadow-2xl space-y-4">
+      <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <h3 class="text-base font-extrabold text-white" id="txtQrModalTitle">باركود طاولة مطعم لحمة وفحمة</h3>
+        <button onclick="closeQRModal()" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-gray-400"><i class="fa-solid fa-xmark text-sm"></i></button>
+      </div>
+      <div class="flex flex-col items-center justify-center bg-white p-3 rounded-2xl shadow-inner mx-auto w-fit">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNyAzNyIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmZmIi8+PGcgZmlsbD0iIzAwMCI+PHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjUiIHk9IjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI2IiB5PSI0IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNyIgeT0iNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjgiIHk9IjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI5IiB5PSI0IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTAiIHk9IjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNSIgeT0iNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE3IiB5PSI0IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTgiIHk9IjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMCIgeT0iNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIxIiB5PSI0IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjIiIHk9IjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMyIgeT0iNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI0IiB5PSI0IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjYiIHk9IjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNyIgeT0iNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI4IiB5PSI0IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjkiIHk9IjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMCIgeT0iNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMxIiB5PSI0IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzIiIHk9IjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI0IiB5PSI1IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTAiIHk9IjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMiIgeT0iNSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE1IiB5PSI1IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTgiIHk9IjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxOSIgeT0iNSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIwIiB5PSI1IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjIiIHk9IjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNiIgeT0iNSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMyIiB5PSI1IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNCIgeT0iNiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjYiIHk9IjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI3IiB5PSI2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iOCIgeT0iNiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEwIiB5PSI2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTIiIHk9IjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNCIgeT0iNiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE1IiB5PSI2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTYiIHk9IjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxOCIgeT0iNiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIwIiB5PSI2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjIiIHk9IjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNCIgeT0iNiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI2IiB5PSI2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjgiIHk9IjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyOSIgeT0iNiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMwIiB5PSI2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzIiIHk9IjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI0IiB5PSI3IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNiIgeT0iNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjciIHk9IjciIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI4IiB5PSI3IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTAiIHk9IjciIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMyIgeT0iNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE2IiB5PSI3IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTciIHk9IjciIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxOCIgeT0iNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIxIiB5PSI3IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjMiIHk9IjciIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNiIgeT0iNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI4IiB5PSI3IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjkiIHk9IjciIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMCIgeT0iNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMyIiB5PSI3IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNCIgeT0iOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjYiIHk9IjgiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI3IiB5PSI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEwIiB5PSI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTQiIHk9IjgiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxOCIgeT0iOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIzIiB5PSI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjYiIHk9IjgiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyOCIgeT0iOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI5IiB5PSI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzAiIHk9IjgiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMiIgeT0iOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjQiIHk9IjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMCIgeT0iOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE0IiB5PSI5IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTciIHk9IjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxOCIgeT0iOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIyIiB5PSI5IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjMiIHk9IjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNiIgeT0iOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMyIiB5PSI5IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNCIgeT0iMTAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI1IiB5PSIxMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjYiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNyIgeT0iMTAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI4IiB5PSIxMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjkiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTIiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTQiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTYiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTgiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjAiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjIiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjQiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjYiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjciIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjgiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjkiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzAiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzEiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzIiIHk9IjEwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTMiIHk9IjExIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTUiIHk9IjExIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTgiIHk9IjExIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTkiIHk9IjExIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjEiIHk9IjExIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjIiIHk9IjExIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjQiIHk9IjExIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNSIgeT0iMTIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI2IiB5PSIxMiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjciIHk9IjEyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iOSIgeT0iMTIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMCIgeT0iMTIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNCIgeT0iMTIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNiIgeT0iMTIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNyIgeT0iMTIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMSIgeT0iMTIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMiIgeT0iMTIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMyIgeT0iMTIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMCIgeT0iMTIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMSIgeT0iMTIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI0IiB5PSIxMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjUiIHk9IjEzIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iOSIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMSIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMyIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNCIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNSIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNyIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMSIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMiIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMyIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNSIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNiIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNyIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyOCIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyOSIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMiIgeT0iMTMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI0IiB5PSIxNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjYiIHk9IjE0IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iOCIgeT0iMTQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI5IiB5PSIxNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEwIiB5PSIxNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEzIiB5PSIxNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE1IiB5PSIxNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE2IiB5PSIxNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE3IiB5PSIxNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE4IiB5PSIxNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIxIiB5PSIxNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI2IiB5PSIxNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI5IiB5PSIxNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMxIiB5PSIxNCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjQiIHk9IjE1IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNSIgeT0iMTUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI2IiB5PSIxNSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjExIiB5PSIxNSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE0IiB5PSIxNSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE1IiB5PSIxNSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIyIiB5PSIxNSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI0IiB5PSIxNSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI3IiB5PSIxNSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMyIiB5PSIxNSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjQiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNiIgeT0iMTYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI3IiB5PSIxNiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjgiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTAiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTEiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTIiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTMiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTYiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTgiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjAiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjEiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjMiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjQiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjUiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjciIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzAiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzEiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzIiIHk9IjE2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNyIgeT0iMTciIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI4IiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjExIiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEyIiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEzIiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE0IiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE1IiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE2IiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE3IiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIxIiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIzIiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI2IiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI3IiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI5IiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMwIiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMyIiB5PSIxNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjQiIHk9IjE4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNSIgeT0iMTgiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI2IiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjciIHk9IjE4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iOCIgeT0iMTgiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI5IiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEwIiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjExIiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE0IiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE2IiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE3IiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIyIiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIzIiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI0IiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI2IiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI3IiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI4IiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI5IiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMxIiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMyIiB5PSIxOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjQiIHk9IjE5IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iOCIgeT0iMTkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI5IiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEyIiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE0IiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE1IiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE2IiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE3IiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE4IiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIwIiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI0IiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI1IiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI2IiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI4IiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI5IiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMxIiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMyIiB5PSIxOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjUiIHk9IjIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNiIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMCIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMiIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNCIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNyIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxOCIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxOSIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMiIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMyIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNCIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyOCIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyOSIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMSIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMiIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI1IiB5PSIyMSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjYiIHk9IjIxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNyIgeT0iMjEiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI4IiB5PSIyMSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE0IiB5PSIyMSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIwIiB5PSIyMSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIxIiB5PSIyMSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI0IiB5PSIyMSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI3IiB5PSIyMSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI5IiB5PSIyMSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMwIiB5PSIyMSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjQiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNiIgeT0iMjIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI3IiB5PSIyMiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjkiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTAiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTEiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTIiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTMiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTkiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjAiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjEiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjQiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjYiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjgiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjkiIHk9IjIyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNiIgeT0iMjMiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI4IiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjExIiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE0IiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE3IiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE5IiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIwIiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIxIiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI0IiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI1IiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI2IiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI3IiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI4IiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI5IiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMwIiB5PSIyMyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjUiIHk9IjI0IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iOCIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMCIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMSIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMyIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNSIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNiIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxOSIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMSIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMiIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNCIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNSIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNiIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNyIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyOCIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMCIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMiIgeT0iMjQiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMiIgeT0iMjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNSIgeT0iMjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNyIgeT0iMjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxOCIgeT0iMjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMSIgeT0iMjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNCIgeT0iMjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyOCIgeT0iMjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyOSIgeT0iMjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMSIgeT0iMjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMiIgeT0iMjUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI0IiB5PSIyNiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjUiIHk9IjI2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNiIgeT0iMjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI3IiB5PSIyNiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjgiIHk9IjI2IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iOSIgeT0iMjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMCIgeT0iMjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNCIgeT0iMjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxOCIgeT0iMjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMCIgeT0iMjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMiIgeT0iMjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMyIgeT0iMjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNCIgeT0iMjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyNiIgeT0iMjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyOCIgeT0iMjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMCIgeT0iMjYiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI0IiB5PSIyNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEwIiB5PSIyNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEyIiB5PSIyNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE0IiB5PSIyNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE1IiB5PSIyNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE2IiB5PSIyNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE3IiB5PSIyNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIwIiB5PSIyNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI0IiB5PSIyNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI4IiB5PSIyNyIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjQiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNiIgeT0iMjgiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI3IiB5PSIyOCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjgiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTAiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTQiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTUiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTYiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTkiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjEiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjQiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjUiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjYiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjciIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjgiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjkiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzAiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzEiIHk9IjI4IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNCIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI2IiB5PSIyOSIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjciIHk9IjI5IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iOCIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMCIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMiIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxMyIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNCIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxNiIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxOCIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIxOSIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMSIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMiIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMyIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyOCIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyOSIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMCIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIzMiIgeT0iMjkiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI0IiB5PSIzMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjYiIHk9IjMwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNyIgeT0iMzAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI4IiB5PSIzMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEwIiB5PSIzMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEyIiB5PSIzMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjEzIiB5PSIzMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE1IiB5PSIzMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjE3IiB5PSIzMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjIxIiB5PSIzMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI0IiB5PSIzMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI3IiB5PSIzMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjI5IiB5PSIzMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjMyIiB5PSIzMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjQiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTAiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTIiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTMiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTUiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTYiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTgiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTkiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjAiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjIiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjQiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjYiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjgiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjkiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzEiIHk9IjMxIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNCIgeT0iMzIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI1IiB5PSIzMiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjYiIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNyIgeT0iMzIiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI4IiB5PSIzMiIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjkiIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTAiIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTQiIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTUiIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTYiIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTciIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMTgiIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjAiIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjMiIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjQiIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjYiIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMjciIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iMzEiIHk9IjMyIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIi8+PC9nPjwvc3ZnPg==" alt="QR Code" class="w-44 h-44 object-contain">
+      </div>
+      <p class="text-xs text-gray-300 leading-relaxed" id="txtQrDesc">هذا الباركود يفتح صفحة المنيو مباشرة لزبائن المطعم.</p>
+      <button onclick="closeQRModal()" class="w-full bg-[#202532] text-gray-200 font-bold py-2.5 rounded-xl text-xs" id="txtCloseQr">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- جلب البيانات والتحكم باللغات -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBcR06wtdVs0nI3Gmi0Keb8Q9EdXTOEgf0",
+      authDomain: "lahma-menu.firebaseapp.com",
+      projectId: "lahma-menu",
+      storageBucket: "lahma-menu.firebasestorage.app",
+      messagingSenderId: "642565994237",
+      appId: "1:642565994237:web:2fff0a3fe0741460f67094",
+      measurementId: "G-MZ4G6DD20L"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ---------- حماية XSS ----------
+    // تنظيف أي نص قادم من قاعدة البيانات قبل وضعه داخل HTML
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+    // السماح فقط بروابط الصور الآمنة (base64 صورة، http/https، أو مسار نسبي)
+    const safeImg = (u) => {
+      u = String(u ?? '').trim();
+      return /^(data:image\/(png|jpe?g|webp|gif|avif);base64,|https?:\/\/|[^:]*$)/i.test(u) ? u : '';
+    };
+    const toArr = (v) => Array.isArray(v) ? v.map(String) : [];
+
+    let menuItems = [];
+    let categoriesList = [];
+    let currentCategory = 'all';
+    let searchQuery = '';
+    let currentLang = 'ar';
+    let loadError = false;
+
+    const translations = {
+      ar: {
+        directMenu: "منيو الطاولة المباشر", tableService: "خدمة الطاولة", qrCode: "الباركود", location: "📍 شارع بور - اللاذقية",
+        subtitleTag: "أطيب لقمة مشوية على الفحم", searchPlaceholder: "ابحث في قائمة الطعام...", catAll: "جميع الوجبات",
+        enjoyTitle: "تصفح المنيو بمتعة", enjoySubtitle: "سيكون النادل بخدمتك لتسجيل طلبك فور اختيارك", wifi: "واي فاي مجاني",
+        grill: "مشوي على الأصول", rights: "مطعم لحمة وفحمة • منيو إلكتروني مباشر عبر الباركود", details: "عرض التفاصيل",
+        ingredients: "محتويات ومكونات الوجبة:", allergens: "مسببات الحساسية المحتملة:", close: "إغلاق التفاصيل",
+        understood: "حسناً، فهمت", currency: "ل.س", qrModalTitle: "باركود طاولة مطعم لحمة وفحمة",
+        qrDesc: "هذا الباركود يفتح صفحة المنيو مباشرة لزبائن المطعم.", closeQr: "إغلاق",
+        noItems: "لا توجد أصناف متاحة", loadError: "تعذر تحميل القائمة، تحقق من الاتصال", reload: "إعادة تحميل", loading: "جاري التحميل... ⏳"
+      },
+      en: {
+        directMenu: "Direct Table Menu", tableService: "Table Service", qrCode: "QR Code", location: "📍 Bour St. - Latakia",
+        subtitleTag: "The Best Charcoal Grilled Bites", searchPlaceholder: "Search menu...", catAll: "All Items",
+        enjoyTitle: "Enjoy Browsing", enjoySubtitle: "Our waiter will be at your service shortly", wifi: "Free Wi-Fi",
+        grill: "Authentic Charcoal Grill", rights: "Lahma & Fahma • Direct Digital Menu", details: "View Details",
+        ingredients: "Ingredients:", allergens: "Potential Allergens:", close: "Close Details",
+        understood: "Got it", currency: "S.P", qrModalTitle: "Lahma & Fahma Table QR",
+        qrDesc: "Scan this QR code to view the menu directly.", closeQr: "Close",
+        noItems: "No items available", loadError: "Could not load the menu, check your connection", reload: "Reload", loading: "Loading... ⏳"
+      }
+    };
+
+    const allergenMap = {
+      "البيض 🥚": { ar: "البيض 🥚", en: "Eggs 🥚" },
+      "الألبان 🥛": { ar: "الألبان 🥛", en: "Dairy 🥛" },
+      "الغلوتين 🌾": { ar: "الغلوتين (خبز) 🌾", en: "Gluten (Bread) 🌾" },
+      "السمسم 🫘": { ar: "السمسم 🫘", en: "Sesame 🫘" },
+      "المكسرات 🥜": { ar: "المكسرات 🥜", en: "Nuts 🥜" }
+    };
+
+    window.toggleLanguage = function() {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      const root = document.getElementById('htmlRoot');
+      root.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+      root.setAttribute('lang', currentLang);
+      document.getElementById('langBtnText').textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+
+      const t = translations[currentLang];
+      document.getElementById('txtDirectMenu').textContent = t.directMenu;
+      document.getElementById('txtTableService').textContent = t.tableService;
+      document.getElementById('txtQrCode').textContent = t.qrCode;
+      document.getElementById('txtLocation').textContent = t.location;
+      document.getElementById('txtSubtitleTag').innerHTML = `<i class="fa-solid fa-fire text-[11px]"></i> ${t.subtitleTag}`;
+      document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+      document.getElementById('txtEnjoyTitle').textContent = t.enjoyTitle;
+      document.getElementById('txtEnjoySubtitle').textContent = t.enjoySubtitle;
+      document.getElementById('txtWifi').textContent = t.wifi;
+      document.getElementById('txtGrill').textContent = t.grill;
+      document.getElementById('txtFooterRights').textContent = t.rights;
+      document.getElementById('txtIngredientsTitle').textContent = t.ingredients;
+      document.getElementById('txtAllergensTitle').textContent = t.allergens;
+      document.getElementById('txtCloseDetails').textContent = t.close;
+      document.getElementById('txtTableSrvModal').textContent = t.tableService;
+      document.getElementById('txtUnderstood').textContent = t.understood;
+      document.getElementById('txtQrModalTitle').textContent = t.qrModalTitle;
+      document.getElementById('txtQrDesc').textContent = t.qrDesc;
+      document.getElementById('txtCloseQr').textContent = t.closeQr;
+
+      renderCategoryTabs();
+      renderMenu();
+    };
+
+    // ---------- كاش محلي لتقليل القراءات ----------
+    const CACHE_KEY = 'lf_menu_cache_v1';
+    const CACHE_TTL = 10 * 60 * 1000; // 10 دقائق (غيّر الرقم لو بدك مدة أطول/أقصر)
+
+    function loadCache() {
+      try {
+        const c = JSON.parse(localStorage.getItem(CACHE_KEY));
+        if (c && typeof c.t === 'number' && Array.isArray(c.categories) && Array.isArray(c.menu)) return c;
+      } catch (e) {}
+      return null;
+    }
+    function saveCache() {
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), categories: categoriesList, menu: menuItems }));
+      } catch (e) { /* التخزين ممتلئ أو ممنوع: عادي، نكمل بدون كاش */ }
+    }
+
+    async function loadAll(force = false) {
+      const c = loadCache();
+      if (c && !force) {
+        categoriesList = c.categories;
+        menuItems = c.menu;
+        renderCategoryTabs();
+        renderMenu();
+        if (Date.now() - c.t < CACHE_TTL) return; // الكاش طازج: ما نقرأ من Firebase
+      }
+      const [okC, okM] = await Promise.all([fetchCategoriesFromFirebase(), fetchMenuFromFirebase()]);
+      if (okC && okM) saveCache();
+    }
+
+    async function fetchCategoriesFromFirebase() {
+      try {
+        const querySnapshot = await getDocs(collection(db, "categories"));
+        categoriesList = [];
+        querySnapshot.forEach((d) => { categoriesList.push(d.data()); });
+        renderCategoryTabs();
+      return true;
+      } catch (error) { console.error("Error fetching categories:", error); return false; }
+    }
+
+    window.renderCategoryTabs = function() {
+      const container = document.getElementById('categoryTabs');
+      const t = translations[currentLang];
+      const on = 'bg-brand-500 text-white shadow-md shadow-brand-500/20';
+      const off = 'bg-brand-card text-gray-300 border border-brand-border hover:bg-gray-800';
+
+      let html = `
+        <button data-cat="all" class="cat-btn px-4 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap ${currentCategory === 'all' ? on : off} transition-all">
+          ✨ <span>${esc(t.catAll)}</span>
+        </button>`;
+
+      categoriesList.forEach(cat => {
+        const catName = currentLang === 'ar' ? cat.nameAr : (cat.nameEn || cat.nameAr);
+        html += `
+          <button data-cat="${esc(cat.id)}" class="cat-btn px-4 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap ${currentCategory === cat.id ? on : off} transition-all">
+            ${esc(cat.emoji || '')} <span>${esc(catName)}</span>
+          </button>`;
+      });
+
+      container.innerHTML = html;
+    };
+
+    // أزرار الأقسام بدون onclick داخل HTML
+    document.getElementById('categoryTabs').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-cat]');
+      if (btn) window.filterCategory(btn.dataset.cat);
+    });
+
+    async function fetchMenuFromFirebase() {
+      try {
+        loadError = false;
+        const querySnapshot = await getDocs(collection(db, "menu"));
+        menuItems = [];
+        querySnapshot.forEach((d) => {
+          const item = d.data();
+          if (item.isVisible !== false) {
+            item.id = d.id;
+            item.order = typeof item.order === 'number' ? item.order : 999999;
+            menuItems.push(item);
+          }
+        });
+        menuItems.sort((a, b) => a.order - b.order);
+        renderMenu();
+      return true;
+      } catch (error) { console.error("Error:", error); if (menuItems.length === 0) { loadError = true; renderMenu(); } return false; }
+    }
+
+    window.renderMenu = function() {
+      const container = document.getElementById('itemsContainer');
+      const q = searchQuery.toLowerCase();
+      const filtered = menuItems.filter(item => {
+        const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
+        const hay = [item.name, item.subtitle, item.description, item.descriptionEn].map(v => String(v ?? '').toLowerCase());
+        const matchesSearch = !q || hay.some(h => h.includes(q));
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        const et = translations[currentLang];
+        container.innerHTML = `
+          <div class="text-center py-12 px-4 bg-[#141720] rounded-2xl border border-gray-800 space-y-4">
+            <h4 class="font-bold text-gray-300 text-sm">${esc(loadError ? et.loadError : et.noItems)}</h4>
+            <button data-reload="1" class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all shadow-lg shadow-brand-500/20 active:scale-95">
+              <i class="fa-solid fa-rotate-right"></i> <span>${esc(et.reload)}</span>
+            </button>
+          </div>`;
+        return;
+      }
+
+      const t = translations[currentLang];
+      container.innerHTML = filtered.map(item => {
+        const displayName = currentLang === 'en' && item.subtitle ? item.subtitle : item.name;
+        const displayDesc = currentLang === 'en' && item.descriptionEn ? item.descriptionEn : item.description;
+        const tagsEn = toArr(item.tagsEn);
+        const displayTags = currentLang === 'en' && tagsEn.length > 0 ? tagsEn : toArr(item.tags);
+        const displayPrice = `${item.price} ${t.currency}`;
+        const displayBadge = currentLang === 'en' && item.badgeEn ? item.badgeEn : item.badge;
+
+        return `
+          <article data-id="${esc(item.id)}" class="menu-card bg-brand-card border border-brand-border hover:border-gray-600 rounded-2xl overflow-hidden transition-all shadow-lg cursor-pointer group active:scale-[0.99]">
+            <div class="relative h-48 w-full overflow-hidden bg-black">
+              <img src="${esc(safeImg(item.image))}" alt="${esc(displayName)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#161922] via-transparent to-black/30"></div>
+              ${displayBadge ? `<span class="absolute top-3 right-3 bg-brand-500 text-white text-[11px] font-black px-2.5 py-1 rounded-lg shadow-md">${esc(displayBadge)}</span>` : ''}
+            </div>
+            <div class="p-4">
+              <div class="flex items-start justify-between gap-2 mb-1.5">
+                <div>
+                  <h3 class="font-black text-base text-white group-hover:text-brand-500 transition-colors">${esc(displayName)}</h3>
+                  ${currentLang === 'ar' && item.subtitle ? `<p class="text-[11px] text-gray-400 font-medium">${esc(item.subtitle)}</p>` : ''}
+                </div>
+                <div class="text-left flex-shrink-0">
+                  <span class="text-brand-gold font-black text-base">${esc(displayPrice)}</span>
+                </div>
+              </div>
+              <p class="text-xs text-gray-400 line-clamp-2 leading-relaxed mb-3">${esc(displayDesc || '')}</p>
+
+              <div class="flex flex-wrap gap-1.5 mb-3">
+                ${displayTags.map(tag => `<span class="bg-[#10121a] text-gray-300 text-[10px] px-2 py-0.5 rounded-md border border-gray-800">${esc(tag)}</span>`).join('')}
+              </div>
+
+              <div class="pt-2 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400">
+                <span class="text-brand-500 font-bold flex items-center gap-1 group-hover:translate-x-[-3px] transition-transform">
+                  <span>${esc(t.details)}</span>
+                  <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                </span>
+              </div>
+            </div>
+          </article>`;
+      }).join('');
+    };
+
+    // فتح تفاصيل الوجبة بدون onclick داخل HTML
+    document.getElementById('itemsContainer').addEventListener('click', (e) => {
+      if (e.target.closest('button[data-reload]')) { window.reloadMenu(); return; }
+      const card = e.target.closest('article[data-id]');
+      if (card) window.openItemModal(card.dataset.id);
+    });
+
+    window.reloadMenu = async function() {
+      document.getElementById('itemsContainer').innerHTML = `<div class="text-center text-gray-500 py-16">${esc(translations[currentLang].loading)}</div>`;
+      await loadAll(true);
+    };
+
+    window.filterCategory = function(cat) {
+      currentCategory = cat;
+      renderCategoryTabs();
+      renderMenu();
+    };
+
+    window.handleSearch = function() {
+      searchQuery = document.getElementById('searchInput').value.trim();
+      renderMenu();
+    };
+
+    window.openItemModal = function(id) {
+      const item = menuItems.find(i => i.id === id);
+      if (!item) return;
+
+      const t = translations[currentLang];
+      const displayName = currentLang === 'en' && item.subtitle ? item.subtitle : item.name;
+      const displayDesc = currentLang === 'en' && item.descriptionEn ? item.descriptionEn : item.description;
+      const displayIng = currentLang === 'en' && item.ingredientsEn ? item.ingredientsEn : (item.ingredients || '-');
+      const tagsEn = toArr(item.tagsEn);
+      const displayTags = currentLang === 'en' && tagsEn.length > 0 ? tagsEn : toArr(item.tags);
+      const displayBadge = currentLang === 'en' && item.badgeEn ? item.badgeEn : item.badge;
+
+      document.getElementById('modalImg').src = safeImg(item.image);
+      document.getElementById('modalTitle').textContent = displayName;
+      document.getElementById('modalCategory').textContent = currentLang === 'en' ? '' : (item.subtitle || '');
+      document.getElementById('modalPrice').textContent = `${item.price} ${t.currency}`;
+      document.getElementById('modalBadge').textContent = displayBadge || '';
+      document.getElementById('modalDescription').textContent = displayDesc || '';
+
+      document.getElementById('modalIngredients').textContent = displayIng;
+      document.getElementById('ingredientsBox').classList.toggle('hidden', !displayIng);
+
+      // نظام الحساسية
+      const allergensBox = document.getElementById('allergensBox');
+      const modalAllergens = document.getElementById('modalAllergens');
+      const allergens = toArr(item.allergens);
+      if (allergens.length > 0) {
+        allergensBox.classList.remove('hidden');
+        modalAllergens.innerHTML = allergens.map(a => {
+          const mapped = allergenMap[a];
+          const allergenText = mapped ? (currentLang === 'en' ? mapped.en : mapped.ar) : a;
+          return `<span class="bg-red-500/20 text-red-300 text-[10px] font-bold px-2.5 py-1 rounded-lg border border-red-500/30">${esc(allergenText)}</span>`;
+        }).join('');
+      } else {
+        allergensBox.classList.add('hidden');
+      }
+
+      // نظام الوسوم للنافذة
+      document.getElementById('modalTags').innerHTML = displayTags.map(tag => `<span class="bg-[#1b1f2b] text-gray-300 text-xs px-2.5 py-1 rounded-lg border border-gray-700">${esc(tag)}</span>`).join('');
+
+      document.getElementById('itemModal').classList.remove('hidden');
+    };
+
+    window.closeItemModal = function() { document.getElementById('itemModal').classList.add('hidden'); };
+    window.openTableInfoModal = function() { document.getElementById('tableInfoModal').classList.remove('hidden'); };
+    window.closeTableInfoModal = function() { document.getElementById('tableInfoModal').classList.add('hidden'); };
+    window.openQRModal = function() { document.getElementById('qrModal').classList.remove('hidden'); };
+    window.closeQRModal = function() { document.getElementById('qrModal').classList.add('hidden'); };
+
+    window.addEventListener('click', (e) => {
+      if (e.target === document.getElementById('itemModal')) closeItemModal();
+      if (e.target === document.getElementById('qrModal')) closeQRModal();
+      if (e.target === document.getElementById('tableInfoModal')) closeTableInfoModal();
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadAll();
+    });
+  </script>
+</body>
+</html>
